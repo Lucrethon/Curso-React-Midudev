@@ -133,6 +133,7 @@ root.render(fragment);
     <button data-id="789">Button 3</button>
 </React.Fragment>
 
+
 // Quien se encarga de transformarlo? 
 // Babel, SWC
 // Son transpiladores o compiladores de codigo donde nosotros escribimos el codigo JSX y lo tranforma a la versión larga de antes 
@@ -144,6 +145,18 @@ root.render(fragment);
 // 1. Se pueden colocar expresiones entre corchetes (constantes, funciones, etc. Cosas que devuelvan un valor): 
 //    <h1>Hola {1 + 1}</h1> 
 
+
+
+// JSX es esa sintaxis hermosa pero extraña que te permite escribir HTML directamente dentro de tu código de JavaScript o TypeScript (como poner <h1>Hola</h1> en medio de una función).
+
+// El problema es que los navegadores web no tienen ni la menor idea de qué es JSX. Si tú le tiras un archivo con JSX a un navegador, se va a romper y te va a lanzar un error. El navegador solo entiende tres cosas: HTML limpio, CSS limpio y JavaScript limpio.
+
+// para utilizar JSX, necesitamos un compilador: Vite 
+
+// Vite toma todo tu código moderno —componentes de React, TypeScript, código en JSX— y, tras bambalinas, lo traduce y empaqueta en archivos de JavaScript y HTML puros que cualquier navegador pueda entender
+
+// Vite tambien levanta un mini servidor web local dentro de tu computadora. Te da una dirección (usualmente http://localhost:5173) para que abras en el navegador y veas tu app corriendo en vivo.
+// Vite es el servidor mas rapido de todos para compilar React 
 
 
 
