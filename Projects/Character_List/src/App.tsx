@@ -1,122 +1,66 @@
 import 'react'
+import { CharacterCard } from "./character_card"
+import { listaPersonajes } from "./character_list"
 import './App.css'
 
+// chl = character list
+
+
+
 function App() {
+
+    return (
+        <div className='chl-containerBox'>
+            <div className='chl-div-title'>
+                <h2 className='chl-title'>Character List</h2>
+            </div>
+            <div className='chl-buttons'>
+                <button className='chl-button-allFighters'>
+                    <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+                    </svg>
+
+                    All Fighters
+                </button>
+                <button className='chl-button-unlocked'>
+                    <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14v3m4-6V7a3 3 0 1 1 6 0v4M5 11h10a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Z"/>
+                    </svg>
+                    Unlocked
+                </button>
+
+                <button className='chl-button-locked'>
+                    <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M8 10V7a4 4 0 1 1 8 0v3h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h1Zm2-3a2 2 0 1 1 4 0v3h-4V7Zm2 6a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z" clip-rule="evenodd"/></svg>
+                    Locked
+                </button>
+            </div>
+            <div className='chl-characterList'>
+                {listaPersonajes.map((personaje) => (
+                    <CharacterCard key={personaje.id} character={personaje} />
+                ))  }
+            </div>
+
+        </div>
+    )
 }
+
+// El metodo .map() para arrays es un callback: recibe una función como parámetro, y esa es la función que se va a ejecutar en cada uno de los elementos del array. Sintaxis: 
+
+// miArray.map((elemento, index, arrayOriginal) => {
+  // Tu lógica de transformación aquí
+// });
+
+// elemento (Obligatorio): Es el ítem actual del array que se está procesando en ese preciso instante. En tu ejercicio, sería el personaje individual (el Knight, luego el Mage, etc.). Puedes llamarlo como quieras (personaje, item, x).
+
+// index (Opcional - Muy usado en React): Es la posición numérica (el índice) del elemento actual dentro del array, empezando desde el 0. En React te servirá muchísimo para usarlo como propiedad key si tus datos no tienen un ID único.
+
+// arrayOriginal (Opcional - Rara vez usado): Es el array completo sobre el cual estás aplicando el .map().
+
+// ⚠️ Regla de oro en React: Cada vez que uses .map(), el primer elemento HTML o Componente que devuelvas debe llevar un atributo llamado key con un valor único (como un ID). Esto le ayuda a React a saber exactamente qué elemento cambió, se eliminó o se agregó sin tener que renderizar toda la lista de nuevo.
+
+// ¿Se entiende mejor ahora el viaje que hace cada elemento dentro del .map()?
+
 
 export default App
 
-// function App() {
-//   const [count, setCount] = useState(0)
-
-//   return (
-//     <>
-//       <section id="center">
-//         <div className="hero">
-//           <img src={heroImg} className="base" width="170" height="179" alt="" />
-//           <img src={reactLogo} className="framework" alt="React logo" />
-//           <img src={viteLogo} className="vite" alt="Vite logo" />
-//         </div>
-//         <div>
-//           <h1>Get started</h1>
-//           <p>
-//             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-//           </p>
-//         </div>
-//         <button
-//           type="button"
-//           className="counter"
-//           onClick={() => setCount((count) => count + 1)}
-//         >
-//           Count is {count}
-//         </button>
-//       </section>
-
-//       <div className="ticks"></div>
-
-//       <section id="next-steps">
-//         <div id="docs">
-//           <svg className="icon" role="presentation" aria-hidden="true">
-//             <use href="/icons.svg#documentation-icon"></use>
-//           </svg>
-//           <h2>Documentation</h2>
-//           <p>Your questions, answered</p>
-//           <ul>
-//             <li>
-//               <a href="https://vite.dev/" target="_blank">
-//                 <img className="logo" src={viteLogo} alt="" />
-//                 Explore Vite
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://react.dev/" target="_blank">
-//                 <img className="button-icon" src={reactLogo} alt="" />
-//                 Learn more
-//               </a>
-//             </li>
-//           </ul>
-//         </div>
-//         <div id="social">
-//           <svg className="icon" role="presentation" aria-hidden="true">
-//             <use href="/icons.svg#social-icon"></use>
-//           </svg>
-//           <h2>Connect with us</h2>
-//           <p>Join the Vite community</p>
-//           <ul>
-//             <li>
-//               <a href="https://github.com/vitejs/vite" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#github-icon"></use>
-//                 </svg>
-//                 GitHub
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://chat.vite.dev/" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#discord-icon"></use>
-//                 </svg>
-//                 Discord
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://x.com/vite_js" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#x-icon"></use>
-//                 </svg>
-//                 X.com
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://bsky.app/profile/vite.dev" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#bluesky-icon"></use>
-//                 </svg>
-//                 Bluesky
-//               </a>
-//             </li>
-//           </ul>
-//         </div>
-//       </section>
-
-//       <div className="ticks"></div>
-//       <section id="spacer"></section>
-//     </>
-//   )
-// }
