@@ -1,3 +1,47 @@
+@font-face {
+    font-family: 'Medieval';
+    src: url('./assets/fonts/MedievalSharp-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; /* Ayuda a que el texto no sea invisible mientras carga */
+}
+
+
+
 .ch-characterCard {
     display: flex;
+    justify-content: space-between; 
+    font-family: Medieval;
+    font-size: large;
+    align-items: center;
 }
+
+
+
+.ch-characterCard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+}
+
+.ch-characterCard-info {
+    display: flex; 
+    align-items: flex-start;
+    flex-direction: column;
+
+}
+
+.ch-characterCard-image {
+  width: 48px;
+  height: 48px;
+
+}
+
+
+
+/* aling-items: ordena los elementos verticalmente
+justify-content: ordena los elementos horizontalmente */
+
+/* align-items: flex-start Fuerza a que los textos se alineen al inicio izquierdo */

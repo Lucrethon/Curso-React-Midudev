@@ -1,0 +1,52 @@
+@font-face {
+    font-family: 'Ithaca';
+    src: url('./assets/fonts/Ithaca-font.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; /* Ayuda a que el texto no sea invisible mientras carga */
+}
+
+
+.chl-containerBox{
+    display: flex; 
+    flex-direction: column;
+    max-width: 90%;
+    margin: auto;
+    gap: 1.5rem
+
+}
+
+.chl-characterList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.chl-div-title {
+    font-family: Ithaca;
+}
+
+.chl-title {
+    text-align: center;
+    font-size: 3rem
+}
+
+.chl-buttons {
+    padding: 0.4rem
+}
+
+.chl-button {
+  display: flex;
+  align-items: center;      /* Centra verticalmente el SVG y el texto */
+  justify-content: center;  /* Centra el contenido en medio del botón */
+  gap: 0.5rem;              /* Separa el icono del texto un poquito */
+  padding: 0.6rem 1rem;     /* Espaciado interno para que no se vean apretados */
+  cursor: pointer;          /* Pone la mano al pasar el mouse */;
+}
+
+.chl-buttons {
+    display: flex;
+    align-items: stretch; /* Fuerza a que todos tengan la misma altura */
+    gap: 0.3rem;
+    justify-content: center; /* Centra los botones en la pantalla */
+}
