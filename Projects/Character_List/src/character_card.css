@@ -14,6 +14,12 @@
     font-family: Medieval;
     font-size: large;
     align-items: center;
+    background-color: #ffffff; /* Blanco puro para máxima limpieza */
+    border: 3px solid #cd7f32;  /* Borde color bronce/cobre */
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02); /* Sombra diminuta */
+    padding: 0.7rem 1rem; /* 0.8rem arriba/abajo y 1.5rem a los lados */
 }
 
 
@@ -33,13 +39,33 @@
 
 }
 
+.ch-characterCard-class {
+    color: #8d6e63;
+}
+
 .ch-characterCard-image {
-  width: 48px;
-  height: 48px;
+    height: 4rem;  /* Controlas qué tan alta es la tarjeta */
+  width: auto;   /* El ancho se adapta perfectamente a la figura del personaje */
 
 }
 
+.ch-characterCard-level {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 2.5rem;
+height: 2.5rem;
+border: 1.5px solid #a37843;  /* Borde dorado */
+border-radius: 50%;        /* ¡Vuelve la caja un círculo perfecto! */
+color: #a37843;            /* Número dorado */
+font-weight: bold;
+font-size: 2rem;
 
+}
+
+.ch-characterCard:hover {
+    background-color: #dfd7c5; /* Se aclara un poco */
+}
 
 /* aling-items: ordena los elementos verticalmente
 justify-content: ordena los elementos horizontalmente */
