@@ -14,7 +14,7 @@ function lockedCharacters(characterList: Character[]) {
     return (
         lockedList.map((char: Character) => (
                 <CharacterCard key={char.id} character={char} />
-        )))
+        ))) // retorno implicito: despues de la flecha no hay llaves. En Js, al usar () después de una función flecha significa: "Toma este elemento y devuélvelo inmediatamente". Es una forma limpia de ahorrar código.
 };
 
 function unlockedCharacters(characterList: Character[]) {
