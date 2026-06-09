@@ -44,9 +44,10 @@ import { useState } from 'react'
 // equivale a las típicas barras laterales de una página web
 
 
-export function TwitterCard ({ formatUsername, children, accountName = "unknown", avatarUrl }) { // Este componente lo tenemos que EXPORTAR para poder usarlo en otro archivo
+export function TwitterCard ({ formatUsername, children, accountName = "unknown", avatarUrl, initialIsFollowing = false
+}) { // Este componente lo tenemos que EXPORTAR para poder usarlo en otro archivo
 
-    
+
     // -------------- Hooks -----------------
     // Los hooks permiten añadir cierta funcionalidad a los componentes de react 
     // o ejecutar codigo arbitrario cuando ocurren ciertas cosas en los componentes 
@@ -59,12 +60,17 @@ export function TwitterCard ({ formatUsername, children, accountName = "unknown"
     // el useState es un array: 
     // [estado actual, funcion para cambiar estado actual]
 
+    // es una buena practica que si vas a pasar una prop como un estado, esta se llame inicialNombreEstado
+    // si vas a utilizar un inicial State (estado inicial) como prop, este SOLO SE INICIA UNA VEZ
+    // si quieres cambiar un estado del componente padre y pasarlo como prop al componente hijo para que este a su vez cambie un estado interno 
+    // el estado del componente hijo NO va a cambiar, porque este solo se inicializa una vez 
+    // el inicial state NO se propaga para abajo. 
+
+
     // aqui se aplica la destructurarion: el useState es un array. Lo que hacemos nosotros es darle nombre a esos valores que estan dentro del array 
-    const [isFollowing, setIsFollowing] = useState(false) // el parentesis es el estado inicial
+    const [isFollowing, setIsFollowing] = useState(initialIsFollowing) // el parentesis es el estado inicial
 
     // Esto ya hace que React sea dinamico y responda ante los cambios del usuario: pasarle funciones a los elementos dependiendo del estado en el que se encuentre
-
-    console.log(isFollowing);
 
     const text = isFollowing ? "Following" : "Follow"; 
 
@@ -121,8 +127,9 @@ export function TwitterCard ({ formatUsername, children, accountName = "unknown"
     <aside>
         <button className={buttonClassName}
         onClick={handleClick}>
-            {text}
+            <span className="tw-followCard-text">{text}</span>
             {/* Este texto se llama children porque es un texto envuelto por un boton que a su vez esta envuelto por un aside (contenedor padre) */}
+            <span className="tw-followCard-stopFollowingButton">Unfollow</span>
         </button>
     </aside>
 

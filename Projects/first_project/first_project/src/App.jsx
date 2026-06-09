@@ -20,6 +20,7 @@ import { TwitterCard } from './TwitterFollowCard.jsx'
         formatUsername: addAtt,
         accountName: "super_lulu",
         avatarUrl: "https://api.dicebear.com/10.x/lorelei/svg?seed=Felix",
+        initialIsFollowing: true
     }
 
 export function App() {
@@ -35,7 +36,7 @@ export function App() {
         formatUsername={addAtt} 
         accountName="midudev" 
         avatarUrl="https://api.dicebear.com/10.x/lorelei/svg?seed=Max" 
-        >
+        initialIsFollowing={false}>
           MiduDev
         </TwitterCard>
     </div>
