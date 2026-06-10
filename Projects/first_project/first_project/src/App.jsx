@@ -23,6 +23,37 @@ import { TwitterCard } from './TwitterFollowCard.jsx'
         initialIsFollowing: true
     }
 
+    // ------------------ Renderizar listas --------------------
+
+    const users = [
+      {
+        formatUsername: addAtt,
+        username: "Lasso",
+        accountName: "lassomusica",
+        avatarUrl: "https://api.dicebear.com/10.x/lorelei/svg?seed=Tzuyu",
+        initialIsFollowing: false
+      },
+      {
+        formatUsername: addAtt,
+        username: "Shakira",
+        accountName: "shakira_music",
+        avatarUrl: "https://api.dicebear.com/10.x/lorelei/svg?seed=Christine",
+        initialIsFollowing: true
+      }
+    ];
+
+function renderUsers(list) {
+
+  return list.map((user) => (
+    <TwitterCard
+    key={user.accountName}
+    {...user}>
+      {user.username}
+    </TwitterCard>
+  )); 
+}
+
+
 export function App() {
   return (
     <div className="tw-followCards">
@@ -39,6 +70,8 @@ export function App() {
         initialIsFollowing={false}>
           MiduDev
         </TwitterCard>
+        {renderUsers(users)}
+
     </div>
   );
 }
