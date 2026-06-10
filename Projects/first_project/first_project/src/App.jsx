@@ -25,6 +25,14 @@ import { TwitterCard } from './TwitterFollowCard.jsx'
 
     // ------------------ Renderizar listas --------------------
 
+    // generalmente se utiliza la función map, que ejecuta una función a cada elemento de la lista 
+    // En este caso, la función sería el componente JSX y se escribiría con la misma sintaxis 
+    // el componente recibiría los mismos parámetros que este pide, no obstante, recibe uno mas: key
+
+    // key es un identificador unico de cada objeto de la lista 
+    // ES MALA PRACTICA que el key se cree cuando se esta llamando al componente, o hacer un math.random ahi porque cada vez que se renderice, seria un ID distinto
+    // se tiene que crear un identificador unico para cada elemento de la lista (id de base de datos)
+
     const users = [
       {
         formatUsername: addAtt,
