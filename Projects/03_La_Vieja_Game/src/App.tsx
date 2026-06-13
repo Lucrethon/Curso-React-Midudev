@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import './index.css'
 import confetti from 'canvas-confetti';
@@ -104,7 +104,21 @@ const updateBoard = (boardToCheck: (null | string)[], index: number) => {
     if (isWinner) {confetti();}
     
   }
+
 };
+
+  // ---------- Aprendiendo hook useEfect -----------------
+  // SOLO puede estar en el cuerto de una funcion de compotente JSX
+
+  useEffect(
+    () => {console.log("esto se ejecuta cada vez que se renderiza el componente")}
+  ) 
+  // si esto no tiene dependencias, se ejecuta cada vez que la app renderiza 
+  // al jugar, constantemente se esta cambiando el estado, y al cambiar el estado, se renderiza otra vez el componente 
+
+  useEffect (() => console.log("esto se ejecuta solo al iniciar"), [])
+  useEffect (() => console.log("esto se ejecuta cuando cambia el winner"), [winner])
+
 
 // --------------------- FUNCIÓN para resetear el juego --------------------
 
