@@ -114,7 +114,11 @@ function resetGame () {
   setBoard(Array(9).fill(null));
   setTurn(TURNS.X);
   setWinner(null);
-  window.localStorage.clear() // si hay valores en localStorage, los borra 
+
+  window.localStorage.removeItem("board") // si hay valores en localStorage, los borra 
+  window.localStorage.removeItem("turn") // si hay valores en localStorage, los borra 
+
+  //window.localStorage.clear() // no es buena practica usar el.clear del localStorage porque se pueden borrar cosas que uno no quiere que se borren 
 }; 
 
 // ----------------- FUNCIÓN para renderizar los square por cada elemento de board ------------------
