@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import './index.css'
 import React from 'react'
+import confetti from 'canvas-confetti';
 
 
 const TURNS = {
@@ -199,6 +200,9 @@ const updateBoard = (boardToCheck: (null | string)[], index: number) => {
 
   if (isWinner !== null) {
     setWinner(isWinner); 
+    if (isWinner) {confetti();}
+    
+
     // -----------------------------------------------------
 
     // el setWinner actualiza el estado de forma ASINCRONA 
