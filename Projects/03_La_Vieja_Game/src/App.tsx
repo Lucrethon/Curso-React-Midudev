@@ -18,11 +18,34 @@ function App() {
 
   // ---------------- estado tablero: posiciones con un array de 9 ---------------------
 
-const [board, setBoard] = useState(Array(9).fill(null)); // los valores iniciales son null
+  // los useStates NO pueden estar nunca dentro de un if, while, for. etc
+  // parse -> para convertir texto JSON a codigo 
+
+
+const [board, setBoard] = useState(
+  () => {const boardFromStorage = window.localStorage.getItem("board"); 
+    return boardFromStorage ? JSON.parse(boardFromStorage) : Array(9).fill(null)}
+  )
+
+  // si hay movimientos guardados en el localStorage, esos seran los estados iniciales
+  // de lo contrario, los valores iniciales son null
+
+  // por que se coloca el getItem dentro del useState??
+  // porque sino, cada vez que se rendeirza el tablero, se esta leyendo el localStorage cuando no se necesita y eso es MUY LENTO
+  // inicializar el estado solo ocurre una ves
 
 // ---------------- estado: turnos ----------------------
 
-const [turn, setTurn] = useState<TurnState>(TURNS.X); // el estado inicial es x (turno de x)
+const [turn, setTurn] = useState<TurnState>(
+  () => {const turnFromStorage = window.localStorage.getItem("turn");
+    return turnFromStorage ? turnFromStorage as TurnState : TURNS.X
+  }); 
+  
+  // si hay un turno guardado en el localStorage, el estado inicial es ese turno
+  // de lo contrario, el estado inicial es x (turno de x)
+
+  // Dado que el turno ya es unstring, no hace falta transformarlo con JSON. 
+  // Solo le indicamos a TypeScript que asuma ese valor leído como un TurnState.
 
 // --------------- Estado: ganador ----------------- 
 
@@ -50,13 +73,23 @@ const updateBoard = (boardToCheck: (null | string)[], index: number) => {
   const newBoard = [...boardToCheck];
   // se hace una copia del board. [NOTA-2] Inmutabilidad de los estados en React (Ver final del archivo)
 
-  newBoard[index] = turn; // "x" u "o"
+  newBoard[index] = turn; // "x" u "o". Se recupera el indice 
   setBoard(newBoard); // funcion para cambiar el estado del tablero. Se le pasa el array actualizado con los cambioss
   
 // ------------- actualizar el turno ----------------
 
   const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
   setTurn(newTurn); // funcion para cambiar de un turno a otro
+
+  // -------------------- Guardar partida -------------
+  // si hay una partida a medias y se actualiza la pagina, no se quiere que los cambios se borren
+  // se guarde siempre el ultimo movimiendo 
+  // localStorage [NOTA-5]
+
+  window.localStorage.setItem("board", JSON.stringify(newBoard)) // guardar tablero para saber el ultimo movimiento
+  window.localStorage.setItem("turn", newTurn) // guardar el NUEVO turno, no el actual
+
+// como el turno ya es un string, no hace falta la funcion stringify
 
   // ------------------ revisar si hay ganador -----------------
 
@@ -75,10 +108,13 @@ const updateBoard = (boardToCheck: (null | string)[], index: number) => {
 
 // --------------------- FUNCIÓN para resetear el juego --------------------
 
+// regresa todo a sus estados iniciales
+
 function resetGame () {
   setBoard(Array(9).fill(null));
   setTurn(TURNS.X);
   setWinner(null);
+  window.localStorage.clear() // si hay valores en localStorage, los borra 
 }; 
 
 // ----------------- FUNCIÓN para renderizar los square por cada elemento de board ------------------
@@ -168,3 +204,28 @@ export default App
 // Para eso, tenemos que llamar a la función usando una función flecha anónima: () => updateBoard(boardToCheck, index)
 // De esta manera, <Square> recibe una función que se ejecutará solo en el futuro, cuando se haga el click, recordando los parámetros gracias al closure.
 
+
+// ---------------- [NOTA-5] localStorage -----------------------
+
+// window.localStorage es una propiedad de JavaScript que te permite almacenar datos de forma local en el navegador del usuario.
+
+// los datos persistirán incluso si el usuario cierra el navegador, apaga la computadora o recarga la página. 
+// No tienen una fecha de expiración, a menos que se borren explícitamente mediante código o que el usuario limpie el caché de su navegador.
+
+// todo lo que guardes en él se convierte automáticamente en una cadena de texto (string). Si se intenta guardar un objeto directamente, se romperá. 
+// Para guardar: Conviértelo a texto con JSON.stringify().
+// Para leer: Conviértelo de vuelta a objeto con JSON.parse().
+
+// metodos (como usarlo): 
+
+// Guardar datos (setItem): localStorage.setItem('usuario', 'Carlos');
+// Leer datos (getItem): const nombre = localStorage.getItem('usuario'); console.log(nombre); // Imprime: Carlos
+// Eliminar un elemento específico (removeItem): localStorage.removeItem('idioma'); // Borra solo la clave 'idioma'
+// Limpiar todo (clear): localStorage.clear(); // Borra absolutamente todo lo guardado por tu web
+
+// es util para guardar cosas como: 
+// tema visual (modo oscuro/claro)
+// carritos de compra temporales 
+// preferencias del usuario
+
+// NUNCA guardar información sensible (como contraseñas, tokens de sesión críticos o tarjetas de crédito) en localStorage. Cualquier script malicioso que logre ejecutarse en tu página (ataques XSS) podría leer esos datos fácilmente.
