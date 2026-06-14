@@ -108,6 +108,7 @@ const updateBoard = (boardToCheck: (null | string)[], index: number) => {
 };
 
   // ---------- Aprendiendo hook useEfect -----------------
+
   // SOLO puede estar en el cuerto de una funcion de compotente JSX
 
   useEffect(
