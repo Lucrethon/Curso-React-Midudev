@@ -39,3 +39,18 @@
 .read-the-docs {
   color: #888;
 }
+
+.followMouse {
+    position: absolute;
+    background-color: rgba(95, 79, 197, 0.493);
+    border: 1px solid #fff;
+    /* hacer que sea redondo:  */
+    border-radius: 50%;
+    opacity: 0.8;
+    /* si se hace click, que no haga nada:  */
+    pointer-events: none;
+    left: -25px;
+    top: -25px;
+    width: 50px;
+    height: 50px;
+}
