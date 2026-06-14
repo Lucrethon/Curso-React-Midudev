@@ -11,4 +11,4 @@ createRoot(document.getElementById('root')!).render(
 
 // el componente StricMode te avisa cuando se esta utilizando codigo desactualizado de React 
 // tambien, con cada renderizacion, ejecuta un efecto, ejecuta un cleanUp para limpiar y después ejecuta el efecto otra vez 
-// asi se asegura de que el componente funciona correctamente y el useEffect tambien
+// asi se asegura de que el componente funciona correctamente y el useEffect tambien durante el desarrollo. En produccion no se ve

@@ -57,6 +57,8 @@ function App() {
 // hacer un windos.addEventListener fuera del efecto no tiene sentido ya que se ejecuta cada vez que se renderiza un componente, cuando solo se tiene que ejecutar una vez
 // con el useEffect, decidimos cuando ejecutamos un evento 
 
+// el localStorage ahora se tendria que leer en el useEffect
+
 // -----------
 
     // const changeState = (state: boolean) => state ? state = false : state = true 
