@@ -74,9 +74,9 @@ function App() {
         )}
 
 
-        <h1>New Project</h1>
+        <h1>Pointer Tracker</h1>
         <button onClick={()=> setEnabled(!enabled)}>
-            {enabled ? "Desactivar Puntero" : "Activar Puntero"}
+            {enabled ? "Disable Pointer" : "Enable Pointer"}
         </button>
         </main>
     )
