@@ -64,6 +64,26 @@ function App() {
     // cambia el estado con un operador ternario dentro de la función (activeColor)
   };
 
+  // temporizador para brillo del boton 
+
+  useEffect(
+    () => {
+      if (activeColor === null) return
+
+      // el temporizador apaga el boton (cambia el estado a null despues de 250 milisegundos)
+      const timer = setTimeout(
+        () => activeButton(null),
+        250
+      );
+      //cleanup
+      return () => {
+        clearTimeout(timer)
+      }
+
+    },
+    [activeColor]
+  );
+
   // useEffect(
   //   ()=> {
 

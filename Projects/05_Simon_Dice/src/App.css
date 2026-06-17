@@ -68,6 +68,18 @@
   background-color: #962424
 }
 
-.square.is-selected {
-  box-shadow: #eee;
+.yellow.is-selected {
+  box-shadow: 0 0 15px #fffb00, 0 0 30px #fffb00;
+}
+
+.blue.is-selected {
+  box-shadow: 0 0 15px #0022ff, 0 0 30px #0022ff;
+}
+
+.red.is-selected {
+  box-shadow: 0 0 15px #ff0800, 0 0 30px #ff0800;
+}
+
+.green.is-selected {
+  box-shadow: 0 0 15px #00ff11, 0 0 30px #00ff11;
 }
