@@ -22,7 +22,6 @@
   background: transparent;
   border: 2px solid #eee;
   color: #eee;
-  width: 100px;
   border-radius: 5px;
   transition: 0.2s;
   font-weight: bold;
@@ -34,10 +33,23 @@
   color: #222;
 }
 
+.board {
+  width: fit-content;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.board h1 {
+  color: #eee;
+  margin-bottom: 16px;
+}
+
+
 .board .game {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 100px);
   gap: 10px;
+  justify-content: center;
 }
 
 
@@ -82,4 +94,10 @@
 
 .green.is-selected {
   box-shadow: 0 0 15px #00ff11, 0 0 30px #00ff11;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+
 }

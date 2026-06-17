@@ -1,4 +1,5 @@
-import React, { useState, useEffect, JSX } from 'react'
+import React, { useState, useEffect } from 'react'
+import type {JSX} from 'react'
 import './App.css'
 import './index.css'
 
@@ -53,13 +54,18 @@ const getRandomIndices = (numberIndices: number) => {
 
 function App() {
 
-  const [turn, setTurn] = useState<turns>(TURNS.machine);
+  // ------------------ Estados --------------
+
+  const [turn, setTurn] = useState<turns | null>(null);
   const [secuency, setSecuency] = useState<colors[]>(setRandomSecuency(colors, getRandomIndices(3)));
-  const [round, setRound] = useState(1);
+  const [round, setRound] = useState(0);
   const [activeColor, setActiveColor] = useState<colors | null>(null)
 
+  // ----------- Color Buttons -------------
+
   // "encender" un boton 
-  const activeButton = (color: colors | null) => {
+  // funcion que se le pasa a la maquina para reproducir la secuencia y al jugador cuando hace click en un boton
+  const activateButton = (color: colors | null) => {
     setActiveColor(color ? color : null) 
     // cambia el estado con un operador ternario dentro de la función (activeColor)
   };
@@ -70,9 +76,9 @@ function App() {
     () => {
       if (activeColor === null) return
 
-      // el temporizador apaga el boton (cambia el estado a null despues de 250 milisegundos)
+      // el temporizador apaga el boton (cambia el estado activeColor a null despues de 250 milisegundos)
       const timer = setTimeout(
-        () => activeButton(null),
+        () => activateButton(null),
         250
       );
       //cleanup
@@ -84,35 +90,99 @@ function App() {
     [activeColor]
   );
 
-  // useEffect(
-  //   ()=> {
+  // ---------------- Comenzar juego -----------------
 
-  //     if (turn === TURNS.user) return
+  const startGame = () => {
+    setTurn(TURNS.machine)
+    setRound(1)
+  };
 
-  //     // Si no es el primer turno, agrega un elemento a la secuencia y la guarda.
-  //     if (round != 1) {
-  //       const newSecuency = [...secuency]
-  //       const randomColor = colors[Math.floor(Math.random() * colors.length)];
-  //       newSecuency.push(randomColor);
-  //       setSecuency(newSecuency);
-  //     }
+  // --------------- Reset Game ---------------
+
+  const resetGame = () => {
+    setTurn(null)
+    setRound(0)
+    setSecuency(setRandomSecuency(colors, getRandomIndices(3)))
+  }
+
+
+  // --------------- Turno maquina -------------------
+
+  const waitTime = 500 // miliseconds
+
+   // añadir color a la secuencia:
+
+  const addColorToSecuency = () => {
+
+        // Funcion para agregar un elemento a la secuencia y la guarda.
+        const newSecuency = [...secuency]
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        newSecuency.push(randomColor);
+        setSecuency(newSecuency);
+        return newSecuency;
+        
+  };
+
+  // activar los botones correspondientes segun la secuencia:
+
+  const displaySecuency = (secuencyToCheck: colors[]) => {
+
+    secuencyToCheck.forEach((color, index) => { // index en forEach indica la posición actual
+      setTimeout(() => {
+        activateButton(color);
+      }, (waitTime * index)); // se multiplica index por el tiempo de espera para no presionar los botones al mismo momento
+    
+    }
+    )
+  };
+
+
+  useEffect(
+    ()=> {
+
+      const delayTime = 1000;
+
+      if (turn === TURNS.user) return // si es el turno del usuario, no se ejecuta 
+      if (round === 0) return // si el juego no ha empezado, no se ejecuta
+
+      // despues de pasado un segundo, se agrega un color a la secuencia y se reproduce 
+      const timer = setTimeout(
+        () => {
+          // Si no es el primer turno, se agrega un color a la secuencia y se reproduce 
+          if (round != 1) {
+            const newSecuency = addColorToSecuency();
+            displaySecuency(newSecuency);
+          }
+          // Sino, solamente se reproduce la secuencia
+          else {
+            displaySecuency(secuency);
+          }
+        },
+        delayTime
       
-  //     // maneja el temporizador cuando turn = machine (cuando es el turno de la maquina) de cuando tiempo presionara el boton para reproducir la secuencia
-  //     // temporizador 
-  //     secuency.forEach(function(color) {
-  //     const timerId = setTimeout()
-  //     })
+      ); 
 
+      const timer2 = setTimeout(()=>{
+        setTurn(TURNS.user)
+      }, waitTime * secuency.length + delayTime + 100
+    )
 
-  //   },
-  //   [turn]
+      //cleanup
+      return () => {
+        clearTimeout(timer)
+        clearTimeout(timer2)
+      };
+
+    },
+    [turn, round]
   
-  // )
+  )
+
+  // ---------------- turno usuario -----------------
 
 
 
-
-
+  // ----------------- Botones ------------
 
   function displayBoard() {
 
@@ -122,7 +192,7 @@ function App() {
         key={color}
         color={color}
         isPressed={activeColor === color ? true : false}
-        buttonSelected={() => activeButton(color)}
+        buttonSelected={() => activateButton(color)}
         >
         </Square>)
     })
@@ -133,8 +203,14 @@ function App() {
     <main className="board">
       <h1>Simon Dice</h1>
 
-        <section className='game'>
+      <section className='game'>
         {displayBoard()}
+      </section>
+      <section>
+        <div className='buttons'>
+          <button onClick={startGame}>Comenzar Juego</button>
+          <button onClick={resetGame}>Reiniciar Juego</button>
+        </div>
       </section>
     </main>
     
