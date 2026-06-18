@@ -1,53 +1,17 @@
 import { useState, useEffect } from 'react'
-// import type {JSX} from 'react'
+import { TURNS, COLORS } from './types_&_enums.tsx'
+import {Square} from './components/Square.tsx'
+import type {colors, turns} from './types_&_enums.tsx'
+import { setRandomSecuency, getRandomIndices } from './utils.tsx'
+
 import './App.css'
 import './index.css'
 
 // Juego "Simon Dice"
-type colors = "yellow" | "blue" | "red" | "green"
-type turns = "machine" | "user"
-
-const TURNS = {
-  machine: "machine",
-  user: "user",
-} as const;
-
-const COLORS = {
-  yellow: "yellow",
-  blue: "blue", 
-  red: "red",
-  green: "green"
-} as const;
 
 const colors = Object.values(COLORS) as colors[]
 
 
-const Square = (
-  {isPressed, buttonSelected, color} : 
-  {isPressed?: boolean, buttonSelected: () => void, color: colors}) => {
-
-    const className = `square ${color} ${(isPressed ? "is-selected" : "")}`.trim();
-    const handleClick = () => {buttonSelected()}
-
-    return (
-      <div className={className} onClick={handleClick}></div>
-    )
-  };
-
-
-
-const setRandomSecuency  = (colorsArray: colors[], indices: number[]) => {
-    return indices.map(index => colorsArray[index]);
-    // funcion que recibe dos array: el de colores y el de numeros de indices random 
-    // la funcion dice: por cada numero dentro del array de indices, vas a transformarlo en el objeto que corresponde ese numero al indice en el array de colores y generas un nuevo array
-    // esto se hace porque el lintern NO admite utilizar funciones "impuras" (que son cambiantes como random) en una funcion 
-    // estps se tienen que pasar como parametro
-};
-
-const getRandomIndices = (numberIndices: number) => {
-  const indices = Array.from({length: numberIndices}, () => Math.floor(Math.random() * colors.length))
-  return indices
-}
 
 // -----------------------------------------
 
@@ -57,10 +21,11 @@ function App() {
   // ------------------ Estados --------------
 
   const [turn, setTurn] = useState<turns | null>(null);
-  const [secuency, setSecuency] = useState<colors[]>(setRandomSecuency(colors, getRandomIndices(3)));
+  const [secuency, setSecuency] = useState<colors[]>(setRandomSecuency(colors, getRandomIndices(colors, 3)));
   const [round, setRound] = useState(0);
   const [activeColor, setActiveColor] = useState<colors | null>(null)
   const [userIndex, setUserIndex] = useState(0)
+
 
 
 
@@ -105,7 +70,7 @@ function App() {
   const resetGame = () => {
     setTurn(null)
     setRound(0)
-    setSecuency(setRandomSecuency(colors, getRandomIndices(3)))
+    setSecuency(setRandomSecuency(colors, getRandomIndices(colors, 3)))
   }
 
 
@@ -185,7 +150,7 @@ function App() {
 
   const handleUserClick = (color: colors) => {
 
-    
+
     // activar el brillo del boton 
     activateButton(color); 
     const currentUserIndex = userIndex;
