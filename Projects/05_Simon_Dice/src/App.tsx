@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import type {JSX} from 'react'
+import { useState, useEffect } from 'react'
+// import type {JSX} from 'react'
 import './App.css'
 import './index.css'
 
@@ -24,7 +24,7 @@ const colors = Object.values(COLORS) as colors[]
 
 const Square = (
   {isPressed, buttonSelected, color} : 
-  {isPressed?: boolean, buttonSelected?: () => void, color: colors}) => {
+  {isPressed?: boolean, buttonSelected: () => void, color: colors}) => {
 
     const className = `square ${color} ${(isPressed ? "is-selected" : "")}`.trim();
     const handleClick = () => {buttonSelected()}
@@ -60,6 +60,9 @@ function App() {
   const [secuency, setSecuency] = useState<colors[]>(setRandomSecuency(colors, getRandomIndices(3)));
   const [round, setRound] = useState(0);
   const [activeColor, setActiveColor] = useState<colors | null>(null)
+  const [userIndex, setUserIndex] = useState(0)
+
+
 
   // ----------- Color Buttons -------------
 
@@ -180,6 +183,27 @@ function App() {
 
   // ---------------- turno usuario -----------------
 
+  const handleUserClick = (color: colors) => {
+
+    
+    // activar el brillo del boton 
+    activateButton(color); 
+    const currentUserIndex = userIndex;
+    // si el color que presiona el usuario es igual al color se la secuencia de la maquina en la posicion 0, 
+    // el jugador sigue adelante con el turno, y se suma +1 a 0 para que coindica con el indice de la secuencia 
+    if (color === secuency[currentUserIndex]) {
+      const nextIndex = currentUserIndex + 1; 
+      setUserIndex(nextIndex)
+      // bloque de victoria
+      if (nextIndex === secuency.length) { // aqui se indica que ya gano y completo toda le secuencia 
+        setRound(round + 1)
+        setUserIndex(0)
+        setTurn(TURNS.machine)
+        return
+      }
+    }
+    else {resetGame()}
+  }
 
 
   // ----------------- Botones ------------
@@ -192,7 +216,7 @@ function App() {
         key={color}
         color={color}
         isPressed={activeColor === color ? true : false}
-        buttonSelected={() => activateButton(color)}
+        buttonSelected={() => handleUserClick(color)}
         >
         </Square>)
     })
