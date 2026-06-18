@@ -11,8 +11,6 @@ import './index.css'
 
 const colors = Object.values(COLORS) as colors[]
 
-
-
 // -----------------------------------------
 
 
@@ -25,8 +23,8 @@ function App() {
   const [round, setRound] = useState(0);
   const [activeColor, setActiveColor] = useState<colors | null>(null)
   const [userIndex, setUserIndex] = useState(0)
-
-
+  const [itBegin, setItBegin] = useState(false)
+  const [countdown, setcountdown] = useState(3) // cuenta regresiva
 
 
   // ----------- Color Buttons -------------
@@ -61,9 +59,36 @@ function App() {
   // ---------------- Comenzar juego -----------------
 
   const startGame = () => {
-    setTurn(TURNS.machine)
-    setRound(1)
+    setItBegin(true)
   };
+
+  // efecto de cuenta regresiva en pantalla 
+
+  useEffect(() => {
+    if (!itBegin) return;
+
+    if (countdown === 0) {
+    setTimeout(() => {
+      setTurn(TURNS.machine);
+      setRound(1);
+      }, 0); // <--- Tiempo cero
+    return;
+    // por que setTimeout de 0 segundos no genera errores de cascading renders?
+    // JavaScript saca esa ejecución del flujo principal síncrono y la manda a la "cola de tareas" (Task Queue). React termina de procesar el renderizado actual del contador en 0, limpia el efecto, y en el milisegundo inmediatamente posterior, ejecuta los cambios de turno y ronda sin pisarse los talones.
+    }
+
+    const timer = setTimeout(() => {
+      setcountdown(countdown - 1);
+    },
+  1000)
+        //cleanup
+      return () => {
+        clearTimeout(timer)};
+  
+  }
+    , [itBegin, countdown])
+
+
 
   // --------------- Reset Game ---------------
 
@@ -150,24 +175,29 @@ function App() {
 
   const handleUserClick = (color: colors) => {
 
-
     // activar el brillo del boton 
     activateButton(color); 
+
+    if (!itBegin) return // si el juego no ha empezado, no se ejecuta 
+    if (turn === TURNS.machine) return // si es el turno de la maquina, no se ejecuta 
+
     const currentUserIndex = userIndex;
-    // si el color que presiona el usuario es igual al color se la secuencia de la maquina en la posicion 0, 
-    // el jugador sigue adelante con el turno, y se suma +1 a 0 para que coindica con el indice de la secuencia 
-    if (color === secuency[currentUserIndex]) {
-      const nextIndex = currentUserIndex + 1; 
-      setUserIndex(nextIndex)
-      // bloque de victoria
-      if (nextIndex === secuency.length) { // aqui se indica que ya gano y completo toda le secuencia 
-        setRound(round + 1)
-        setUserIndex(0)
-        setTurn(TURNS.machine)
-        return
-      }
+  // si el color que presiona el usuario es igual al color se la secuencia de la maquina en la posicion 0, 
+  // el jugador sigue adelante con el turno, y se suma +1 a 0 para que coindica con el indice de la secuencia 
+  if (color === secuency[currentUserIndex]) {
+    const nextIndex = currentUserIndex + 1; 
+    setUserIndex(nextIndex)
+    // bloque de victoria
+    if (nextIndex === secuency.length) { // aqui se indica que ya gano y completo toda le secuencia 
+      setRound(round + 1)
+      setUserIndex(0)
+      setTurn(TURNS.machine)
+      return
     }
-    else {resetGame()}
+  }
+  else {resetGame()}
+  
+
   }
 
 
@@ -201,6 +231,16 @@ function App() {
           <button onClick={resetGame}>Reiniciar Juego</button>
         </div>
       </section>
+      {itBegin && (
+        <section>
+        <div className='rounds'>
+          {`Ronda: ${round}`}
+        </div>
+        <div className='countdown'>
+          {`${countdown ? countdown : "GO!"}`}
+        </div>
+        </section>
+      )}
     </main>
     
   )
