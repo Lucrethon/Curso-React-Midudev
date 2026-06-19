@@ -25,6 +25,9 @@ function App() {
   const [userIndex, setUserIndex] = useState(0)
   const [itBegin, setItBegin] = useState(false)
   const [countdown, setcountdown] = useState(3) // cuenta regresiva
+  const [gameOver, setGameOver] = useState<null | boolean>(null)
+
+
 
 
   // ----------- Color Buttons -------------
@@ -60,6 +63,7 @@ function App() {
 
   const startGame = () => {
     setItBegin(true)
+    setGameOver(false)
   };
 
   // efecto de cuenta regresiva en pantalla 
@@ -93,10 +97,14 @@ function App() {
   // --------------- Reset Game ---------------
 
   const resetGame = () => {
+    setItBegin(false)
+    setGameOver(true)
+    setSecuency(setRandomSecuency(colors, getRandomIndices(colors, 3)))
     setTurn(null)
     setRound(0)
-    setSecuency(setRandomSecuency(colors, getRandomIndices(colors, 3)))
-  }
+
+
+  };
 
 
   // --------------- Turno maquina -------------------
@@ -200,6 +208,15 @@ function App() {
 
   }
 
+  // ---------- mostrar turno ----------
+
+  const showTurnMessage = () => {
+    if (!gameOver && itBegin && !turn) {
+      const message = turn === TURNS.user ? "Tu Turno" : "Turno de la Maquina"
+      return message
+    }
+  }
+
 
   // ----------------- Botones ------------
 
@@ -230,6 +247,9 @@ function App() {
           <button onClick={startGame}>Comenzar Juego</button>
           <button onClick={resetGame}>Reiniciar Juego</button>
         </div>
+        <div>
+          {showTurnMessage()}
+        </div>
       </section>
       {itBegin && (
         <section>
@@ -240,6 +260,11 @@ function App() {
           {`${countdown ? countdown : "GO!"}`}
         </div>
         </section>
+      )}
+      {gameOver === true && (
+        <div className='final-message'>
+          {`Ops! ¿Quieres volverlo a intentar?`}
+        </div>
       )}
     </main>
     
