@@ -212,7 +212,7 @@ function App() {
 
   const showTurnMessage = () => {
     if (!gameOver && itBegin && !turn) {
-      const message = turn === TURNS.user ? "Tu Turno" : "Turno de la Maquina"
+      const message = TURNS.user ? "Tu Turno" : "Turno de la Maquina"
       return message
     }
   }
