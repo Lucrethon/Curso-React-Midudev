@@ -52,52 +52,132 @@
   justify-content: center;
 }
 
-
 .square {
-  width: 100px;
-  height: 100px;
-  border: 2px solid #eee;
-  border-radius: 5px;
-  display: grid;
-  place-items: center;
+  aspect-ratio: 1 / 1;      /* Fuerza a que siempre sean cuadrados perfectos */
+  border-radius: 20px;      /* Bordes redondeados sutiles y modernos */
   cursor: pointer;
-  font-size: 48px;
+  opacity: 0.6;             /* Un poco opacos porque están "apagados" */
+  transition: all 0.15s ease-in-out; /* Animación suave para cuando se enciendan */
 }
 
-.square.yellow {
-  background-color: #dfbe28;
+/* Colores de los botones apagados */
+.square.red    { background-color: #ff4d4d; border: 4px solid #b30000; }
+.square.blue   { background-color: #3399ff; border: 4px solid #0066cc; }
+.square.green  { background-color: #2ecc71; border: 4px solid #219653; }
+.square.yellow { background-color: #f1c40f; border: 4px solid #d4ac0d; }
+
+/* El efecto cuando se encienden (clase .is-selected que ya programaste) */
+.square.is-selected {
+  opacity: 1;               /* Brillo total */
+  transform: scale(0.98);   /* Se encoge un milímetro, dando efecto de rebote */
 }
 
-.square.blue {
-  background-color: #243f96
-}
+/* Sombras de luz específicas para cada color cuando se enciende */
+.square.red.is-selected    { box-shadow: 0 0 30px #ff4d4d; }
+.square.blue.is-selected   { box-shadow: 0 0 30px #3399ff; }
+.square.green.is-selected  { box-shadow: 0 0 30px #2ecc71; }
+.square.yellow.is-selected { box-shadow: 0 0 30px #f1c40f; }
 
-.square.green {
-  background-color: #249635
-}
-
-.square.red {
-  background-color: #962424
-}
-
-.yellow.is-selected {
-  box-shadow: 0 0 15px #fffb00, 0 0 30px #fffb00;
-}
-
-.blue.is-selected {
-  box-shadow: 0 0 15px #0022ff, 0 0 30px #0022ff;
-}
-
-.red.is-selected {
-  box-shadow: 0 0 15px #ff0800, 0 0 30px #ff0800;
-}
-
-.green.is-selected {
-  box-shadow: 0 0 15px #00ff11, 0 0 30px #00ff11;
-}
-
-.buttons {
+.board {
   display: flex;
+  flex-direction: column;
+  align-items: center;    /* Centra todo horizontalmente */
   justify-content: center;
+  min-height: 100vh;
+  background-color: #1e1e24; /* Un fondo oscuro "gamer" para que resalten las luces */
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
+.game {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas iguales */
+  gap: 20px;                             /* Espacio entre los botones */
+  max-width: 400px;                      /* Tamaño máximo del tablero */
+  margin: 40px auto;                     /* Centra el tablero en la pantalla */
+}
+
+/* Estilo para tus botones de comenzar/reiniciar */
+.buttons button {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.buttons button:hover {
+  background-color: #2c3e50; /* Cambia de color al pasar el mouse */
+}
+
+/* El mensaje de error o los turnos */
+.final-message {
+  color: #ff4d4d;
+  font-weight: bold;
+  margin-top: 20px;
+  font-size: 18px;
+  animation: blink 1s infinite; /* Parpadeo de advertencia */
+}
+
+@keyframes blink {
+  50% { opacity: 0.5; }
+}
+
+* Contenedor de la ronda y la cuenta regresiva */
+.board section:last-of-type {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+/* Estilos para el texto de la Ronda */
+.rounds {
+  font-size: 24px;
+  font-weight: 600;
+  color: #a0a0a9; /* Un gris elegante */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos para el número de la Cuenta Regresiva (3, 2, 1, GO!) */
+.countdown {
+  font-size: 72px; /* ¡Bien grande! */
+  font-weight: 900;
+  color: #00ffcc; /* Un color cian brillante muy retro-futurista */
+  text-shadow: 0 0 20px rgba(0, 255, 204, 0.6); /* Efecto de brillo neón */
+  font-family: 'Courier New', Courier, monospace; /* Tipografía tipo marcador arcade */
+  transition: all 0.2s ease-in-out;
+  
+  /* Animación para que bombee o parpadee un poco cada segundo */
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* Modificador sutil si el texto cambia a "GO!" para que resalte en verde */
+.countdown:contains("GO!") {
+  color: #2ecc71;
+  text-shadow: 0 0 20px rgba(46, 204, 113, 0.8);
+}
+
+/* Animación de pulso para la cuenta atrás */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08); /* Se agranda un poquito a mitad de segundo */
+  }
+  100% {
+    transform: scale(1);
+  }
 }
