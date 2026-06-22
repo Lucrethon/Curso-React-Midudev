@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { TURNS, COLORS } from './types_&_enums.tsx'
 import {Square} from './components/Square.tsx'
+import {Button} from './components/Button.tsx'
 import type {colors, turns} from './types_&_enums.tsx'
 import { setRandomSecuency, getRandomIndices } from './utils.tsx'
 
@@ -26,6 +27,7 @@ function App() {
   const [itBegin, setItBegin] = useState(false)
   const [countdown, setcountdown] = useState(3) // cuenta regresiva
   const [gameOver, setGameOver] = useState<null | boolean>(null)
+  const [message, setMessage] = useState("")
 
 
 
@@ -62,8 +64,11 @@ function App() {
   // ---------------- Comenzar juego -----------------
 
   const startGame = () => {
-    setItBegin(true)
-    setGameOver(false)
+  setSecuency(setRandomSecuency(colors, getRandomIndices(colors, 3))); // Secuencia fresca
+  setcountdown(3); // Cronómetro listo
+  setUserIndex(0); // Reiniciamos clicks
+  setItBegin(true); // ¡Arrancamos!
+  setGameOver(false);
   };
 
   // efecto de cuenta regresiva en pantalla 
@@ -97,13 +102,10 @@ function App() {
   // --------------- Reset Game ---------------
 
   const resetGame = () => {
-    setItBegin(false)
-    setGameOver(true)
-    setSecuency(setRandomSecuency(colors, getRandomIndices(colors, 3)))
-    setTurn(null)
-    setRound(0)
-
-
+  setItBegin(false);
+  setGameOver(true);
+  setTurn(null);
+  setRound(0);
   };
 
 
@@ -210,14 +212,47 @@ function App() {
 
   // ---------- mostrar turno ----------
 
-  const showTurnMessage = () => {
-    if (!gameOver && itBegin && !turn) {
-      const message = TURNS.user ? "Tu Turno" : "Turno de la Maquina"
-      return message
+  useEffect(
+    ()=> {
+      if (round === 0) return
+      const timer = setTimeout(
+        ()=> {
+          if (turn === TURNS.user) {
+            setMessage("Tu turno!")
+          }
+          else {
+            setMessage("")
+          }
+        }, 200
+      )
+
+      // cleanout
+      return () => {
+        clearTimeout(timer)
+      };
+
+    }, [turn]
+  )
+
+  // ----------- Button Message ----------------
+
+  const buttonMessage = () => {
+    const mess = gameOver ? "Reiniciar Juego" : "Comenzar Juego"
+    return mess
+  };
+
+
+  // ------------------ Countdown Display ----------------
+
+      const displayCountdown = () => {
+        if (round > 0) return
+        else {
+          let message = `${countdown}`
+          if (countdown === 0)
+            message = "GO!"
+          return message
+        }
     }
-  }
-
-
   // ----------------- Botones ------------
 
   function displayBoard() {
@@ -236,37 +271,41 @@ function App() {
 
 
   return (
-    <main className="board">
-      <h1>Simon Dice</h1>
+<main className="board">
+    <h1>Simon Dice</h1>
 
-      <section className='game'>
-        {displayBoard()}
-      </section>
-      <section>
-        <div className='buttons'>
-          <button onClick={startGame}>Comenzar Juego</button>
-          <button onClick={resetGame}>Reiniciar Juego</button>
+    <section className='game'>
+      {displayBoard()}
+    </section>
+    {!itBegin && (
+      <Button func={startGame}>
+        {buttonMessage()}
+      </Button>
+    )}
+    {/* Sección de información de la partida (Solo aparece si el juego inició) */}
+    {itBegin && (
+      <section className="game-info">
+        <div className="turns">
+          {message}
         </div>
-        <div>
-          {showTurnMessage()}
-        </div>
-      </section>
-      {itBegin && (
-        <section>
         <div className='rounds'>
-          {`Ronda: ${round}`}
+          {`RONDA: ${round}`}
         </div>
         <div className='countdown'>
-          {`${countdown ? countdown : "GO!"}`}
+          {displayCountdown()}
         </div>
-        </section>
-      )}
-      {gameOver === true && (
+      </section>
+    )}
+
+    {gameOver === true && (
+      <section>
         <div className='final-message'>
           {`Ops! ¿Quieres volverlo a intentar?`}
         </div>
-      )}
-    </main>
+      </section>
+
+    )}
+  </main>
     
   )
 }
