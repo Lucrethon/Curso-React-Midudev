@@ -181,3 +181,22 @@
     transform: scale(1);
   }
 }
+
+/* Contenedor de información de juego */
+.game-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;          /* <- Esto controla la separación vertical exacta entre el turno y la ronda */
+  margin-top: 30px;   /* Separa toda esta sección de los botones de arriba */
+}
+
+/* Estilo para que el texto de "!Tu turno!" tenga presencia */
+.turns {
+  font-size: 20px;
+  font-weight: bold;
+  color: #00ffcc;     /* Mismo cian retro que el contador para mantener armonía */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  min-height: 28px;   /* Evita que el layout "salte" cuando el texto aparece/desaparece */
+}
