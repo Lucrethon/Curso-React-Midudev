@@ -22,7 +22,7 @@ function App() {
   const [turn, setTurn] = useState<turns | null>(null);
   const [secuency, setSecuency] = useState<colors[]>(setRandomSecuency(colors, getRandomIndices(colors, 3)));
   const [round, setRound] = useState(0);
-  const [activeColor, setActiveColor] = useState<colors | null>(null)
+  const [activeColor, setActiveColor] = useState<colors | null>(null) // indica el color del boton activo
   const [userIndex, setUserIndex] = useState(0)
   const [itBegin, setItBegin] = useState(false)
   const [countdown, setcountdown] = useState(3) // cuenta regresiva
@@ -41,7 +41,7 @@ function App() {
     // cambia el estado con un operador ternario dentro de la función (activeColor)
   };
 
-  // temporizador para brillo del boton 
+  // -------------- Efecto: brillo de los boton (temporizador) -----------------
 
   useEffect(
     () => {
@@ -64,14 +64,14 @@ function App() {
   // ---------------- Comenzar juego -----------------
 
   const startGame = () => {
-  setSecuency(setRandomSecuency(colors, getRandomIndices(colors, 3))); // Secuencia fresca
-  setcountdown(3); // Cronómetro listo
-  setUserIndex(0); // Reiniciamos clicks
-  setItBegin(true); // ¡Arrancamos!
+  setSecuency(setRandomSecuency(colors, getRandomIndices(colors, 3))); // crear nueva secuencia 
+  setcountdown(3); // reiniciar cronometro de cuenta atras
+  setUserIndex(0); // reiniciar clicks
+  setItBegin(true); // arrancar el juego
   setGameOver(false);
   };
 
-  // efecto de cuenta regresiva en pantalla 
+  // ---------- Efecto: cuenta regresiva en pantalla ----------
 
   useEffect(() => {
     if (!itBegin) return;
@@ -139,6 +139,7 @@ function App() {
     )
   };
 
+  // ---------------- Efecto: reproducir secuencia y agregar colores en cada turno a la secuencia -----------
 
   useEffect(
     ()=> {
@@ -185,13 +186,14 @@ function App() {
 
   const handleUserClick = (color: colors) => {
 
-    // activar el brillo del boton 
+    // activar el brillo del boton que el usuario presione 
     activateButton(color); 
 
     if (!itBegin) return // si el juego no ha empezado, no se ejecuta 
     if (turn === TURNS.machine) return // si es el turno de la maquina, no se ejecuta 
 
     const currentUserIndex = userIndex;
+    
   // si el color que presiona el usuario es igual al color se la secuencia de la maquina en la posicion 0, 
   // el jugador sigue adelante con el turno, y se suma +1 a 0 para que coindica con el indice de la secuencia 
   if (color === secuency[currentUserIndex]) {
@@ -206,11 +208,10 @@ function App() {
     }
   }
   else {resetGame()}
-  
 
   }
 
-  // ---------- mostrar turno ----------
+  // ---------- Efecto: mostrar turno del usuario en pantalla ----------
 
   useEffect(
     ()=> {
