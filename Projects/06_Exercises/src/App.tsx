@@ -62,24 +62,76 @@ const Buttons = (indexArray: number[], handleClick: (value: number)=> void, acti
 };
 
 
+// Ejercicio 3: El Gestor de Tareas Inmutable (React + .map + .filter con índices)
+// En React, nunca debemos modificar un array original (mutación), sino crear copias. Eliminar un elemento de un array basándonos únicamente en su índice numérico es una de las fallas más comunes al aprender.
+
+// El Reto:
+// 1. Crea un pequeño componente <ListaTareas />.
+// 2. Inicia con un estado: const [tareas, setTareas] = useState(["Estudiar React", "Aprender Node", "Practicar CSS"]).
+// 3. Renderiza la lista usando .map(). En cada elemento, incluye un botón que diga "Eliminar".
+// 4. Crea la función eliminarTarea(indexTarget).
+
+// La trampa: Debes actualizar el estado usando el método .filter(). El filtro debe evaluar los índices para dejar pasar a todas las tareas excepto a la que coincida con el indexTarget que clickeaste.
+
+const ListaTareas = (
+  listaTareas: string[], 
+  eliminarTarea: (index:number)=> void) => 
+    {
+  return listaTareas.map(
+    (value: string, index: number) => {
+      return (
+        <li className='tarea' key={index+1}>{
+          value}
+          <button 
+          onClick={() => eliminarTarea(index)}>
+            Eliminar Tarea
+          </button>
+        </li>
+      )
+    }
+  )
+
+}
+
 
 function App() {
 
+  // estado ejercicio 2
   const [activePage, setActivePage] = useState<number>(0)
+  // estado ejercicio 3
+  const [tareas, setTareas] = useState([
+    "Comprar el pan",
+    "Limpiar la cocina",
+    "Cocinar almuerzo", 
+  ])
 
   const handleUserClick = (index: number) => {
     setActivePage(index)
   }; 
 
+  const eliminarTarea = (indexTarget: number) => {
+    const lista = tareas;
+    const listaFiltrada = lista.filter((_, currentIndex) => currentIndex !== indexTarget);
+    setTareas(listaFiltrada);
+  }
+
   const indexes = indexArray(5); 
   
   return (
+  <>
     <div className="App">
       <h1>Ejercicios de Arrays</h1>
       <div className="buttons-container">
         {Buttons(indexes, handleUserClick, activePage)}
       </div>
+      <div className="lista-tareas">
+        <h1>Ejercicio de lista de tareas</h1>
+        <ul>
+          {ListaTareas(tareas, eliminarTarea)}
+        </ul>
+      </div>
     </div>
+  </>
   )
 }
 
