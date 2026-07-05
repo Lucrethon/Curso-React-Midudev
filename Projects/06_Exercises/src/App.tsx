@@ -1,4 +1,4 @@
-import { use, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 
 // Ejercicios para repasar metodos de Arrays con TS y React
