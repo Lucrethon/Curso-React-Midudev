@@ -43,3 +43,24 @@ img {
     object-fit: cover;
     text-align: center;
 }
+
+button {
+  padding: 8px 12px;
+  background: transparent;
+  border: 2px solid #eee;
+  color: #eee;
+  border-radius: 5px;
+  transition: 0.2s;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #eee;
+  color: #262525;
+}
+
+button.active {
+  background: #eeeeee45;
+  color: #262525;
+}

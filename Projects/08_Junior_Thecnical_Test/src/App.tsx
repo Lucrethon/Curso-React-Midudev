@@ -29,39 +29,39 @@ const [imageUrlLoading, setImageUrlLoading] = useState<boolean>(true)
 
 // obtener la el dato curioso cada vez que se renderice la pagina
 // CON async - await
-useEffect(
-    ()=> {
-    const getFact = async () => {
-    try {
-        // con async - await
-        const res = await fetch(catEndpointRandomFact);
-        const data = await res.json();
-        const fact = data.fact as string
-        setFact(fact)
-        
-        // SIN async - await seria asi: 
 
-        // fetch(catEndpointRandomFact)
-        // .then(res => res.json())
-        // .then(data => setFact(data.fact))
+const getFact = async () => {
+try {
+    // con async - await
+    const res = await fetch(catEndpointRandomFact);
+    const data = await res.json();
+    const fact = data.fact as string
+    setFact(fact)
+    
+    // SIN async - await seria asi: 
 
-    } catch(err) {
-        
-        if (err instanceof Error) {
-            setFactError(err.message)
-        }
-        else if (err instanceof TypeError) {
-            setFactError(err.message)
-        }
-        else {
-            (setFactError(`${String(err)}`))
-        }
-    } finally {
-        setFactLoading(false)
-    };
+    // fetch(catEndpointRandomFact)
+    // .then(res => res.json())
+    // .then(data => setFact(data.fact))
+
+} catch(err) {
+    
+    if (err instanceof Error) {
+        setFactError(err.message)
     }
-    getFact();
-    }, []
+    else if (err instanceof TypeError) {
+        setFactError(err.message)
+    }
+    else {
+        (setFactError(`${String(err)}`))
+    }
+} finally {
+    setFactLoading(false)
+};
+};
+
+useEffect(
+    ()=> {getFact()}, []
 );
 
     // las dependencias vacias hacen que se ejecute una sola vez al montar el componente
@@ -75,32 +75,35 @@ useEffect(
 
 // obtener la imagen cada vez que cambie el hecho
 // con solamente fetch 
+
+const getImageUrl = () => {
+    // recuperar la primera palabra del fact 
+    const firstWord = fact.split(" ")[0]
+    // recuperar las tres primeras palabras del fact
+    // const threeWords = fact.split(" ").slice(0, 3).join(" ")
+
+    fetch(`https://cataas.com/cat/says/${firstWord}?json=true`)
+    .then(res => {
+        if (!res.ok) throw new Error("No se ha podido cargar la imagen")
+        return res.json()
+    })
+    .then(picture => setImageUrl(picture.url)
+    )
+    .catch((err) => setImageUrlError(err))
+    .finally(() => setImageUrlLoading(false))
+}
+
 useEffect(
     () => {
         if (!fact) return // si no hay un hecho, no se ejecuta el efecto
-
-        // recuperar la primera palabra del fact 
-        const firstWord = fact.split(" ")[0]
-        // recuperar las tres primeras palabras del fact
-        // const threeWords = fact.split(" ").slice(0, 3).join(" ")
-
-        fetch(`https://cataas.com/cat/says/${firstWord}?json=true`)
-        .then(res => {
-            if (!res.ok) throw new Error("No se ha podido cargar la imagen")
-            return res.json()
-        })
-        .then(picture => setImageUrl(picture.url)
-        )
-        .catch((err) => setImageUrlError(err))
-        .finally(() => setImageUrlLoading(false))
-
+        getImageUrl()
     },[fact])
     // NO se puede entregar la imagen hasta no tener el hecho, por eso se coloca como dependencia el fact 
 
 return (
     <>
         <main>
-            <h1>App de Gatos</h1>
+            <h1>Cat App</h1>
             <section>
                 {factLoading && <p>Cargando fact...</p>}
                 {factError && <p>Ha ocurrido un error: {factError}</p>}
@@ -109,8 +112,8 @@ return (
                 {imageUrlLoading && <p>Cargando imagen...</p>}
                 {imageUrlError && <p>Ha ocurrido un error: {imageUrlError}</p>}
                 {imageUrl && <img src={imageUrl} alt={`Cat image extracted using the first word from ${fact}`}/>}
-                
             </section>
+            <button onClick={getFact}>Get Cat Fact</button>
         </main>
     </>
     )
