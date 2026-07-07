@@ -97,26 +97,19 @@ useEffect(
     },[fact])
     // NO se puede entregar la imagen hasta no tener el hecho, por eso se coloca como dependencia el fact 
 
-    const factMessage = () => {
-        if (factError) return <p>{`Ha ocurrido un error. ${factError}`}</p>
-        else if (factLoading) return <p>{`Cargando`}</p>
-        else return fact
-    }
-
-    const image = () => {
-        if (imageUrlError) return <p>{`Ha ocurrido un error. ${imageUrlError}`}</p>
-        else if (imageUrlLoading) return <p>{`Cargando imagen...`}</p>
-        else return <img src={imageUrl} alt={`Cat image extracted using the first word from ${fact}`}/>
-    }
-
-
 return (
     <>
         <main>
             <h1>App de Gatos (prueba tecnica)</h1>
             <section>
-                {factMessage()}
-                {image()}
+                {factLoading && <p>Cargando fact...</p>}
+                {factError && <p>Ha ocurrido un error: {factError}</p>}
+                {fact && <p>{fact}</p>}
+
+                {imageUrlLoading && <p>Cargando imagen...</p>}
+                {imageUrlError && <p>Ha ocurrido un error: {imageUrlError}</p>}
+                {imageUrl && <img src={imageUrl} alt={`Cat image extracted using the first word from ${fact}`}/>}
+                
             </section>
         </main>
     </>
