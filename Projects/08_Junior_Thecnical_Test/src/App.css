@@ -23,12 +23,23 @@ section {
     flex-direction: row; 
     justify-content: center;
     align-items: center;
-    max-width: 400px;
-    max-height: 500px;
+    width: 100%;
     gap: 2rem; 
+    border: 3px solid rgb(252, 252, 252);;
+    border-radius: 5px;
+    padding: 2rem;
 }
 
+
+section p {
+    flex: 1;
+}
+
+
 img {
-    max-width: 80%;
-    max-height: 80%;
+    flex: 1;
+    max-width: 300px;
+    max-height: 400px;
+    object-fit: cover;
+    text-align: center;
 }

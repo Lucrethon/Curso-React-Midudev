@@ -100,7 +100,7 @@ useEffect(
 return (
     <>
         <main>
-            <h1>App de Gatos (prueba tecnica)</h1>
+            <h1>App de Gatos</h1>
             <section>
                 {factLoading && <p>Cargando fact...</p>}
                 {factError && <p>Ha ocurrido un error: {factError}</p>}
