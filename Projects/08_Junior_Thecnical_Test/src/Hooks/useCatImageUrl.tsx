@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 
 // const catEndpointImageUrl = `https://cataas.com/cat/says/${firstWord}?json=true`
 
-export const useCatImageUrl = (fact: string) => {
+export const useCatImageUrl = ({ fact } : {fact: string}) => {
 
     const [imageUrl, setImageUrl] = useState<string>("")
     const [imageUrlError, setImageUrlError] = useState<string | null>(null)

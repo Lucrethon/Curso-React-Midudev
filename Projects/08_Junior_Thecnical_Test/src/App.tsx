@@ -17,7 +17,7 @@ import { useCatImageUrl } from './Hooks/useCatImageUrl.tsx'
 const CatComponent = () => {
 
     const { fact, factError, factLoading, getFact } = useCatfact()
-    const { imageUrl, imageUrlError, imageUrlLoading } = useCatImageUrl(fact)
+    const { imageUrl, imageUrlError, imageUrlLoading } = useCatImageUrl({ fact })
 
     return (
         <>
