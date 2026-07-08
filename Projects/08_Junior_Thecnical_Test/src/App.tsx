@@ -1,5 +1,6 @@
-import {useEffect, useState} from 'react'
 import './App.css'
+import { useCatfact } from './Hooks/useCatFact.tsx'
+import { useCatImageUrl } from './Hooks/useCatImageUrl.tsx'
 
 // # Prueba técnica para Juniors y Trainees de React en Live Coding
 
@@ -12,112 +13,30 @@ import './App.css'
 // - Facts Random: https://catfact.ninja/fact 
 // - Imagen random: https://cataas.com/cat/says/hello    
 
-const catEndpointRandomFact = "https://catfact.ninja/fact "
-// const catEndpointImageUrl = `https://cataas.com/cat/says/${firstWord}?json=true`
-
 
 const CatComponent = () => {
 
-const [fact, setFact] = useState<string>("")
-const [imageUrl, setImageUrl] = useState<string>("")
-// fact errors & loading
-const [factError, setFactError] = useState<string | null>(null)
-const [factLoading, setFactLoading] = useState<boolean>(true)
-// imageUrl errors & loading
-const [imageUrlError, setImageUrlError] = useState<string | null>(null)
-const [imageUrlLoading, setImageUrlLoading] = useState<boolean>(true)
+    const { fact, factError, factLoading, getFact } = useCatfact()
+    const { imageUrl, imageUrlError, imageUrlLoading } = useCatImageUrl(fact)
 
-// obtener la el dato curioso cada vez que se renderice la pagina
-// CON async - await
+    return (
+        <>
+            <main>
+                <h1>Cat App</h1>
+                <section>
+                    {factLoading && <p>Cargando fact...</p>}
+                    {factError && <p>Ha ocurrido un error: {factError}</p>}
+                    {fact && <p>{fact}</p>}
 
-const getFact = async () => {
-try {
-    // con async - await
-    const res = await fetch(catEndpointRandomFact);
-    const data = await res.json();
-    const fact = data.fact as string
-    setFact(fact)
-    
-    // SIN async - await seria asi: 
-
-    // fetch(catEndpointRandomFact)
-    // .then(res => res.json())
-    // .then(data => setFact(data.fact))
-
-} catch(err) {
-    
-    if (err instanceof Error) {
-        setFactError(err.message)
-    }
-    else if (err instanceof TypeError) {
-        setFactError(err.message)
-    }
-    else {
-        (setFactError(`${String(err)}`))
-    }
-} finally {
-    setFactLoading(false)
-};
-};
-
-useEffect(
-    ()=> {getFact()}, []
-);
-
-    // las dependencias vacias hacen que se ejecute una sola vez al montar el componente
-
-    // si el efecto es un condicional del useEffect, ahi se tiene que colocar fact en las dependencias
-    // si se pone fact, se ejecutaria cada vez que fact cambie (osea, cada vez que se haga un setFact), y eso generaria un loop infinito
-
-    // si no se coloca ningun array, se genera un loop infinito, porque cada vez que se ejecuta el useEffect, se cambia el estado de fact, y eso hace que se vuelva a ejecutar el useEffect
-    // esto puede servir para tracking cambios de estado, pero en este caso no es necesario
-
-
-// obtener la imagen cada vez que cambie el hecho
-// con solamente fetch 
-
-const getImageUrl = () => {
-    // recuperar la primera palabra del fact 
-    const firstWord = fact.split(" ")[0]
-    // recuperar las tres primeras palabras del fact
-    // const threeWords = fact.split(" ").slice(0, 3).join(" ")
-
-    fetch(`https://cataas.com/cat/says/${firstWord}?json=true`)
-    .then(res => {
-        if (!res.ok) throw new Error("No se ha podido cargar la imagen")
-        return res.json()
-    })
-    .then(picture => setImageUrl(picture.url)
-    )
-    .catch((err) => setImageUrlError(err))
-    .finally(() => setImageUrlLoading(false))
-}
-
-useEffect(
-    () => {
-        if (!fact) return // si no hay un hecho, no se ejecuta el efecto
-        getImageUrl()
-    },[fact])
-    // NO se puede entregar la imagen hasta no tener el hecho, por eso se coloca como dependencia el fact 
-
-return (
-    <>
-        <main>
-            <h1>Cat App</h1>
-            <section>
-                {factLoading && <p>Cargando fact...</p>}
-                {factError && <p>Ha ocurrido un error: {factError}</p>}
-                {fact && <p>{fact}</p>}
-
-                {imageUrlLoading && <p>Cargando imagen...</p>}
-                {imageUrlError && <p>Ha ocurrido un error: {imageUrlError}</p>}
-                {imageUrl && <img src={imageUrl} alt={`Cat image extracted using the first word from ${fact}`}/>}
-            </section>
-            <button onClick={getFact}>Get Cat Fact</button>
-        </main>
-    </>
-    )
-}; 
+                    {imageUrlLoading && <p>Cargando imagen...</p>}
+                    {imageUrlError && <p>Ha ocurrido un error: {imageUrlError}</p>}
+                    {imageUrl && <img src={imageUrl} alt={`Cat image extracted using the first word from ${fact}`}/>}
+                </section>
+                <button onClick={getFact}>Get Cat Fact</button>
+            </main>
+        </>
+        )
+    }; 
 
 const App = () => {
     return (
