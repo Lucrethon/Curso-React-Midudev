@@ -8,6 +8,7 @@ import { setRandomSecuency, getRandomIndices } from './utils.tsx'
 // Hooks 
 import { useActiveButton} from './Hooks/useActiveButton.tsx'
 import { useTurnMessage } from './Hooks/useTurnMessage.tsx'
+import { useCountdown } from './Hooks/useCountdown.tsx'
 
 import './App.css'
 import './index.css'
@@ -34,8 +35,6 @@ function App() {
 
   const [itBegin, setItBegin] = useState(false)
 
-  const [countdown, setcountdown] = useState(3) // cuenta regresiva
-
   const [gameOver, setGameOver] = useState<null | boolean>(null)
 
     // hooks 
@@ -47,39 +46,21 @@ function App() {
 
   const startGame = () => {
   setSecuency(setRandomSecuency(colors, getRandomIndices(colors, 3))); // crear nueva secuencia 
-  setcountdown(3); // reiniciar cronometro de cuenta atras
+  resetCountdown(); // reiniciar cronometro de cuenta atras
   setUserIndex(0); // reiniciar clicks
   setItBegin(true); // arrancar el juego
   setGameOver(false);
   };
 
-  // ---------- Efecto: cuenta regresiva en pantalla ----------
+  // --------- Countdown Complete Handler ---------
 
-  useEffect(() => {
-    if (!itBegin) return;
+  const handleCountdownComplete = () => {
+  // Aquí usas tus setters con total libertad
+  setTurn(TURNS.machine);
+  setRound(1);
+};
 
-    if (countdown === 0) {
-    setTimeout(() => {
-      setTurn(TURNS.machine);
-      setRound(1);
-      }, 0); // <--- Tiempo cero
-    return;
-    // por que setTimeout de 0 segundos no genera errores de cascading renders?
-    // JavaScript saca esa ejecución del flujo principal síncrono y la manda a la "cola de tareas" (Task Queue). React termina de procesar el renderizado actual del contador en 0, limpia el efecto, y en el milisegundo inmediatamente posterior, ejecuta los cambios de turno y ronda sin pisarse los talones.
-    }
-
-    const timer = setTimeout(() => {
-      setcountdown(countdown - 1);
-    },
-  1000)
-        //cleanup
-      return () => {
-        clearTimeout(timer)};
-  
-  }
-    , [itBegin, countdown])
-
-
+  const { countdown, resetCountdown } = useCountdown({itBegin, handleCountdownComplete})
 
   // --------------- Reset Game ---------------
 
