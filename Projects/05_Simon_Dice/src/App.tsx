@@ -7,6 +7,7 @@ import { setRandomSecuency, getRandomIndices } from './utils.tsx'
 
 // Hooks 
 import { useActiveButton} from './Hooks/useActiveButton.tsx'
+import { useTurnMessage } from './Hooks/useTurnMessage.tsx'
 
 import './App.css'
 import './index.css'
@@ -20,7 +21,6 @@ const colors = Object.values(COLORS) as colors[]
 
 function App() {
 
-  const { activeColor, activateButton } = useActiveButton()
 
   // ------------------ Estados --------------
 
@@ -38,9 +38,10 @@ function App() {
 
   const [gameOver, setGameOver] = useState<null | boolean>(null)
 
-  const [message, setMessage] = useState("")
+    // hooks 
 
-
+  const { activeColor, activateButton } = useActiveButton()
+  const { turnMessage } = useTurnMessage({turn, round})
 
   // ---------------- Comenzar juego -----------------
 
@@ -192,30 +193,6 @@ function App() {
 
   }
 
-  // ---------- Efecto: mostrar turno del usuario en pantalla ----------
-
-  useEffect(
-    ()=> {
-      if (round === 0) return
-      const timer = setTimeout(
-        ()=> {
-          if (turn === TURNS.user) {
-            setMessage("Tu turno!")
-          }
-          else {
-            setMessage("")
-          }
-        }, 200
-      )
-
-      // cleanout
-      return () => {
-        clearTimeout(timer)
-      };
-
-    }, [turn]
-  )
-
   // ----------- Button Message ----------------
 
   const buttonMessage = () => {
@@ -268,7 +245,7 @@ function App() {
     {itBegin && (
       <section className="game-info">
         <div className="turns">
-          {message}
+          {turnMessage}
         </div>
         <div className='rounds'>
           {`RONDA: ${round}`}
