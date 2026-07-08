@@ -8,7 +8,7 @@ export const useCatfact = () => {
 
 // obtener la el dato curioso cada vez que se renderice la pagina
 
-    const getFact = async () => {
+    const refrechRandomFact = async () => {
     try {
         // con async - await
         const res = await fetch(catEndpointRandomFact);
@@ -39,10 +39,10 @@ export const useCatfact = () => {
     };
 
     useEffect(
-        ()=> {getFact()}, []
+        ()=> {refrechRandomFact()}, []
     );
     // Devolvemos un objeto con los TRES estados ya procesados
-    return { fact, factError, factLoading, getFact };
+    return { fact, factError, factLoading, refrechRandomFact };
 
 }
 

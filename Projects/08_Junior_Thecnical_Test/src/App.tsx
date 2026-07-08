@@ -16,7 +16,7 @@ import { useCatImageUrl } from './Hooks/useCatImageUrl.tsx'
 
 const CatComponent = () => {
 
-    const { fact, factError, factLoading, getFact } = useCatfact()
+    const { fact, factError, factLoading, refrechRandomFact } = useCatfact()
     const { imageUrl, imageUrlError, imageUrlLoading } = useCatImageUrl({ fact })
 
     return (
@@ -32,7 +32,7 @@ const CatComponent = () => {
                     {imageUrlError && <p>Ha ocurrido un error: {imageUrlError}</p>}
                     {imageUrl && <img src={imageUrl} alt={`Cat image extracted using the first word from ${fact}`}/>}
                 </section>
-                <button onClick={getFact}>Get Cat Fact</button>
+                <button onClick={refrechRandomFact}>Get Cat Fact</button>
             </main>
         </>
         )
