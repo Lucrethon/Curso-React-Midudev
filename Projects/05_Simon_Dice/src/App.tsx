@@ -5,6 +5,9 @@ import {Button} from './components/Button.tsx'
 import type {colors, turns} from './types_&_enums.tsx'
 import { setRandomSecuency, getRandomIndices } from './utils.tsx'
 
+// Hooks 
+import { useActiveButton} from './Hooks/useActiveButton.tsx'
+
 import './App.css'
 import './index.css'
 
@@ -17,49 +20,27 @@ const colors = Object.values(COLORS) as colors[]
 
 function App() {
 
+  const { activeColor, activateButton } = useActiveButton()
+
   // ------------------ Estados --------------
 
   const [turn, setTurn] = useState<turns | null>(null);
+
   const [secuency, setSecuency] = useState<colors[]>(setRandomSecuency(colors, getRandomIndices(colors, 3)));
+
   const [round, setRound] = useState(0);
-  const [activeColor, setActiveColor] = useState<colors | null>(null) // indica el color del boton activo
+
   const [userIndex, setUserIndex] = useState(0)
+
   const [itBegin, setItBegin] = useState(false)
+
   const [countdown, setcountdown] = useState(3) // cuenta regresiva
+
   const [gameOver, setGameOver] = useState<null | boolean>(null)
+
   const [message, setMessage] = useState("")
 
 
-
-
-  // ----------- Color Buttons -------------
-
-  // "encender" un boton 
-  // funcion que se le pasa a la maquina para reproducir la secuencia y al jugador cuando hace click en un boton
-  const activateButton = (color: colors | null) => {
-    setActiveColor(color ? color : null) 
-    // cambia el estado con un operador ternario dentro de la función (activeColor)
-  };
-
-  // -------------- Efecto: brillo de los boton (temporizador) -----------------
-
-  useEffect(
-    () => {
-      if (activeColor === null) return
-
-      // el temporizador apaga el boton (cambia el estado activeColor a null despues de 250 milisegundos)
-      const timer = setTimeout(
-        () => activateButton(null),
-        250
-      );
-      //cleanup
-      return () => {
-        clearTimeout(timer)
-      }
-
-    },
-    [activeColor]
-  );
 
   // ---------------- Comenzar juego -----------------
 
