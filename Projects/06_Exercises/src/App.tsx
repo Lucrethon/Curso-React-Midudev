@@ -1,4 +1,4 @@
-import { useState } from 'react'
+
 import './App.css'
 
 // Ejercicios para repasar metodos de Arrays con TS y React
@@ -41,7 +41,8 @@ import { SelectorFrutas } from './Components/SelectorFrutas'
 // ejercicio 5 
 import { CarruselEmoji } from './Components/CarruselEmojis'
 
-
+// Ejercicio 6
+import { Sprite } from './Components/Sprite'
 
 
 function App() {
@@ -59,19 +60,27 @@ function App() {
       <div className="buttons-container">
         {Buttons(indexes, handleUserClick, activePage)}
       </div>
+
       <div className="lista-tareas">
         <h1>Ejercicio 3: Lista de tareas</h1>
         <ul>
           {ListaTareas(tareas, eliminarTarea)}
         </ul>
       </div>
+      
       <div>
         <h1>Ejercicio 4: Seleccionador Frutas</h1>
         <SelectorFrutas />
       </div>
+
       <div>
         <h1>Ejercicio 5: Carrusel de Emojis</h1>
         <CarruselEmoji />
+      </div>
+
+      <div>
+        <h1>Ejercicio 6: Srpite</h1>
+        <Sprite />
       </div>
     </div>
   </>

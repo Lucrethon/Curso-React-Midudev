@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from 'react'
+import { useState, useEffect } from 'react'
 
 // ejercicio 6: El Simulador de Carga de Assets
 // Vamos a simular la carga de un sprite de un caballero usando Aseprite. No usarás fetch. Tu trabajo es crear una promesa manual con setTimeout y gestionarla en un componente.
@@ -26,17 +26,17 @@ export const useSprite = () => {
         const cargaSprite = new Promise((resolve, reject) => {
             setTimeout(() => {
                 if (!mustFail) {
-                    const imgSource = './../assets/Crawlid_x6.gif'
+                    const imgSource = '/Crawlid_x6.gif'
                     resolve(imgSource)
                 } else {
-                    reject(null)
+                    reject("Error al cargar la imagen")
                 }
             }, 3000)
         })
         return cargaSprite
     }
 
-    const cargarSprite = (mustFail: boolean) => {
+    const cargarSprite = (mustFail: boolean = false) => {
 
         simularCargaSprite(mustFail)
         .then((resultado) => setAssetSrc(resultado as string))
@@ -45,16 +45,9 @@ export const useSprite = () => {
     }
 
     useEffect(() => {
-        cargarSprite(false)
+        cargarSprite()
     }, []);
 
-    return { assetSrc, error, loading }
+    return { assetSrc, error, loading, cargarSprite }
 
 }; 
-
-// const AssetButton = (handleClick: () => string) => {
-    
-//     return (
-        
-//     )
-// }   
