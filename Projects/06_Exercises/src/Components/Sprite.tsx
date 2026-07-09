@@ -3,7 +3,7 @@ import { useSprite } from "../Hooks/useSprite"
 
 export const Sprite = () => {
 
-    const { assetSrc, error, loading, cargarSprite } = useSprite()
+    const { assetSrc, error, loading, handleUserClick } = useSprite()
 
     return (
         <main>
@@ -12,7 +12,7 @@ export const Sprite = () => {
                 {error && <p>Ha ocurrido un error al cargar la imagen</p>}
                 {loading && <p>Cargando imagen... </p>}
             </section>
-            <button onClick={() => cargarSprite()}>Cargar Imagen</button>
+            <button onClick={() => handleUserClick()}>Cargar Imagen</button>
         </main>
     )
 }   

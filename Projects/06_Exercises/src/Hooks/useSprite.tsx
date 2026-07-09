@@ -44,10 +44,21 @@ export const useSprite = () => {
         .finally(() => setLoading(false))
     }
 
+    
+    const handleUserClick = () => {
+        
+        // 1. Limpiamos estados antes de pedir la imagen
+        setLoading(true);
+        setError(null);
+        setAssetSrc(null);
+        // 2. Llamamos a la función para cargar la imagen
+        cargarSprite();
+    }
+
     useEffect(() => {
         cargarSprite()
     }, []);
 
-    return { assetSrc, error, loading, cargarSprite }
+    return { assetSrc, error, loading, handleUserClick }
 
 }; 
