@@ -45,14 +45,14 @@ export const useSprite = () => {
     }
 
     
-    const handleUserClick = () => {
+    const handleUserClick = (mustFail: boolean = false) => {
         
         // 1. Limpiamos estados antes de pedir la imagen
         setLoading(true);
         setError(null);
         setAssetSrc(null);
         // 2. Llamamos a la función para cargar la imagen
-        cargarSprite();
+        cargarSprite(mustFail);
     }
 
     useEffect(() => {
