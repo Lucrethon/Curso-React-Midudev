@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 
-export const useCountdown = ({ itBegin, handleCountdownComplete }: 
+export const useCountdown = ({ itBegin, handleCountdownComplete, round }: 
     {itBegin: boolean
     handleCountdownComplete: () => void
+    round: number
     }) => {
 
     const [countdown, setcountdown] = useState(3) // cuenta regresiva
@@ -34,5 +35,16 @@ export const useCountdown = ({ itBegin, handleCountdownComplete }:
 
     const resetCountdown = () => setcountdown(3)
 
-    return { countdown, resetCountdown }
+      // ------------------ Countdown Display ----------------
+
+    const goMessage = () => {
+        if (round > 0) return
+        else {
+            let message = `${countdown}`
+            if (countdown === 0) message = "GO!"
+            return message
+        }
+    }
+
+    return { countdown, resetCountdown, goMessage }
 }
