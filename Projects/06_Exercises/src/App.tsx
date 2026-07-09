@@ -42,6 +42,8 @@ import { SelectorFrutas } from './Components/SelectorFrutas'
 import { CarruselEmoji } from './Components/CarruselEmojis'
 
 
+
+
 function App() {
 
   // ejercicio 2
