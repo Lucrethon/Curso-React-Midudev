@@ -3,12 +3,12 @@ import { TURNS, COLORS } from './types_&_enums.tsx'
 import {Square} from './components/Square.tsx'
 import {Button} from './components/Button.tsx'
 import type {colors, turns} from './types_&_enums.tsx'
-import { setRandomSecuency, getRandomIndices } from './utils.tsx'
 
 // Hooks 
 import { useActiveButton} from './Hooks/useActiveButton.tsx'
 import { useTurnMessage } from './Hooks/useTurnMessage.tsx'
 import { useCountdown } from './Hooks/useCountdown.tsx'
+import { useSequence } from './Hooks/useSequence.tsx'
 
 import './App.css'
 import './index.css'
@@ -27,8 +27,6 @@ function App() {
 
   const [turn, setTurn] = useState<turns | null>(null);
 
-  const [secuency, setSecuency] = useState<colors[]>(setRandomSecuency(colors, getRandomIndices(colors, 3)));
-
   const [round, setRound] = useState(0);
 
   const [userIndex, setUserIndex] = useState(0)
@@ -41,11 +39,12 @@ function App() {
 
   const { activeColor, activateButton } = useActiveButton()
   const { turnMessage } = useTurnMessage({turn, round})
+  const { sequence, createNewSequence, addColorToSequence } = useSequence()
 
   // ---------------- Comenzar juego -----------------
 
   const startGame = () => {
-  setSecuency(setRandomSecuency(colors, getRandomIndices(colors, 3))); // crear nueva secuencia 
+  createNewSequence()// crear nueva secuencia 
   resetCountdown(); // reiniciar cronometro de cuenta atras
   setUserIndex(0); // reiniciar clicks
   setItBegin(true); // arrancar el juego
@@ -76,24 +75,11 @@ function App() {
 
   const waitTime = 500 // miliseconds
 
-   // añadir color a la secuencia:
-
-  const addColorToSecuency = () => {
-
-        // Funcion para agregar un elemento a la secuencia y la guarda.
-        const newSecuency = [...secuency]
-        const randomColor = colors[Math.floor(Math.random() * colors.length)];
-        newSecuency.push(randomColor);
-        setSecuency(newSecuency);
-        return newSecuency;
-        
-  };
-
   // activar los botones correspondientes segun la secuencia:
 
-  const displaySecuency = (secuencyToCheck: colors[]) => {
+  const displaysequence = (sequenceToCheck: colors[]) => {
 
-    secuencyToCheck.forEach((color, index) => { // index en forEach indica la posición actual
+    sequenceToCheck.forEach((color, index) => { // index en forEach indica la posición actual
       setTimeout(() => {
         activateButton(color);
       }, (waitTime * index)); // se multiplica index por el tiempo de espera para no presionar los botones al mismo momento
@@ -117,12 +103,12 @@ function App() {
         () => {
           // Si no es el primer turno, se agrega un color a la secuencia y se reproduce 
           if (round != 1) {
-            const newSecuency = addColorToSecuency();
-            displaySecuency(newSecuency);
+            const newsequence = addColorToSequence();
+            displaysequence(newsequence);
           }
           // Sino, solamente se reproduce la secuencia
           else {
-            displaySecuency(secuency);
+            displaysequence(sequence);
           }
         },
         delayTime
@@ -131,7 +117,7 @@ function App() {
 
       const timer2 = setTimeout(()=>{
         setTurn(TURNS.user)
-      }, waitTime * secuency.length + delayTime + 100
+      }, waitTime * sequence.length + delayTime + 100
     )
 
       //cleanup
@@ -159,11 +145,11 @@ function App() {
     
   // si el color que presiona el usuario es igual al color se la secuencia de la maquina en la posicion 0, 
   // el jugador sigue adelante con el turno, y se suma +1 a 0 para que coindica con el indice de la secuencia 
-  if (color === secuency[currentUserIndex]) {
+  if (color === sequence[currentUserIndex]) {
     const nextIndex = currentUserIndex + 1; 
     setUserIndex(nextIndex)
     // bloque de victoria
-    if (nextIndex === secuency.length) { // aqui se indica que ya gano y completo toda le secuencia 
+    if (nextIndex === sequence.length) { // aqui se indica que ya gano y completo toda le secuencia 
       setRound(round + 1)
       setUserIndex(0)
       setTurn(TURNS.machine)
