@@ -6,14 +6,11 @@ import { useState, useEffect } from 'react'
 // Instrucciones:
 
 // Crea una función llamada simularCargaDeSprite(debeFallar: boolean) que retorne una new Promise.
-
 // Dentro de la promesa, pon un setTimeout de 3 segundos.
-
 // Si debeFallar es false, la promesa debe hacer resolve devolviendo el string "sprite_caballero_ataque.png".
-
 // Si debeFallar es true, la promesa debe hacer reject devolviendo "Error: El archivo del sprite está corrupto".
-
 // Crea un componente en React con un botón "Cargar Asset". Al hacer clic, debe ejecutar la promesa, mostrar "Cargando..." en la pantalla, y finalmente mostrar el string de éxito o el de error.
+
 
 export const useSprite = () => {
 
