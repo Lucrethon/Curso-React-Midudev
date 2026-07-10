@@ -44,6 +44,9 @@ import { CarruselEmoji } from './Components/CarruselEmojis'
 // Ejercicio 6
 import { Sprite } from './Components/Sprite'
 
+// Ejercicio 7 
+import { Sprites } from './Components/Sprites'
+
 
 function App() {
 
@@ -82,6 +85,12 @@ function App() {
         <h1>Ejercicio 6: Srpite</h1>
         <Sprite />
       </div>
+
+      <div>
+        <h1>Ejercicio 7: Srpitess</h1>
+        <Sprites />
+      </div>
+
     </div>
   </>
   )
