@@ -31,5 +31,17 @@ test('get random cat image and fact', async ({ page }) => {
 
 });
 
+test('get new random cat img by pressing button', async({ page }) => {
+
+  await page.goto(LocalHost); 
+
+  const button = page.getByRole('button'); 
+  await expect(button).toBeVisible; 
+  await button.click(); 
+
+  const image =  page.getByRole('img');
+  await expect(image).toBeVisible()
+
+})
 
 
