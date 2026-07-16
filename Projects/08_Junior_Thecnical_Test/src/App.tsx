@@ -26,7 +26,7 @@ const CatComponent = () => {
                 <section>
                     {factLoading && <p>Cargando fact...</p>}
                     {factError && <p>Ha ocurrido un error: {factError}</p>}
-                    {fact && <p>{fact}</p>}
+                    {fact && <p data-testid="cat-fact">{fact}</p>}
 
                     {imageUrlLoading && <p>Cargando imagen...</p>}
                     {imageUrlError && <p>Ha ocurrido un error: {imageUrlError}</p>}
