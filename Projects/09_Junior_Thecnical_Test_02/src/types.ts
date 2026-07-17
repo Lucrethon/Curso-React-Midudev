@@ -5,11 +5,7 @@ export type Results = {
     Response:     string;
 }
 
-export type Type = {
-    Game : "game",
-    Movie : "movie",
-}
-
+export type Type = "game" | "movie" | "series";
 
 export type Movie = {
     Title:  string;

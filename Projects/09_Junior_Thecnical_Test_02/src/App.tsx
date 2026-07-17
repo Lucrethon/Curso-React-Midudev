@@ -1,8 +1,8 @@
 import './App.css'
 import './types.ts'
 import withResults from './mocks/with-results.json'
-import withoutResults from './mocks/without-results.json'
-import type { Results, Movie, NoResults } from './types.ts'
+import type { Movie } from './types.ts'
+import {Movies} from './Components/Movies.tsx'
 
 
 // Crea una aplicación para buscar películas
@@ -25,22 +25,6 @@ import type { Results, Movie, NoResults } from './types.ts'
 // - Evita que se haga la búsqueda continuamente al escribir (debounce)   
 
 
-const Movies = (movies: Movie[]) => {
-
-    return (
-        movies.map(
-            (movie: Movie)=> {
-                return (
-                    <li key={movie.imdbID} className='movie-card'>
-                        <h3>{movie.Title}</h3>
-                        <p>{`Year: ${movie.Year}`}</p>
-                        <img src={movie.Poster}></img>
-                    </li>
-                )
-        })
-    )
-};
-
 
 const App = () => {
 
@@ -58,15 +42,7 @@ const App = () => {
             </header>
             
             <main className="movies-container">
-                {
-                    hasMovies 
-                    ? (
-                        <ul className='movies'>
-                            {Movies(movies)}
-                        </ul>
-                    )
-                    : (withoutResults.Error)
-                }
+                {<Movies hasMovies={hasMovies} movieList={movies}/>}
             </main>
         </div>
     )
