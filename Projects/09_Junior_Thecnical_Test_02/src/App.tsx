@@ -1,5 +1,10 @@
 import './App.css'
 import './types.ts'
+import withResults from './mocks/with-results.json'
+import withoutResults from './mocks/without-results.json'
+import type { Results, Movie, NoResults } from './types.ts'
+
+
 // Crea una aplicación para buscar películas
 
 // API a usar:
@@ -20,8 +25,27 @@ import './types.ts'
 // - Evita que se haga la búsqueda continuamente al escribir (debounce)   
 
 
+const Movies = (movies: Movie[]) => {
+
+    return (
+        movies.map(
+            (movie: Movie)=> {
+                return (
+                    <li key={movie.imdbID} className='movie-card'>
+                        <h3>{movie.Title}</h3>
+                        <p>{`Year: ${movie.Year}`}</p>
+                        <img src={movie.Poster}></img>
+                    </li>
+                )
+        })
+    )
+};
+
 
 const App = () => {
+
+    const movies = withResults.Search as Movie[]
+    const hasMovies = movies.length > 0
 
     return (
         <div className='page'>
@@ -34,7 +58,15 @@ const App = () => {
             </header>
             
             <main className="movies-container">
-                Results here
+                {
+                    hasMovies 
+                    ? (
+                        <ul className='movies'>
+                            {Movies(movies)}
+                        </ul>
+                    )
+                    : (withoutResults.Error)
+                }
             </main>
         </div>
     )

@@ -1,6 +1,6 @@
 
-export type Welcome = {
-    Search:       Search[];
+export type Results = {
+    Search:       Movie[];
     totalResults: string;
     Response:     string;
 }
@@ -11,7 +11,7 @@ export type Type = {
 }
 
 
-export type Search = {
+export type Movie = {
     Title:  string;
     Year:   string;
     imdbID: string;
@@ -19,7 +19,7 @@ export type Search = {
     Poster: string;
 }
 
-export type MovieNotFound = {
+export type NoResults = {
   Response: "False",
   Error: "Movie not found!"
 }
