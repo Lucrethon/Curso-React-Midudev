@@ -1,8 +1,7 @@
 import './App.css'
 import './types.ts'
-import withResults from './mocks/with-results.json'
-import type { Movie } from './types.ts'
 import {Movies} from './Components/Movies.tsx'
+import { useMovies } from './Hooks/useMovies.tsx'
 
 
 // Crea una aplicación para buscar películas
@@ -28,8 +27,8 @@ import {Movies} from './Components/Movies.tsx'
 
 const App = () => {
 
-    const movies = withResults.Search as Movie[]
-    const hasMovies = movies.length > 0
+    const { movies } = useMovies()
+    
 
     return (
         <div className='page'>
@@ -42,7 +41,7 @@ const App = () => {
             </header>
             
             <main className="movies-container">
-                {<Movies hasMovies={hasMovies} movieList={movies}/>}
+                {<Movies movieList={movies}/>}
             </main>
         </div>
     )

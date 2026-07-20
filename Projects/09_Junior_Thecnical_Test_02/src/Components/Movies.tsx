@@ -27,8 +27,10 @@ export const NoMoviesResult = () => {
 
 }
 
-export const Movies = ({hasMovies, movieList} : 
-    {hasMovies: boolean, movieList: Movie[]}) => {
+export const Movies = ({movieList} : 
+    {movieList: Movie[]}) => {
+        const hasMovies = movieList.length > 0
+        
         return (
             hasMovies
             ? <ListOfMovies movies={movieList}/>
