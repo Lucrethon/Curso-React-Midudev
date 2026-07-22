@@ -20,5 +20,5 @@ export const useMovies = () => {
         }
     )
 
-    return { movies: appendMovies }
+    return { appendMovies }
 }
