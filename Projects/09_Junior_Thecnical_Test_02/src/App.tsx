@@ -2,9 +2,10 @@ import './App.css'
 import './types.ts'
 import { Movies } from './Components/Movies.tsx'
 import { useMovies } from './Hooks/useMovies.tsx'
+import { useSearchControlled } from './Hooks/useSearchControlled.tsx'
 
 // nuevo hook: useRef
-import { useRef } from 'react'
+import React, { useEffect, useRef, useState, type SyntheticEvent } from 'react'
 // crea una referencia mutable que persiste para todo el ciclo de vida del componente 
 // es decir: su valor no se reinicia 
 // con el useState, su valor de reinicia con cada renderizado
@@ -37,8 +38,13 @@ import { useRef } from 'react'
 const App = () => {
 
     const { appendMovies } = useMovies()
+    const { movie, error, handleChange } = useSearchControlled()
 
-    
+    // ---------------- Formas NO controladas de obtener la información de los formularios a través del DOM ---------------
+
+ 
+
+
     // Metodo para obtener los datos del input con el hook useRef
 
     const inputRef = useRef<HTMLInputElement>(null)
@@ -82,16 +88,37 @@ const App = () => {
         }
 
     }; 
-    // ambas formas son no controladas 
+
+
+    
+    // diferencias entre useReft y useState
+
+    // useState
+    let i = 1
+    i =+ 1
+    console.log(`useState: ${i}`)
+    // siempre mostrara 1 en cada renderizado porque el estado se vuelve a reiniciar
+
+    // useRef
+    const counter = useRef(1)
+    counter.current++
+    console.log(`useRef: ${counter.current}`)
+    // el counter se irá sumando porque es un valor que persiste entre renders 
+
 
     return (
         <div className='page'>
             <h1>Prueba Técnica</h1>
             <header className='form-container'>
                 <form className='form' onSubmit={handleImput}>
-                    <input ref={inputRef} placeholder='Star Wars, Toy Story...' name="movie"></input>
+                    <input ref={inputRef} placeholder='Star Wars, Toy Story...' name="movie"  value={movie} onChange={handleChange} 
+                    style={{
+                        border: '1px solid transparent',
+                        borderColor: error ? 'red' : 'transparent'
+                    }}></input>
                     <button type='submit'>Buscar</button>
                 </form>
+                {error && <p style={{color: 'red'}}>{error}</p>}
             </header>
             
             <main className="movies-container">
