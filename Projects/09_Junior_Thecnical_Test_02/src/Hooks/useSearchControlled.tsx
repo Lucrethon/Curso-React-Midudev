@@ -1,11 +1,11 @@
-   import React, { useEffect, useState } from 'react'
+   import React, { useEffect, useState, useRef } from 'react'
 
 
  export const useSearchControlled = () => {
 
     // ---------------- Formas CONTROLADAS de obtener la información de los formularios a través del DOM ---------------
 
-    const [movie, setMovie] = useState("");
+    const [movie, setMovie] = useState('');
     // creamos un estado
     // se lo pasamos al input como value, por ende, movie sería el value del input
     const [error, setError] = useState<string | null>(null)
@@ -36,9 +36,25 @@
         // }
     }
 
+    // 
+    const isFirtsInput = useRef(true)
+    // utilizamos un useRef para que no se coloque el error de "no se ha escrito ninguna pelicula" cuando ni siuiqera hemos escrito nada 
+    // se utiza una referencia porque el boleano SOBREVIVE a los renders, entonces en cada render del useEstate, el useRef se va a mantener igual
+
+
     useEffect(() => {
+
+        // Es la primera vez que el usuario interactúa?
+        if (isFirtsInput.current) {
+            // Vacío es igual a vacío? S
+            // Si es true, el ref se mantiene en true y el return expulsa al código fuera del useEffect y no se ejecutan las validaciones de abajo
+            isFirtsInput.current = movie === ''
+            // esto es un booleano: se resuelve primero el operador de comparación === antes que el de asignación = 
+            return
+        }
+
         if (movie == "") {
-            setError("No se ha escrito ninguna película")
+            setError("No se puede buscar una pelicula vacía")
             return
         }
 

@@ -9,7 +9,11 @@ import React, { useRef } from 'react'
 
 
 export const useSearchUncontrolled = () => {
+
+
     // ---------------- Formas NO controladas de obtener la información de los formularios a través del DOM ---------------
+
+    
 
     // Metodo para obtener los datos del input con el hook useRef
 
@@ -27,6 +31,8 @@ export const useSearchUncontrolled = () => {
         // siempre que se quiera acceder a una referencia en React, se utiliza la propiedad current 
         alert(input)
     };
+
+
 
 
     // Metodo para obtener los datos del imput con JS puro

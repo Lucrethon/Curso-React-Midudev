@@ -57,6 +57,7 @@ const App = () => {
             <h1>Prueba Técnica</h1>
             <header className='form-container'>
                 <form className='form' onSubmit={handleImput}>
+
                     <input 
                     ref={inputRef} 
                     placeholder='Star Wars, Toy Story...' 
@@ -67,6 +68,7 @@ const App = () => {
                         border: '1px solid transparent',
                         borderColor: error ? 'red' : 'transparent'
                     }}></input>
+                    
                     <button type='submit'>Buscar</button>
                 </form>
                 {error && <p style={{color: 'red'}}>{error}</p>}
