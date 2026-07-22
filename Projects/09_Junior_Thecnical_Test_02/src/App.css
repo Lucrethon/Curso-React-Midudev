@@ -3,12 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-
-.movies-container {
-    display: flex;
-    justify-content: center;
+    width: 100%;
 }
 
 
@@ -22,4 +17,27 @@
 .form {
     display: flex;
     flex-direction: row;
+}
+
+.movies-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+
+.list-of-movies {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px
+
+}
+
+.movie-card {
+    text-align: center;
+}
+
+.movie-card h3, .movie-card p {
+    margin: 0;
 }

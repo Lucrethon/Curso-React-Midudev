@@ -20,6 +20,8 @@ import { useRef, type SyntheticEvent } from 'react'
 
 // - Necesita mostrar un input para buscar la película y un botón para buscar.
 // - Lista las películas encontradas y muestra el título, año y poster.
+// - Que el formulario funcione
+// - Hacer Fetching de datos
 // - Haz que las películas se muestren en un grid responsive.
 
 // Primera iteración:
@@ -68,7 +70,7 @@ const App = () => {
                         border: '1px solid transparent',
                         borderColor: error ? 'red' : 'transparent'
                     }}></input>
-                    
+
                     <button type='submit'>Buscar</button>
                 </form>
                 {error && <p style={{color: 'red'}}>{error}</p>}
