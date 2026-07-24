@@ -5,7 +5,7 @@
 
     // ---------------- Formas CONTROLADAS de obtener la información de los formularios a través del DOM ---------------
 
-    const [movie, setMovie] = useState('');
+    const [search, setsearch] = useState('');
     // creamos un estado
     // se lo pasamos al input como value, por ende, movie sería el value del input
     const [error, setError] = useState<string | null>(null)
@@ -24,7 +24,7 @@
         if (newMovie.startsWith(' ')) return
 
 
-        setMovie(newMovie)
+        setsearch(newMovie)
         // if (movie == "") {
         //     setError("No se ha escrito ninguna película")
         //     return
@@ -48,24 +48,24 @@
         if (isFirtsInput.current) {
             // Vacío es igual a vacío? S
             // Si es true, el ref se mantiene en true y el return expulsa al código fuera del useEffect y no se ejecutan las validaciones de abajo
-            isFirtsInput.current = movie === ''
+            isFirtsInput.current = search === ''
             // esto es un booleano: se resuelve primero el operador de comparación === antes que el de asignación = 
             return
         }
 
-        if (movie == "") {
+        if (search == "") {
             setError("No se puede buscar una pelicula vacía")
             return
         }
 
-        if (movie?.length < 2) {
+        if (search?.length < 2) {
             setError("La búsqueda tiene que tener al menos 2 caracteres")
             return
         }
 
         setError(null)
 
-    }, [movie])
+    }, [search])
 
-        return { movie, error, handleChange }
+        return { search, error, handleChange }
     }

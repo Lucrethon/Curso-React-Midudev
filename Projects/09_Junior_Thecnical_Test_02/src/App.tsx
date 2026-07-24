@@ -34,11 +34,47 @@ import { useRef, type SyntheticEvent } from 'react'
 
 const App = () => {
 
-    const { appendMovies } = useMovies()
-    const { movie, error, handleChange } = useSearchControlled()
-    const {handleImput, inputRef} = useSearchUncontrolled()
+    
+    const { search, error, handleChange } = useSearchControlled()
+    const { inputRef} = useSearchUncontrolled()
+    const { appendMovies, getMovies, responseMovies } = useMovies( {search} )
 
     
+    // Metodo para obtener los datos del imput con JS puro
+
+    const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
+
+        // evitar que la pagina se recargue 
+        event.preventDefault();
+        getMovies()
+
+
+        // // event.target es el <form> entero. 
+        // // FormData extrae todos los inputs que tengan el atributo 'name'
+
+        // const formData = new FormData(event.currentTarget);
+
+        // // el .target es el original, pero en TS no funciona. Target puede ser el boton que el usuario clickeo, mientras que currentTarget siempre apunta al elemento que tiene el evento pegado (en este, <form>)
+
+        // // para obtener los datos listos de todo el form: 
+
+        // const datosListos = Object.fromEntries(formData);
+        // console.log(datosListos)
+
+        // // para obtener los datos de un name en específico: 
+
+        // const data = formData.get('movie') as string
+
+        // // (Añadimos 'as string' para que TS sepa que no es nulo ni un archivo)
+
+        // // validaciones: 
+        
+        // if (data == '') {
+        //     throw new Error("No se encontro ninguna pelicula")
+        // }
+
+    }; 
+
     // diferencias entre useReft y useState
 
     // useState
@@ -54,22 +90,29 @@ const App = () => {
     // el counter se irá sumando porque es un valor que persiste entre renders 
 
 
+
     return (
         <div className='page'>
             <h1>Prueba Técnica</h1>
             <header className='form-container'>
-                <form className='form' onSubmit={handleImput}>
+                <form className='form' onSubmit={handleSubmit}>
 
                     <input 
+                    
                     ref={inputRef} 
-                    placeholder='Star Wars, Toy Story...' 
                     name="movie"  
-                    value={movie} 
+
+                    placeholder='Star Wars, Toy Story...' 
+
+                    value={search} 
                     onChange={handleChange} 
+
                     style={{
                         border: '1px solid transparent',
                         borderColor: error ? 'red' : 'transparent'
-                    }}></input>
+                    }}>
+
+                    </input>
 
                     <button type='submit'>Buscar</button>
                 </form>
@@ -77,7 +120,7 @@ const App = () => {
             </header>
             
             <main className="movies-container">
-                {<Movies movieList={appendMovies}/>}
+                {<Movies movieList={responseMovies}/>}
             </main>
         </div>
     )

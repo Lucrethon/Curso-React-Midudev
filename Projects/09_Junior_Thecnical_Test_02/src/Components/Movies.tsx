@@ -1,8 +1,9 @@
-import type { Movie } from  '../types.ts'
+import type { Movie, NoResults } from  '../types.ts'
 
-export const ListOfMovies = ({ movies }: { movies: Movie[] }) => {
+export const ListOfMovies = ({ movies }: { movies: Movie[] | NoResults | null}) => {
 
-    return (
+    // Usamos Array.isArray como "type guard" para asegurar que 'movies' es un array.
+    if (Array.isArray(movies)) return (
         <ul className='list-of-movies'> {
         movies.map(
             (movie: Movie)=> {
