@@ -38,6 +38,8 @@ export const useMovies = ( {search} : {search: string | null} ) => {
 
         if (search == previousSearch.current) return
 
+        const controller = new AbortController(); 
+        const anthena = controller.signal
         // si hay una busqueda
         if (search) try {
 
@@ -45,7 +47,10 @@ export const useMovies = ( {search} : {search: string | null} ) => {
                 setSearchError("")
                 setLoading(true)
                 previousSearch.current = search
-                const response = await fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${search}`)
+
+                const response = await fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${search}`, {
+                    signal: anthena
+                })
                 // Verificar respuesta (si hay error)
                 if (!response.ok) throw new Error("Error de conexión");
 
@@ -64,12 +69,18 @@ export const useMovies = ( {search} : {search: string | null} ) => {
                 if (err instanceof TypeError || err instanceof Error) {
                     setSearchError(err.message)
                 }
+                else if (err instanceof Error && err.name === 'AbortError') {
+                    setSearchError("Petición cancelada")
+                }
                 else {
                     setSearchError(String(err))
                 }
             } finally {
                 setLoading(false)
             }
+
+            return () => {
+                controller.abort();}
 
         
         // if (search) {
