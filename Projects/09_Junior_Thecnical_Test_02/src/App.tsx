@@ -2,6 +2,7 @@ import './App.css'
 import './types.ts'
 import { Movies } from './Components/Movies.tsx'
 import { useMovies } from './Hooks/useMovies.tsx'
+import { useEffect } from 'react'
 import { useSearchControlled } from './Hooks/useSearchControlled.tsx'
 import { useSearchUncontrolled } from './Hooks/useSearchUncontrolled.tsx'
 
@@ -34,8 +35,12 @@ const App = () => {
     
     const { search, error, handleChange } = useSearchControlled()
     const { inputRef} = useSearchUncontrolled()
-    const { searchMovies, responseMovies, searchError, loading } = useMovies( {search} )
+    const { searchMovies, movies, searchError, loading } = useMovies({search})
 
+    useEffect(() => {
+        // Carga inicial de películas con un término por defecto
+        searchMovies({ search: 'Avengers' })
+    }, [])
     
     // Metodo para obtener los datos del imput con JS puro
 
@@ -43,7 +48,9 @@ const App = () => {
 
         // evitar que la pagina se recargue 
         event.preventDefault();
-        await searchMovies()
+        if (search) {
+            await searchMovies({ search })
+        }
 
 
         // // event.target es el <form> entero. 
@@ -120,7 +127,7 @@ const App = () => {
                 {
                     loading 
                     ? <p>Cargando...</p>
-                    : <Movies movieList={responseMovies} searchError={searchError}/>
+                    : <Movies movieList={movies} searchError={searchError}/>
                 }
             </main>
         </div>

@@ -5,7 +5,7 @@ import { useRef, useState } from 'react'
 
 
 
-export const useMovies = ( {search} : {search: string | null} ) => {
+export const useMovies = ({search} : {search: string}) => {
 
     const [responseMovies, setResponseMovies] = useState<Movie[]>([])
     const [searchError, setSearchError] = useState<string>("")
@@ -34,7 +34,7 @@ export const useMovies = ( {search} : {search: string | null} ) => {
     // )
 
     
-    const searchMovies = async () => {
+    const searchMovies = async ({search} : {search: string}) => {
 
         if (search == previousSearch.current) return
 
@@ -99,5 +99,5 @@ export const useMovies = ( {search} : {search: string | null} ) => {
     }
 
 
-    return { searchMovies, responseMovies, searchError, loading }
+    return { searchMovies, movies: responseMovies, searchError, loading }
 }
