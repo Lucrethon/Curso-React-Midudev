@@ -1,6 +1,6 @@
-import type { Movie, NoResults } from  '../types.ts'
+import type { Movie } from  '../types.ts'
 
-export const ListOfMovies = ({ movies }: { movies: Movie[] | NoResults | null}) => {
+export const ListOfMovies = ({ movies }: { movies: Movie[]}) => {
 
     // Usamos Array.isArray como "type guard" para asegurar que 'movies' es un array.
     if (Array.isArray(movies)) return (
@@ -21,21 +21,22 @@ export const ListOfMovies = ({ movies }: { movies: Movie[] | NoResults | null}) 
     )
 };
 
-export const NoMoviesResult = () => {
+export const NoMoviesResult = ({ searchError } : {searchError: string}) => {
     return (
-        <p>No se ha encontrado ninguna coincidencia</p>
+        <p>{searchError}</p>
     )
 
 }
 
-export const Movies = ({movieList} : 
-    {movieList: Movie[]}) => {
-        const hasMovies = movieList.length > 0
+export const Movies = ({movieList, searchError} : 
+    {movieList: Movie[], searchError: string
+    }) => {
+        const hasMovies = movieList?.length > 0
         
         return (
             hasMovies
             ? <ListOfMovies movies={movieList}/>
-            : <NoMoviesResult/>
+            : <NoMoviesResult searchError={searchError}/>
         )
 
 }   

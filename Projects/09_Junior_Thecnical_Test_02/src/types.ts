@@ -2,7 +2,7 @@
 export type Results = {
     Search:       Movie[];
     totalResults: string;
-    Response:     string;
+    Response:     "True";
 }
 
 export type Type = "game" | "movie" | "series";

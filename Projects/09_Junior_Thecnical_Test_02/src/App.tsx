@@ -37,16 +37,16 @@ const App = () => {
     
     const { search, error, handleChange } = useSearchControlled()
     const { inputRef} = useSearchUncontrolled()
-    const { appendMovies, getMovies, responseMovies } = useMovies( {search} )
+    const { searchMovies, responseMovies, searchError, loading } = useMovies( {search} )
 
     
     // Metodo para obtener los datos del imput con JS puro
 
-    const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
 
         // evitar que la pagina se recargue 
         event.preventDefault();
-        getMovies()
+        await searchMovies()
 
 
         // // event.target es el <form> entero. 
@@ -77,17 +77,17 @@ const App = () => {
 
     // diferencias entre useReft y useState
 
-    // useState
-    let i = 1
-    i =+ 1
-    console.log(`useState: ${i}`)
-    // siempre mostrara 1 en cada renderizado porque el estado se vuelve a reiniciar
+    // // useState
+    // let i = 1
+    // i =+ 1
+    // console.log(`useState: ${i}`)
+    // // siempre mostrara 1 en cada renderizado porque el estado se vuelve a reiniciar
 
-    // useRef
-    const counter = useRef(1)
-    counter.current++
-    console.log(`useRef: ${counter.current}`)
-    // el counter se irá sumando porque es un valor que persiste entre renders 
+    // // useRef
+    // const counter = useRef(1)
+    // counter.current++
+    // console.log(`useRef: ${counter.current}`)
+    // // el counter se irá sumando porque es un valor que persiste entre renders 
 
 
 
@@ -120,7 +120,11 @@ const App = () => {
             </header>
             
             <main className="movies-container">
-                {<Movies movieList={responseMovies}/>}
+                {
+                    loading 
+                    ? <p>Cargando...</p>
+                    : <Movies movieList={responseMovies} searchError={searchError}/>
+                }
             </main>
         </div>
     )
