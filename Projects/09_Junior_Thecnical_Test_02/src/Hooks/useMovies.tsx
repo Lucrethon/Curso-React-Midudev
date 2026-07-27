@@ -1,7 +1,7 @@
 // import withResults from '../mocks/with-results.json'
 // import withoutResults from '../mocks/without-results.json'
 import type { Movie, NoResults, Results } from '../types'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 
 
@@ -10,6 +10,8 @@ export const useMovies = ( {search} : {search: string | null} ) => {
     const [responseMovies, setResponseMovies] = useState<Movie[]>([])
     const [searchError, setSearchError] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
+    const previousSearch = useRef(search)
+    
 
 
     const API_KEY = '26060f05'
@@ -34,12 +36,15 @@ export const useMovies = ( {search} : {search: string | null} ) => {
     
     const searchMovies = async () => {
 
+        if (search == previousSearch.current) return
+
         // si hay una busqueda
         if (search) try {
 
                 setResponseMovies([])
                 setSearchError("")
                 setLoading(true)
+                previousSearch.current = search
                 const response = await fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${search}`)
                 // Verificar respuesta (si hay error)
                 if (!response.ok) throw new Error("Error de conexión");

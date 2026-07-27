@@ -5,9 +5,6 @@ import { useMovies } from './Hooks/useMovies.tsx'
 import { useSearchControlled } from './Hooks/useSearchControlled.tsx'
 import { useSearchUncontrolled } from './Hooks/useSearchUncontrolled.tsx'
 
-// nuevo hook: useRef
-import { useRef, type SyntheticEvent } from 'react'
-
 
 // Crea una aplicación para buscar películas
 
