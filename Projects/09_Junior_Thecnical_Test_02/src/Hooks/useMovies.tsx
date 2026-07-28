@@ -1,7 +1,7 @@
 // import withResults from '../mocks/with-results.json'
 // import withoutResults from '../mocks/without-results.json'
 import type { Movie, NoResults, Results } from '../types'
-import { useRef, useState, useMemo } from 'react'
+import { useRef, useState, useMemo, useCallback } from 'react'
 
 
 
@@ -34,9 +34,7 @@ export const useMovies = ({search, sort} : {search: string, sort: boolean}) => {
     // )
 
     
-    const searchMovies = useMemo(() => {
-    
-        return async ({search} : {search: string}) => {
+    const getMovie = useCallback(async ({search} : {search: string}) => {
 
         if (search == previousSearch.current) return
 
@@ -83,7 +81,7 @@ export const useMovies = ({search, sort} : {search: string, sort: boolean}) => {
 
             return () => {
                 controller.abort();}
-        }}, [search]
+        }, [search]
     )
 
             // if (search) {
@@ -113,5 +111,5 @@ export const useMovies = ({search, sort} : {search: string, sort: boolean}) => {
         // se ejecuta solo con el cambio de determinadas dependencias
             
 
-    return { searchMovies, movies: sortMovies, searchError, loading }
+    return { getMovie, movies: sortMovies, searchError, loading }
 }

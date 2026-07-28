@@ -5,6 +5,8 @@ import { useMovies } from './Hooks/useMovies.tsx'
 import { useEffect, useState } from 'react'
 import { useSearchControlled } from './Hooks/useSearchControlled.tsx'
 import { useSearchUncontrolled } from './Hooks/useSearchUncontrolled.tsx'
+import debounce from "just-debounce-it";
+import { useCallback } from 'react'
 
 
 // Crea una aplicación para buscar películas
@@ -34,9 +36,24 @@ const App = () => {
 
     const [sort, setSort] = useState(false)
 
-    const { search, error, handleChange } = useSearchControlled()
+    const { search, error, updateSearch } = useSearchControlled()
     const { inputRef} = useSearchUncontrolled()
-    const { searchMovies, movies, searchError, loading } = useMovies({search, sort})
+    const { getMovie, movies, searchError, loading } = useMovies({search, sort})
+
+
+    const debouncedGetMovie = useCallback(debounce(({search}: {search: string}) => getMovie({search}), 500), [])
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // le pasamos el evento a la función para hacer .currentTarget.value y tener el valor 
+        const newMovie = event.currentTarget.value
+        
+        // con esto podemos crear un useEffect para las validaciones y los errores o dejar las validaciones dentro de esta misma función 
+        // si lo dejamos dentro de la función, podemos hacer pre validaciones 
+        if (newMovie.startsWith(' ')) return
+        updateSearch(newMovie)
+        debouncedGetMovie({search: newMovie})
+
+    }
     
 
     const handleSort = () => {
@@ -46,9 +63,8 @@ const App = () => {
 
     useEffect(() => {
         // Carga inicial de películas con un término por defecto
-        searchMovies({ search: 'Avengers' })
+        getMovie({ search: 'Avengers' })
     }, [])
-    
     
 
     const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
@@ -56,7 +72,7 @@ const App = () => {
         // evitar que la pagina se recargue 
         event.preventDefault();
         if (search) {
-            await searchMovies({ search })
+            await getMovie({ search })
         }
 
     
