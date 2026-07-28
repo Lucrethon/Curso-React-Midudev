@@ -34,7 +34,9 @@ export const useMovies = ({search, sort} : {search: string, sort: boolean}) => {
     // )
 
     
-    const searchMovies = async ({search} : {search: string}) => {
+    const searchMovies = useMemo(() => {
+    
+        return async ({search} : {search: string}) => {
 
         if (search == previousSearch.current) return
 
@@ -81,9 +83,10 @@ export const useMovies = ({search, sort} : {search: string, sort: boolean}) => {
 
             return () => {
                 controller.abort();}
+        }}, [search]
+    )
 
-        
-        // if (search) {
+            // if (search) {
         //     fetch(`http://www.omdbapi.com/?apikey=26060f05&s=${search}`)
         //     .then(res => res.json())
         //     .then(json => {
@@ -96,7 +99,6 @@ export const useMovies = ({search, sort} : {search: string, sort: boolean}) => {
         // else {
         //     setResponseMovies(noResults)
         // }
-    }
 
         const sortMovies = useMemo(() => {
             const sortMovies = sort 
