@@ -1,11 +1,11 @@
 // import withResults from '../mocks/with-results.json'
 // import withoutResults from '../mocks/without-results.json'
 import type { Movie, NoResults, Results } from '../types'
-import { useRef, useState } from 'react'
+import { useRef, useState, useMemo } from 'react'
 
 
 
-export const useMovies = ({search} : {search: string}) => {
+export const useMovies = ({search, sort} : {search: string, sort: boolean}) => {
 
     const [responseMovies, setResponseMovies] = useState<Movie[]>([])
     const [searchError, setSearchError] = useState<string>("")
@@ -98,6 +98,18 @@ export const useMovies = ({search} : {search: string}) => {
         // }
     }
 
+        const sortMovies = useMemo(() => {
+            const sortMovies = sort 
+            ? [...responseMovies].sort((movie1, movie2) => movie1.Title.localeCompare(movie2.Title, 'es'))
+            : responseMovies
 
-    return { searchMovies, movies: responseMovies, searchError, loading }
+            return sortMovies
+
+        }, [sort, responseMovies]) 
+        // useMemo se usa para memorizar el resultado de un cálculo y evitar hacer operaciones pesadas en cada renderizado.
+        // evita que se ejecute la función con cada render (el render es todo lo que esta en el cuerpo de la funcion)
+        // se ejecuta solo con el cambio de determinadas dependencias
+            
+
+    return { searchMovies, movies: sortMovies, searchError, loading }
 }

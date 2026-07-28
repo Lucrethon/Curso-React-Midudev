@@ -2,7 +2,7 @@ import './App.css'
 import './types.ts'
 import { Movies } from './Components/Movies.tsx'
 import { useMovies } from './Hooks/useMovies.tsx'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchControlled } from './Hooks/useSearchControlled.tsx'
 import { useSearchUncontrolled } from './Hooks/useSearchUncontrolled.tsx'
 
@@ -32,17 +32,24 @@ import { useSearchUncontrolled } from './Hooks/useSearchUncontrolled.tsx'
 
 const App = () => {
 
-    
+    const [sort, setSort] = useState(false)
+
     const { search, error, handleChange } = useSearchControlled()
     const { inputRef} = useSearchUncontrolled()
-    const { searchMovies, movies, searchError, loading } = useMovies({search})
+    const { searchMovies, movies, searchError, loading } = useMovies({search, sort})
+    
+
+    const handleSort = () => {
+        setSort(!sort)
+    }
+
 
     useEffect(() => {
         // Carga inicial de películas con un término por defecto
         searchMovies({ search: 'Avengers' })
     }, [])
     
-    // Metodo para obtener los datos del imput con JS puro
+    
 
     const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
 
@@ -52,7 +59,10 @@ const App = () => {
             await searchMovies({ search })
         }
 
+    
 
+
+        // Metodo para obtener los datos del imput con JS puro
         // // event.target es el <form> entero. 
         // // FormData extrae todos los inputs que tengan el atributo 'name'
 
@@ -117,8 +127,9 @@ const App = () => {
                     }}>
 
                     </input>
-
+                    <input type='checkbox' onChange={handleSort} checked={sort}></input>
                     <button type='submit'>Buscar</button>
+                    
                 </form>
                 {error && <p style={{color: 'red'}}>{error}</p>}
             </header>
