@@ -4,7 +4,7 @@ export const ListOfMovies = ({ movies }: { movies: Movie[]}) => {
 
     // Usamos Array.isArray como "type guard" para asegurar que 'movies' es un array.
     if (Array.isArray(movies)) return (
-        <ul className='list-of-movies'> {
+        <ul className='list-of-movies' data-testid='movie-list'> {
         movies.map(
             (movie: Movie)=> {
                 
@@ -23,7 +23,7 @@ export const ListOfMovies = ({ movies }: { movies: Movie[]}) => {
 
 export const NoMoviesResult = ({ searchError } : {searchError: string}) => {
     return (
-        <p>{searchError}</p>
+        <p data-testid='no-movies-result'>{searchError}</p>
     )
 
 }

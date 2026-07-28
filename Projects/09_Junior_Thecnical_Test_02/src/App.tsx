@@ -128,7 +128,8 @@ const App = () => {
                 <form className='form' onSubmit={handleSubmit}>
 
                     <input 
-                    
+                    data-testid='search-input'
+
                     ref={inputRef} 
                     name="movie"  
 
@@ -144,7 +145,7 @@ const App = () => {
 
                     </input>
                     <input type='checkbox' onChange={handleSort} checked={sort}></input>
-                    <button type='submit'>Buscar</button>
+                    <button type='submit' data-testid='search-button'>Buscar</button>
                     
                 </form>
                 {error && <p style={{color: 'red'}}>{error}</p>}
