@@ -144,7 +144,7 @@ const App = () => {
                     }}>
 
                     </input>
-                    <input type='checkbox' onChange={handleSort} checked={sort}></input>
+                    <input type='checkbox' onChange={handleSort} checked={sort} data-testid="sort-checkbox"></input>
                     <button type='submit' data-testid='search-button'>Buscar</button>
                     
                 </form>

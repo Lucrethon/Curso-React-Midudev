@@ -10,9 +10,9 @@ export const ListOfMovies = ({ movies }: { movies: Movie[]}) => {
                 
                 return (
                     <li key={movie.imdbID} className='movie-card'>
-                        <h3>{movie.Title}</h3>
+                        <h3 data-testid="movie-title">{movie.Title}</h3>
                         <p>{`Year: ${movie.Year}`}</p>
-                        <img src={movie.Poster} alt={movie.Title}></img>
+                        <img data-testid='movie-poster'src={movie.Poster} alt={movie.Title}></img>
                     </li>
                 )
         })
