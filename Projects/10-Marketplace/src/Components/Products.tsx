@@ -2,7 +2,7 @@ import type { Product } from "../types"
 import { AddToCartIcon } from "./Icons"
 import "./Product.css"
 
-export const Products = ({productList} : {productList: Product[]}) => {
+const ProductList = ({productList} : {productList: Product[]}) => {
 
     return(
         <main className="products">
@@ -11,11 +11,11 @@ export const Products = ({productList} : {productList: Product[]}) => {
                 return (
                     <li key={product.id} className="product">
                         <img src={product.thumbnail} alt={`Image of ${product.title}`}></img>
-                        <div>
+                        <div className="product-info">
                             <h3 className="product-title">{product.title}</h3>
                             <span className="product-description">{product.description}</span>
                             <span className="product-stock">{`Stock: ${product.stock}`}</span>
-                            <span className="product-price">{`Price: ${product.price}`}</span>
+                            <span className="product-price">{`Price: $${product.price}`}</span>
                         </div>
                         <div>
                             <button>
@@ -30,4 +30,18 @@ export const Products = ({productList} : {productList: Product[]}) => {
         </main>
     )
 
+}
+
+export const Products = ({productList, error} : {
+    productList: Product[], 
+    error: string
+}) => {
+
+    const hasProducts = productList.length > 0
+
+    return (
+        hasProducts
+        ? <ProductList productList={productList}/>
+        : <p>{error}</p>
+    )
 }

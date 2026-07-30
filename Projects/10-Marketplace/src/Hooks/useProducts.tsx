@@ -6,6 +6,7 @@ export const useProducts = () => {
     const [products, setProducts] = useState<Product[]>([])
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(true)
+    const API = 'https://dummyjson.com/products'
 
     const getProducts = async ({endpoint} : {endpoint: string}) => {
 
@@ -41,7 +42,12 @@ export const useProducts = () => {
         }
     }
 
-    return {products, error, loading, getProducts}
+    useEffect(() => {
+        getProducts({endpoint: API})
+    }, [])
+
+
+    return {products, error, loading}
 }
 
 
