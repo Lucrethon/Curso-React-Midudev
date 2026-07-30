@@ -32,7 +32,15 @@ export type Product = {
 
 export type AvailabilityStatus = "In Stock" | "Low Stock";
 
-export type Category = "beauty" | "fragrances" | "furniture" | "groceries";
+export type Category = "beauty" | "fragrances" | "furniture" | "groceries" | "all";
+
+export const PRODUCT_CATEGORY = {
+    beauty: 'beauty',
+    fragrances: 'fragrances',
+    furniture: 'furniture',
+    groceries: 'groceries',
+    all: 'all'
+}
 
 export type Dimensions = {
     width:  number;
@@ -60,4 +68,9 @@ export type Review = {
     date:          string;
     reviewerName:  string;
     reviewerEmail: string;
+}
+
+export type Filter = {
+    category: Category,
+    maxPrice: number
 }

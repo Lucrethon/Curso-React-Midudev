@@ -13,7 +13,7 @@ const ProductList = ({productList} : {productList: Product[]}) => {
                         <img src={product.thumbnail} alt={`Image of ${product.title}`}></img>
                         <div className="product-info">
                             <h3 className="product-title">{product.title}</h3>
-                            <span className="product-description">{product.description}</span>
+                            {/* <span className="product-description">{product.description}</span> */}
                             <span className="product-stock">{`Stock: ${product.stock}`}</span>
                             <span className="product-price">{`Price: $${product.price}`}</span>
                         </div>

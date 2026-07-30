@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import type { Product, ProductList } from "../types";
 
 export const useProducts = () => {
@@ -37,10 +37,12 @@ export const useProducts = () => {
             setLoading(false)
         }
 
+        // console.log("la funcion se ejecuto")
+
+
         return () => {
             controller.abort()
-        }
-    }
+        }    }
 
     useEffect(() => {
         getProducts({endpoint: API})
