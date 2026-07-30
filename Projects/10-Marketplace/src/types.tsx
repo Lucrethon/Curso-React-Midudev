@@ -41,8 +41,8 @@ export type Dimensions = {
 }
 
 export type Meta = {
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
     barcode:   string;
     qrCode:    string;
 }
@@ -57,7 +57,7 @@ export type ReturnPolicy =
 export type Review = {
     rating:        number;
     comment:       string;
-    date:          Date;
+    date:          string;
     reviewerName:  string;
     reviewerEmail: string;
 }
