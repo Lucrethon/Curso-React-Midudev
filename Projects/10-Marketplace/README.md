@@ -1,6 +1,8 @@
 Ecommerce
 
-1. Muestra una lista de productos que vienen de un JSON
+1. Muestra una lista de productos que vienen en la siguiente API: 
+
+API: https://dummyjson.com/products
 
 Añade un filtro por categoría
 Añade un filtro por precio
