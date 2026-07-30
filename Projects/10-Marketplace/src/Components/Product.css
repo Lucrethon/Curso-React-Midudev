@@ -45,3 +45,10 @@
   object-fit: cover;
   background: #fff;
 }
+
+.product-info {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem,
+}
