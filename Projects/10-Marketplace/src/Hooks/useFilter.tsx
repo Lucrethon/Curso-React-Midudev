@@ -24,5 +24,5 @@ export const useFilter = ({products} : {products : Product[]}) => {
     
         const filteredProducts = filterProducts({products})
 
-        return {filteredProducts, setFilters}
+        return {filteredProducts, setFilters, filters}
 }

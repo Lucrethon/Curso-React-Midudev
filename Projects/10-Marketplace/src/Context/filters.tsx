@@ -5,7 +5,8 @@ import type { Filter } from "../types";
 // Todos los componentes que esten dentro de <Context.Provider value={prop}> van a poder utilizar el value (un estado, función, setter, etc)
 
 type FilterContextType = {
-    setFilters : React.Dispatch<React.SetStateAction<Filter>>
+    setFilters : React.Dispatch<React.SetStateAction<Filter>>,
+    filters : Filter
 }
 
 // Context: 
@@ -15,12 +16,13 @@ const FilterContext = createContext<FilterContextType | null>(null);
 type FilterProviderProps = {
     children : ReactNode,
     setFilters : React.Dispatch<React.SetStateAction<Filter>>
+    filters : Filter
 }
 // para simplificar, aquí se crea un componente en donde ya esta el Context.Provider
 // se le pasa el children (componente hijo que va a utilizar la prop) y la prop necesaria 
-export const FilterProvider = ({children, setFilters} : FilterProviderProps) => {
+export const FilterProvider = ({children, setFilters, filters} : FilterProviderProps) => {
     return (
-        <FilterContext.Provider value={{setFilters}}>
+        <FilterContext.Provider value={{setFilters, filters}}>
             {children}
         </FilterContext.Provider>
     )

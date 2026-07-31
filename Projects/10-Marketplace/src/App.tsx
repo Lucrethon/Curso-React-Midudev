@@ -16,19 +16,20 @@ const App = () => {
     // fetching de productos 
     const {products, error, loading} = useProducts()
     // productos filtrados
-    const {filteredProducts, setFilters} = useFilter({products})
+    const {filteredProducts, setFilters, filters} = useFilter({products})
 
     return (
         <>
-            <FilterProvider setFilters={setFilters}>
+            <FilterProvider setFilters={setFilters} filters={filters}>
                 <Header/>
+            
+                {
+                    loading
+                    ? <span>Cargando...</span>
+                    : <Products productList={filteredProducts} error={error}/>
+                }
+                <Footer/>
             </FilterProvider>
-            {
-                loading
-                ? <span>Cargando...</span>
-                : <Products productList={filteredProducts} error={error}/>
-            }
-            <Footer/>
 
         </>
     )
