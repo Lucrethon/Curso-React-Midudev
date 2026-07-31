@@ -33,7 +33,7 @@ export const FilterProvider = ({children, setFilters} : FilterProviderProps) => 
 // if (!context) return null; const { props } = context  
 // return context 
 
-export const useFilter = () => {
+export const useFilterContext = () => {
     const context = useContext(FilterContext)
 
     if (!context) {

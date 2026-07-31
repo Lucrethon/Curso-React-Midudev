@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { PRODUCT_CATEGORY, type Category } from "../types"
-import { useFilter } from "../Context/filters"
-import { useId } from "react" // componente para identificadores, sobretodo en label 
+import { useFilterContext } from "../Context/filters"
+import { useId } from "react" // componente para identificadores, sobretodo en label. NO SIRVE PARA KEY EN ITERACIONES CON MAP
 
 const Options = () => {
     return (
@@ -18,7 +18,7 @@ export const Filters = () => {
     // para mostrar el rango de precio en el filtro de precio se necesita un estado
     const [maxPrice, setMaxPrice] = useState(0)
     // hook personalizado con el useContext, listo para usar la prop que hay dentro 
-    const { setFilters } = useFilter()
+    const { setFilters } = useFilterContext()
 
     const maxPriceFilterId = useId()
     const categoryFilterId = useId()
