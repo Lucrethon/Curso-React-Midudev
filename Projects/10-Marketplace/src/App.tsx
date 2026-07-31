@@ -2,9 +2,9 @@
 import { Products } from "./Components/Products"
 import { useProducts } from "./Hooks/useProducts"
 import { Header } from "./Components/Header"
-import { FilterProvider } from "./Context/filters"
-import { useFilter } from "./Hooks/useFilter"
 import { Footer } from "./Components/Footer"
+// import { useFilter } from "./Hooks/useFilter"
+import { useFilterContext } from "./Context/filters"
 // import mockProducts from "./Mocks/products.json"
 
 
@@ -14,22 +14,22 @@ const App = () => {
     // const productList = mockProducts as ProductList
     
     // fetching de productos 
-    const {products, error, loading} = useProducts()
-    // productos filtrados
-    const {filteredProducts, setFilters, filters} = useFilter({products})
+    const { error, loading } = useProducts()
+
+    // productos ya filtrados
+    // CUALQUIER COMPONENTE QUE USE usefilterContext DEBE ESTAR ENCAPSULADO POR EL PROVIDER
+    // INCLUSIVE APP 
+    const {filteredProducts} = useFilterContext()
 
     return (
         <>
-            <FilterProvider setFilters={setFilters} filters={filters}>
-                <Header/>
-            
-                {
-                    loading
-                    ? <span>Cargando...</span>
-                    : <Products productList={filteredProducts} error={error}/>
-                }
-                <Footer/>
-            </FilterProvider>
+            <Header/>
+            {
+                loading
+                ? <span>Cargando...</span>
+                : <Products productList={filteredProducts} error={error}/>
+            }
+            <Footer/>
 
         </>
     )
