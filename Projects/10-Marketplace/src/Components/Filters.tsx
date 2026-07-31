@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { PRODUCT_CATEGORY, type Category } from "../types"
 import { useFilter } from "../Context/filters"
+import { useId } from "react" // componente para identificadores, sobretodo en label 
 
 const Options = () => {
     return (
@@ -16,8 +17,11 @@ export const Filters = () => {
 
     // para mostrar el rango de precio en el filtro de precio se necesita un estado
     const [maxPrice, setMaxPrice] = useState(0)
-    // hook personalizado con el useContext 
+    // hook personalizado con el useContext, listo para usar la prop que hay dentro 
     const { setFilters } = useFilter()
+
+    const maxPriceFilterId = useId()
+    const categoryFilterId = useId()
 
     const handleChangePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newPrice = Number(event.currentTarget.value)
@@ -43,9 +47,9 @@ export const Filters = () => {
     return (
         <section className="filters">
             <div>
-                <label htmlFor="price">Max Price</label>
+                <label htmlFor={maxPriceFilterId}>Max Price</label>
                 <input
-                id='price'
+                id={maxPriceFilterId}
                 type="range"
                 min={0}
                 max={3000}
@@ -55,8 +59,8 @@ export const Filters = () => {
             </div>
 
             <div>
-                <label htmlFor="category">Category</label>
-                <select id="category" onChange={handleChangeCategory}>
+                <label htmlFor={categoryFilterId}>Category</label>
+                <select id={categoryFilterId} onChange={handleChangeCategory}>
                     <Options/>
                 </select>
             </div>
