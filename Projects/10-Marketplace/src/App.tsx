@@ -15,7 +15,7 @@ const App = () => {
     const {products, error, loading} = useProducts()
     const [filters, setFilters] = useState<Filter>({
         category: PRODUCT_CATEGORY.all as Category, 
-        maxPrice: 1000
+        maxPrice: 3000
     })
 
     const filterProducts = ({products}: {products: Product[]}) => {
