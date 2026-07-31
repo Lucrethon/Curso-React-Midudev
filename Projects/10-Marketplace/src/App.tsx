@@ -4,6 +4,7 @@ import { useProducts } from "./Hooks/useProducts"
 import { Header } from "./Components/Header"
 import { FilterProvider } from "./Context/filters"
 import { useFilter } from "./Hooks/useFilter"
+import { Footer } from "./Components/Footer"
 // import mockProducts from "./Mocks/products.json"
 
 
@@ -21,14 +22,14 @@ const App = () => {
         <>
             <FilterProvider setFilters={setFilters}>
                 <Header/>
-                <div>
-                    {
-                        loading
-                        ? <span>Cargando...</span>
-                        : <Products productList={filteredProducts} error={error}/>
-                    }
-                </div>
             </FilterProvider>
+            {
+                loading
+                ? <span>Cargando...</span>
+                : <Products productList={filteredProducts} error={error}/>
+            }
+            <Footer/>
+
         </>
     )
 }
