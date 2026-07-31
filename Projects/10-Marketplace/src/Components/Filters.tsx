@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { PRODUCT_CATEGORY } from "../types"
+import { useFilter } from "../Context/filters"
 
 const Options = () => {
     return (
@@ -15,6 +16,7 @@ export const Filters = () => {
 
     // para mostrar el rango de precio en el filtro de precio se necesita un estado
     const [maxPrice, setMaxPrice] = useState(0)
+    const { setFilters } = useFilter()
 
     const handleChangePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
         setMaxPrice(Number(event.currentTarget.value))

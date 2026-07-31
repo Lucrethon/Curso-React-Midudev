@@ -34,7 +34,7 @@ const App = () => {
 
     return (
         <>
-            <FilterProvider setFilter={setFilters}>
+            <FilterProvider setFilters={setFilters}>
                 <Header/>
                 <div>
                     {
