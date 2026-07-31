@@ -27,7 +27,7 @@ const FilterContext = createContext<FilterContextType | null>(null);
 // se le pasa el children (componente hijo que va a utilizar la prop) y la prop necesaria 
 // un provider al final es un componente 
 export const FilterProvider = ({children} : {children: ReactNode}) => {
-    
+
     const {products} = useProducts()
     const { filteredProducts, setFilters, filters} = useFilter({products})
 
@@ -47,6 +47,7 @@ export const FilterProvider = ({children} : {children: ReactNode}) => {
 
 export const useFilterContext = () => {
     const context = useContext(FilterContext)
+    // el USE CONTEXT ES PARA ESTADOS QUE NO ESTAN CAMBIANDO CONSTANTEMENTE (filtros, modo claro/oscuro, inicios de sesion, etc)
 
     if (!context) {
         throw new Error('useFilter se debe usar dentro de un FilterContextProvider')

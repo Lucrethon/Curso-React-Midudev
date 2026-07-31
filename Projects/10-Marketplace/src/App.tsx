@@ -16,9 +16,11 @@ const App = () => {
     // fetching de productos 
     const { error, loading } = useProducts()
 
-    // productos ya filtrados
+    
     // CUALQUIER COMPONENTE QUE USE usefilterContext DEBE ESTAR ENCAPSULADO POR EL PROVIDER
     // INCLUSIVE APP 
+
+    // productos ya filtrados
     const {filteredProducts} = useFilterContext()
 
     return (

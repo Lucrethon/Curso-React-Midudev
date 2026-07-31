@@ -16,9 +16,9 @@ const Options = () => {
 export const Filters = () => {
 
     // para mostrar el rango de precio en el filtro de precio se necesita un estado
-    const [maxPrice, setMaxPrice] = useState(0)
+
     // hook personalizado con el useContext, listo para usar la prop que hay dentro 
-    const { setFilters } = useFilterContext()
+    const { filters, setFilters } = useFilterContext()
 
     const maxPriceFilterId = useId()
     const categoryFilterId = useId()
@@ -29,7 +29,6 @@ export const Filters = () => {
         // ya que React reutiliza los objetos de evento (SyntheticEvent) por razones de rendimiento. 
         // Una vez que la función del manejador de eventos ha finalizado su ejecución, React anula las propiedades del objeto event para poder reutilizarlo.
         // event se limpia y event.currentTarget es null.
-        setMaxPrice(newPrice)
         setFilters(prevState => ({
             ...prevState,
             maxPrice: newPrice
@@ -54,8 +53,9 @@ export const Filters = () => {
                 min={0}
                 max={3000}
                 onChange={handleChangePrice}
+                value={filters.maxPrice}
                 ></input>
-                <span>{maxPrice}</span>
+                <span>{filters.maxPrice}</span>
             </div>
 
             <div>
