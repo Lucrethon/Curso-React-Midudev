@@ -6,6 +6,7 @@ export const Cart = ({cartList} : {cartList : Product[]}) => {
     return (
     <div className="modal-window">
         <div className="modal-content">
+            <h1>Tu carrito:</h1>
             <ul>
                 {cartList.map((product: Product) => {
                     return (
