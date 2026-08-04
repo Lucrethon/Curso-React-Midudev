@@ -6,6 +6,7 @@ import { Footer } from "./Components/Footer"
 // import { useFilter } from "./Hooks/useFilter"
 import { useFilterContext } from "./Context/filters"
 // import mockProducts from "./Mocks/products.json"
+import { FooterCart } from "./Components/FooterCart"
 
 
 
@@ -32,6 +33,7 @@ const App = () => {
                 : <Products productList={filteredProducts} error={error}/>
             }
             <Footer/>
+            <FooterCart/>
 
         </>
     )
