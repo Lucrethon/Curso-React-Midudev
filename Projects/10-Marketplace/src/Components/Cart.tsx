@@ -1,5 +1,6 @@
 import { RemoveFromCartIcon, ClearCartIcon } from "./Icons";
 import type { Product } from "../types";
+import './Cart.css'
 
 export const Cart = ({cartList} : {cartList : Product[]}) => {
 
@@ -25,11 +26,11 @@ export const Cart = ({cartList} : {cartList : Product[]}) => {
                     )
                 })}
             </ul>
-        </div>
-        <div>
-            <button>
-                <ClearCartIcon/>
-            </button>
+            <div>
+                <button>
+                    <ClearCartIcon/>
+                </button>
+            </div>
         </div>
     </div>
     )
