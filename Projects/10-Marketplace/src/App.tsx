@@ -7,6 +7,8 @@ import { Footer } from "./Components/Footer"
 import { useFilterContext } from "./Context/filters"
 // import mockProducts from "./Mocks/products.json"
 import { FooterCart } from "./Components/FooterCart"
+import { Cart } from "./Components/Cart"
+import { useModalContext } from "./Context/modal"
 
 
 
@@ -23,6 +25,7 @@ const App = () => {
 
     // productos ya filtrados
     const {filteredProducts} = useFilterContext()
+    const {isModalOpen} = useModalContext()
 
     return (
         <>
@@ -34,6 +37,9 @@ const App = () => {
             }
             <Footer/>
             <FooterCart/>
+            {isModalOpen && (
+                <Cart cartList={filteredProducts}/>
+            )}
 
         </>
     )
