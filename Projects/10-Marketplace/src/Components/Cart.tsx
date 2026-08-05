@@ -32,6 +32,10 @@ export const Cart = ({cartList} : {cartList : Product[]}) => {
                             <div className="product-info">
                                 <h3 className="product-title">{product.title}</h3>
                                 <span className="product-price">{`Price: $${product.price}`}</span>
+                                <div className="product-quantity">
+                                    <span>Quantity: 1</span>
+                                    <button>+</button>
+                                </div>
                             </div>
                             <div className="remove-item-button">
                                 <button>
