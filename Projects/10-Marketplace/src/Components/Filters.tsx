@@ -1,4 +1,3 @@
-import React, { useState } from "react"
 import { PRODUCT_CATEGORY, type Category } from "../types"
 import { useFilterContext } from "../Context/filters"
 import { useId } from "react" // componente para identificadores, sobretodo en label. NO SIRVE PARA KEY EN ITERACIONES CON MAP
