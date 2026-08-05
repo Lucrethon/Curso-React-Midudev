@@ -5,11 +5,10 @@ import { useModalContext } from "../Context/modal";
 
 export const FooterCart = () => {
 
-    const { isModalOpen, setIsModalOpen} = useModalContext()
+    const { setIsModalOpen} = useModalContext()
 
     const handleClick = () => {
-        const value = isModalOpen
-        setIsModalOpen(!value)
+        setIsModalOpen(prevState => !prevState)
     }
 
     return (

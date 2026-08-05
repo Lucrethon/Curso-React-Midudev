@@ -22,7 +22,7 @@ export const useModalContext = () => {
     const context = useContext(ModalContext)
 
     if (!context) {
-        throw new Error('useFilter se debe usar dentro de un ModalContextProvider')
+        throw new Error('useModalContext se debe usar dentro de un ModalContextProvider')
     }
 
     return context
