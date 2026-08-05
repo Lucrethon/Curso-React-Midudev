@@ -5,7 +5,7 @@ import { useCartContext } from "../Context/cart"
 
 const ProductList = ({productList} : {productList: Product[]}) => {
 
-    const {addToCart, isProductOnCart} = useCartContext()
+    const {addToCart, isProductOnCart, clearAllItems} = useCartContext()
 
     return(
         <main className="products">
@@ -17,17 +17,14 @@ const ProductList = ({productList} : {productList: Product[]}) => {
                         <div className="product-info">
                             <h3 className="product-title">{product.title}</h3>
                             {/* <span className="product-description">{product.description}</span> */}
-                            <span className="product-stock">{`Stock: ${product.stock}`}</span>
                             <span className="product-price">{`Price: $${product.price}`}</span>
                         </div>
                         <div>
-                            <button onClick={() => addToCart(product)}>
-                                {
-                                    isProductOnCart(product)
-                                    ? <RemoveFromCartIcon/>
-                                    : <AddToCartIcon/>
-                                }
-                            </button>
+                            {
+                                isProductOnCart(product)
+                                ? <button style={{backgroundColor: "red"}} onClick={() => clearAllItems(product)}><RemoveFromCartIcon/></button>
+                                : <button style={{backgroundColor: "blue"}} onClick={() => addToCart(product)}><AddToCartIcon/></button>
+                            }
                         </div>
                     </li>
                 )
