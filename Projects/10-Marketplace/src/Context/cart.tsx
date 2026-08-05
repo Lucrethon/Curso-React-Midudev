@@ -9,6 +9,7 @@ type CartContextType = {
     removeFromCart : (product: CartItem) => void
     clearCart : () => void
     isProductOnCart : (product: Product) => boolean 
+    clearAllItems : (product : CartItem | Product) => void
 }
 
 const CartContext = createContext<CartContextType | null>(null)
@@ -49,7 +50,7 @@ export const CartProvider = ({children} : {children: ReactNode}) => {
         ))
         }
 
-        else setCartList(prevState => prevState.filter(item => item.id !== product.id))
+        else clearAllItems(product)
         // filtra todos mos productos que NO tengan el id del producto que se quiere sacar 
         // filter crea un array nuevo, por lo que no muta el estado original 
     }
@@ -63,6 +64,10 @@ export const CartProvider = ({children} : {children: ReactNode}) => {
         setCartList([])
     }
 
+    const clearAllItems = (product : CartItem | Product) => {
+        setCartList(prevState => prevState.filter(item => item.id !== product.id))
+    }   
+
     return (
         <CartContext.Provider value={{
         cartList, 
@@ -70,7 +75,8 @@ export const CartProvider = ({children} : {children: ReactNode}) => {
         addToCart, 
         removeFromCart, 
         clearCart, 
-        isProductOnCart
+        isProductOnCart, 
+        clearAllItems
         }}>
             {children}
         </CartContext.Provider>
