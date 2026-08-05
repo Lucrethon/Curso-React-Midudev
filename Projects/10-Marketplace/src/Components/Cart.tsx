@@ -1,12 +1,11 @@
 import { RemoveFromCartIcon, ClearCartIcon } from "./Icons";
-import type { Product, CartItem } from "../types";
 import './Cart.css'
 import { useModalContext } from "../Context/modal";
 import { useCartContext } from "../Context/cart";
 
 export const Cart = () => {
 
-    const {cartList, removeFromCart, addToCart} = useCartContext()
+    const {cartList, removeFromCart, addToCart, clearCart, clearAllItems} = useCartContext()
 
     const { setIsModalOpen} = useModalContext()
     const handleClick = () => {
@@ -42,7 +41,7 @@ export const Cart = () => {
                                 </div>
                             </div>
                             <div className="remove-item-button">
-                                <button onClick={() => removeFromCart(product)}>
+                                <button onClick={() => clearAllItems(product)}>
                                     <RemoveFromCartIcon/>
                                 </button>
                             </div>
@@ -55,7 +54,7 @@ export const Cart = () => {
                     <strong>{`Total: $${totalPrice()}`}</strong>
                 </div>
                 <div className="buttons-container">
-                    <button>
+                    <button onClick={clearCart}>
                         <ClearCartIcon/>
                     </button>
                     <button onClick={handleClick}>Cerrar</button>
