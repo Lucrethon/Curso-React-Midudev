@@ -1,3 +1,5 @@
+import { Products } from "./Components/Products";
+
 export type ProductList = {
     products: Product[];
     total:    number;
@@ -73,4 +75,8 @@ export type Review = {
 export type Filter = {
     category: Category,
     maxPrice: number
+}
+
+export type CartItem = Product & {
+    quantity : number
 }
