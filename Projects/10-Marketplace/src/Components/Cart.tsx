@@ -1,9 +1,12 @@
 import { RemoveFromCartIcon, ClearCartIcon } from "./Icons";
-import type { Product } from "../types";
+import type { Product, CartItem } from "../types";
 import './Cart.css'
 import { useModalContext } from "../Context/modal";
+import { useCartContext } from "../Context/cart";
 
-export const Cart = ({cartList} : {cartList : Product[]}) => {
+export const Cart = () => {
+
+    const {cartList, removeFromCart, addToCart} = useCartContext()
 
     const { setIsModalOpen} = useModalContext()
     const handleClick = () => {
@@ -12,8 +15,8 @@ export const Cart = ({cartList} : {cartList : Product[]}) => {
 
     const totalPrice = () => {
         let total = 0
-        cartList.forEach((product: Product) => {
-            total += product.price
+        cartList.forEach((product) => {
+            total += (product.price * product.quantity)
         })
         return total.toFixed(2)
     }
@@ -25,7 +28,7 @@ export const Cart = ({cartList} : {cartList : Product[]}) => {
                 <h1>Tu carrito:</h1>
             </div>
             <ul>
-                {cartList.map((product: Product) => {
+                {cartList.map((product) => {
                     return (
                         <li key={product.id}>
                             <img src={product.thumbnail} alt={`Image of ${product.title}`}></img>
@@ -33,12 +36,13 @@ export const Cart = ({cartList} : {cartList : Product[]}) => {
                                 <h3 className="product-title">{product.title}</h3>
                                 <span className="product-price">{`Price: $${product.price}`}</span>
                                 <div className="product-quantity">
-                                    <span>Quantity: 1</span>
-                                    <button>+</button>
+                                    <button onClick={() => removeFromCart(product)}>-</button>
+                                    <span>{product.quantity}</span>
+                                    <button onClick={() => addToCart(product)}>+</button>
                                 </div>
                             </div>
                             <div className="remove-item-button">
-                                <button>
+                                <button onClick={() => removeFromCart(product)}>
                                     <RemoveFromCartIcon/>
                                 </button>
                             </div>

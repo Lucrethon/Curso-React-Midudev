@@ -9,6 +9,7 @@ import { useFilterContext } from "./Context/filters"
 import { FooterCart } from "./Components/FooterCart"
 import { Cart } from "./Components/Cart"
 import { useModalContext } from "./Context/modal"
+import { CartProvider } from "./Context/cart"
 
 
 
@@ -29,6 +30,7 @@ const App = () => {
 
     return (
         <>
+            <CartProvider>
             <Header/>
             {
                 loading
@@ -38,9 +40,9 @@ const App = () => {
             <Footer/>
             <FooterCart/>
             {isModalOpen && (
-                <Cart cartList={filteredProducts}/>
+                <Cart/>
             )}
-
+            </CartProvider>
         </>
     )
 }

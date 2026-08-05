@@ -1,10 +1,9 @@
 import React, { createContext, type ReactNode } from "react";
 import { useState, useContext } from "react";
 import type { Product, CartItem } from "../types";
-import { Products } from "../Components/Products";
 
 type CartContextType = {
-    cartList: Product[], 
+    cartList: CartItem[], 
     setCartList: React.Dispatch<React.SetStateAction<CartItem[]>>,
     addToCart : (product: Product) => void
     removeFromCart : (product: CartItem) => void
@@ -33,7 +32,7 @@ export const CartProvider = ({children} : {children: ReactNode}) => {
             {             // 2. Agrega este NUEVO objeto (product) al final del arreglo
                 ...product, 
                 quantity: 1 // 3. añadiendole la propiedad quantity
-            }
+            } as CartItem
         ])
 
     }

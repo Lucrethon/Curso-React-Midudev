@@ -1,8 +1,11 @@
 import type { Product } from "../types"
-import { AddToCartIcon } from "./Icons"
+import { AddToCartIcon, RemoveFromCartIcon } from "./Icons"
 import "./Product.css"
+import { useCartContext } from "../Context/cart"
 
 const ProductList = ({productList} : {productList: Product[]}) => {
+
+    const {addToCart, isProductOnCart} = useCartContext()
 
     return(
         <main className="products">
@@ -18,8 +21,12 @@ const ProductList = ({productList} : {productList: Product[]}) => {
                             <span className="product-price">{`Price: $${product.price}`}</span>
                         </div>
                         <div>
-                            <button>
-                                <AddToCartIcon/>
+                            <button onClick={() => addToCart(product)}>
+                                {
+                                    isProductOnCart(product)
+                                    ? <RemoveFromCartIcon/>
+                                    : <AddToCartIcon/>
+                                }
                             </button>
                         </div>
                     </li>
