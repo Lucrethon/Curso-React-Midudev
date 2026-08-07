@@ -2,10 +2,36 @@ import { RemoveFromCartIcon, ClearCartIcon } from "./Icons";
 import './Cart.css'
 import { useModalContext } from "../Context/modal";
 import { useCartContext } from "../Context/cart";
+import type { CartItem } from "../types";
+
+const CartItem = ({product} : {product : CartItem}) => {
+
+    const {removeFromCart, addToCart, clearAllItems} = useCartContext()
+
+    return (
+        <li key={product.id}>
+            <img src={product.thumbnail} alt={`Image of ${product.title}`}></img>
+            <div className="product-info">
+                <h3 className="product-title">{product.title}</h3>
+                <span className="product-price">{`Price: $${product.price}`}</span>
+                <div className="product-quantity">
+                    <button onClick={() => removeFromCart(product)}>-</button>
+                    <span>{product.quantity}</span>
+                    <button onClick={() => addToCart(product)}>+</button>
+                </div>
+            </div>
+            <div className="remove-item-button">
+                <button onClick={() => clearAllItems(product)}>
+                    <RemoveFromCartIcon/>
+                </button>
+            </div>
+        </li>
+    )   
+}
 
 export const Cart = () => {
 
-    const {cartList, removeFromCart, addToCart, clearCart, clearAllItems} = useCartContext()
+    const {cartList, clearCart} = useCartContext()
 
     const { setIsModalOpen} = useModalContext()
     const handleClick = () => {
@@ -29,23 +55,7 @@ export const Cart = () => {
             <ul>
                 {cartList.map((product) => {
                     return (
-                        <li key={product.id}>
-                            <img src={product.thumbnail} alt={`Image of ${product.title}`}></img>
-                            <div className="product-info">
-                                <h3 className="product-title">{product.title}</h3>
-                                <span className="product-price">{`Price: $${product.price}`}</span>
-                                <div className="product-quantity">
-                                    <button onClick={() => removeFromCart(product)}>-</button>
-                                    <span>{product.quantity}</span>
-                                    <button onClick={() => addToCart(product)}>+</button>
-                                </div>
-                            </div>
-                            <div className="remove-item-button">
-                                <button onClick={() => clearAllItems(product)}>
-                                    <RemoveFromCartIcon/>
-                                </button>
-                            </div>
-                        </li>
+                        <CartItem product={product}/>
                     )
                 })}
             </ul>

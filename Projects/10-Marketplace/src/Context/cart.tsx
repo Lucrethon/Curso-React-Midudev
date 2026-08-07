@@ -1,10 +1,11 @@
-import React, { createContext, type ReactNode } from "react";
-import { useState, useContext } from "react";
+import { createContext, type ReactNode } from "react";
+import { useContext } from "react";
 import type { Product, CartItem } from "../types";
+import { useReducer } from "react";
+import { cartReducer, initialState } from "../reducers/cartReducer";
 
 type CartContextType = {
     cartList: CartItem[], 
-    setCartList: React.Dispatch<React.SetStateAction<CartItem[]>>,
     addToCart : (product: Product) => void
     removeFromCart : (product: CartItem) => void
     clearCart : () => void
@@ -12,66 +13,44 @@ type CartContextType = {
     clearAllItems : (product : CartItem | Product) => void
 }
 
+
 const CartContext = createContext<CartContextType | null>(null)
 
 export const CartProvider = ({children} : {children: ReactNode}) => {
 
-    const [cartList, setCartList] = useState<CartItem[]>([])
+    const [state, dispatch] = useReducer(cartReducer, initialState)
+    // dispatch se encarga de enviar las acciones al reducer 
 
-    const addToCart = (product: Product) => {
+    // const [cartList, setCartList] = useState<CartItem[]>([])
 
+    const addToCart = (product: Product) => dispatch({
+        type: 'ADD_TO_CART', 
+        payload: product
+    })
 
-        if (isProductOnCart(product)) { // si el rpoducto ya existe en el carrito, solo se actualiza la cantidad 
-            setCartList(prevState => prevState.map(
-                (item) => item.id === product.id
-                ? {... item, quantity: item.quantity + 1}
-                : item
-            ))
-        }
-        else setCartList(prevState => [
-            ...prevState, // 1. Desempaqueta todos los elementos que YA estaban en el carrito
-            {             // 2. Agrega este NUEVO objeto (product) al final del arreglo
-                ...product, 
-                quantity: 1 // 3. añadiendole la propiedad quantity
-            } as CartItem
-        ])
+    const removeFromCart = (product: CartItem) => dispatch({
+        type: 'REMOVE_FROM_CART',
+        payload: product
+    })
 
-    }
+    const clearCart = () => dispatch({
+        type: 'CLEAR_CART'
+    })
 
-    const removeFromCart = (product: CartItem) => {
+    const clearAllItems = (product : CartItem | Product) => dispatch({
+        type: 'CLEAR_ALL_ITEMS', 
+        payload: product
+    })
 
-        //  const productInCartIndex = cartList.findLastIndex((item) => item.id == product.id) // number
-
-        if (product.quantity > 1) {
-            setCartList(prevState => prevState.map(
-                (item) => item.id === product.id
-                ? {... item, quantity: item.quantity - 1}
-                : item
-        ))
-        }
-
-        else clearAllItems(product)
-        // filtra todos mos productos que NO tengan el id del producto que se quiere sacar 
-        // filter crea un array nuevo, por lo que no muta el estado original 
-    }
 
     const isProductOnCart = (product: Product) => {
-        const productInCart = cartList.find((item) => item.id === product.id) // falsy or truty
+        const productInCart = state.find((item) => item.id === product.id) // falsy or truty
         return !!productInCart
     }
 
-    const clearCart = () => {
-        setCartList([])
-    }
-
-    const clearAllItems = (product : CartItem | Product) => {
-        setCartList(prevState => prevState.filter(item => item.id !== product.id))
-    }   
-
     return (
         <CartContext.Provider value={{
-        cartList, 
-        setCartList, 
+        cartList: state, 
         addToCart, 
         removeFromCart, 
         clearCart, 
