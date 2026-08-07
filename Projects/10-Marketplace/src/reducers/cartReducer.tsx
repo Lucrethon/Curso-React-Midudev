@@ -73,7 +73,7 @@ export const cartReducer = (state: CartItem[], action: CartAction) => {
             if (isProductOnCart(product)) { // si el rpoducto ya existe en el carrito, solo se actualiza la cantidad 
                 return state.map(
                     (item) => item.id === product.id
-                    ? {... item, quantity: item.quantity + 1}
+                    ? {... item, quantity: item.quantity + 1} // desempaqueto item y solo cambio la propiedad quantity 
                     : item
                 )
             }
@@ -81,7 +81,7 @@ export const cartReducer = (state: CartItem[], action: CartAction) => {
                 ...state,       // 1. Desempaqueta todos los elementos que YA estaban en el carrito
                 {               // 2. Agrega este NUEVO objeto (product) al final del arreglo
                     ...product, 
-                    quantity: 1 // 3. añadiendole la propiedad quantity
+                    quantity: 1 // 3. añadiendole la propiedad quantity (y asi se convierte en type CartItem)
                 } as CartItem
             ]
         }
