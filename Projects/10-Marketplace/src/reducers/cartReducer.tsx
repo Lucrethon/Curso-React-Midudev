@@ -1,8 +1,8 @@
 import type { CartItem, Product } from "../types"
 
 type AddToCart = {
-    type: 'ADD_TO_CART'
-    payload: Product
+    type: 'ADD_TO_CART' // el tipo de accion que se va a realizar
+    payload: Product // el objeto que necesita esa accion para poder realizarse 
 } 
 
 type RemoveFromCart = {
@@ -27,7 +27,29 @@ type CartAction =
 
 
 export const initialState = [] as CartItem[]
+
+export const init = () => { 
+    // esta funcion retorna el estado inicial que yo quiera que este
+    // Si calcular el estado inicial es una operación costosa (leer de localStorage, procesar un array grande), 
+    // pasar esta función asegura que esa operación costosa se realiza en el primer render 
+    const localStorage = window.localStorage.getItem('cart')
+    return localStorage ? JSON.parse(localStorage) : initialState
+
+}
+
 export const cartReducer = (state: CartItem[], action: CartAction) => {
+
+    // si fuera solamente JS: 
+    // const {type: actionType, payload: actionPayload} = action
+
+    // y para no utilizar un string, se haría lo siguiente: 
+
+    // const CART_ACTION_TYPES = {
+    //     ADD_TO_CART : 'ADD_TO_CART',
+    //     REMOVE_FROM_CART: 'REMOVE_FROM_CART',
+    //     CLEAR_CART: 'CLEAR_CART'
+    //     ...
+    // }
 
 
     const isProductOnCart = (product: Product) => {
@@ -35,7 +57,7 @@ export const cartReducer = (state: CartItem[], action: CartAction) => {
         return !!productInCart
     }
 
-    switch (action.type) {
+    switch (action.type) { // y aqui se utilizaria en enum
 
         case 'CLEAR_CART': {
             return initialState

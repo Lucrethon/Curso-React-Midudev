@@ -1,9 +1,9 @@
 import type { CartItem, Product } from "../types"
-import { useReducer } from "react"
-import { cartReducer, initialState } from "../reducers/cartReducer"
+import { useEffect, useReducer } from "react"
+import { cartReducer, initialState, init } from "../reducers/cartReducer"
 
 export const useCartReducer = () => { 
-    const [state, dispatch] = useReducer(cartReducer, initialState)
+    const [state, dispatch] = useReducer(cartReducer, initialState, init)
     // dispatch se encarga de enviar las acciones al reducer 
 
     const addToCart = (product: Product) => dispatch({
@@ -30,6 +30,10 @@ export const useCartReducer = () => {
         const productInCart = state.find((item) => item.id === product.id) // falsy or truty
         return !!productInCart
     }
+
+    useEffect(() => {
+        window.localStorage.setItem('cart', JSON.stringify(state))
+    }, [state])
 
     return {state, addToCart, removeFromCart, clearCart, clearAllItems, isProductOnCart}
 }
