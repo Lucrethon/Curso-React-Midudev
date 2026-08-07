@@ -1,5 +1,5 @@
-import React, { createContext, type ReactNode } from "react";
-import { useState, useContext } from "react";
+import { createContext, type ReactNode } from "react";
+import { useContext } from "react";
 import type { Product, CartItem } from "../types";
 import { useReducer } from "react";
 
