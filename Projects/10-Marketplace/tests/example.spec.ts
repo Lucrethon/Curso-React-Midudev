@@ -1,18 +1,25 @@
 import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+const localHost = 'http://localhost:5173/'
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+test('filter products by categoy', async ({ page }) => {
+  await page.goto(localHost); 
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+  await expect.poll(async () => {
+    return await page.getByRole('img').count()
+  }).toBeGreaterThan(2)
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+  const expectedCategory = 'beauty'
+  const filter = await page.getByRole('combobox', {name: 'Category'})
+  await filter.selectOption(expectedCategory.toUpperCase())
+  await expect(filter).toHaveValue(expectedCategory)
 
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+  const productList = page.getByRole('listitem')
+  const categories = await productList.evaluateAll(
+    products => products.map(item => item.getAttribute('data-category'))
+  )
+  const filteredProducts = categories.every(cat => cat === expectedCategory); 
+  expect(filteredProducts).toBe(true)
+
+
 });
