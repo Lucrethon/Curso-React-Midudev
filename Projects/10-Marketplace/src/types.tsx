@@ -1,5 +1,3 @@
-import { Products } from "./Components/Products";
-
 export type ProductList = {
     products: Product[];
     total:    number;
