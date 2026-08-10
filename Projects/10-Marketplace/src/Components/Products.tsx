@@ -12,7 +12,7 @@ const ProductList = ({productList} : {productList: Product[]}) => {
         <ul>
             {productList.map((product) =>{
                 return (
-                    <li key={product.id} className="product" data-category={product.category}>
+                    <li key={product.id} className="product" data-category={product.category} data-price={product.price}>
                         <img src={product.thumbnail} alt={`Image of ${product.title}`}></img>
                         <div className="product-info">
                             <h3 className="product-title">{product.title}</h3>
@@ -22,8 +22,8 @@ const ProductList = ({productList} : {productList: Product[]}) => {
                         <div>
                             {
                                 isProductOnCart(product)
-                                ? <button style={{backgroundColor: "red"}} onClick={() => clearAllItems(product)}><RemoveFromCartIcon/></button>
-                                : <button style={{backgroundColor: "blue"}} onClick={() => addToCart(product)}><AddToCartIcon/></button>
+                                ? <button style={{backgroundColor: "red"}} onClick={() => clearAllItems(product)} className="button-remove-from-cart"><RemoveFromCartIcon/></button>
+                                : <button style={{backgroundColor: "blue"}} onClick={() => addToCart(product)} className="button-add-to-cart"><AddToCartIcon/></button>
                             }
                         </div>
                     </li>
