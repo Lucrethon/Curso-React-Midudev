@@ -12,7 +12,7 @@ const ProductList = ({productList} : {productList: Product[]}) => {
         <ul>
             {productList.map((product) =>{
                 return (
-                    <li key={product.id} className="product" data-category={product.category} data-price={product.price}>
+                    <li key={product.id} className="product" data-category={product.category} data-price={product.price} data-testid='product'>
                         <img src={product.thumbnail} alt={`Image of ${product.title}`}></img>
                         <div className="product-info">
                             <h3 className="product-title">{product.title}</h3>

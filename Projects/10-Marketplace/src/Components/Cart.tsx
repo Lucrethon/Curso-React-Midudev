@@ -47,7 +47,7 @@ export const Cart = () => {
     }
 
     return (
-    <div className="modal-window">
+    <div className="modal-window" data-testid='modal-cart-window'>
         <div className="modal-content">
             <div className="cart-header">
                 <h1>Tu carrito:</h1>

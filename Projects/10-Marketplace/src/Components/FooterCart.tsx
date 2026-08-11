@@ -12,7 +12,7 @@ export const FooterCart = () => {
     }
 
     return (
-        <footer className="footer-cart">
+        <footer className="footer-cart" data-testid='footer-cart'>
             <div>
                 <button onClick={handleClick}>
                     <CartIcon/>

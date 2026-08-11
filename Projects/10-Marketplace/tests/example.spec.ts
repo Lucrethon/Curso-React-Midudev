@@ -55,3 +55,54 @@ test('filter products by price', async ({ page }) => {
   }).toBe(true)
 
 })
+
+
+test('add product to cart', async({ page }) => {
+  await page.goto(localHost)
+
+  const products = page.getByTestId('product')
+
+  // Esperar a que haya más de 6 productos cargados
+  await expect.poll(async () => {
+    return products.count()
+  }).toBeGreaterThan(6)
+
+  // const firstProduct = page.getByTestId('product').first()
+
+  const productButtons = products.getByRole('button')
+
+  // Verificacion de que todos los botones tengan la clase inicial 'button-add-to-cart'
+  await expect.poll(async () => {
+    const classNames = productButtons.evaluateAll(buttons => 
+      buttons.map(button => button.className)
+    ); 
+    return (await classNames).every(cls => cls.includes('button-add-to-cart'));
+  }).toBe(true)
+
+  // locator de los dos primeros productos
+  const button_item_1 = productButtons.nth(0) 
+  const button_item_2 = productButtons.nth(1)
+
+  // interaccion con los productos seleccionados para agregar dos productos al carrito
+  await button_item_1.click()
+  await button_item_2.click()
+
+  // verificar que despues de la interaccion, el boton tenga la clase 'button-remove-from-cart'
+  await expect(button_item_1).toHaveClass(/button-remove-from-cart/)
+  await expect(button_item_2).toHaveClass(/button-remove-from-cart/)
+
+  // verificar que el footer del carrito se muestre
+  const footerCart = page.getByTestId('footer-cart')
+  await expect(footerCart).toBeVisible()
+
+  // abrir el carrito y verificar que se muestre
+  await footerCart.getByRole('button').click()
+  const modalCartWindow = page.getByTestId('modal-cart-window')
+  await expect(modalCartWindow).toBeVisible()
+
+  // verificar que hay dos productos en el carrito 
+  const cart = modalCartWindow.getByRole('listitem')
+  await expect(cart).toHaveCount(2)
+
+
+})
