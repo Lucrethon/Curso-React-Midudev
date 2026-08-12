@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react"
+import { EVENTS } from "./types"
 
-const EVENTS = {
-    NavigationEvent : 'push state'
-}
+
 
 // Que debemos hacer para hacer una single page aplication? 
 const navigation = (href: string) => {
@@ -18,7 +17,7 @@ const navigation = (href: string) => {
 
     window.history.pushState({}, '', href)
     // crear evento personalizado para avisar que hemos cambiado de URL
-    const navigationEvent = new Event(EVENTS.NavigationEvent)
+    const navigationEvent = new Event(EVENTS.PUSHSTATE)
     // enviar el evento 
     window.dispatchEvent(navigationEvent)
 
@@ -53,16 +52,21 @@ const App = () => {
     const [currentPath, setCurrentPath] = useState(window.location.pathname)
 
     useEffect(() => {
+        // settear el state currentPath con la ubicación actual del navegador
+        // se utiliza un useEffect para que se actualice cuando cambie el estado 
         const onLocationChange = () => {
             setCurrentPath(window.location.pathname)
         }
 
         // escuchar el evento de navegación 
-        window.addEventListener(EVENTS.NavigationEvent, onLocationChange)
+        window.addEventListener(EVENTS.PUSHSTATE, onLocationChange)
+        // escuchar el evento para navegar hacia atrás o hacia adelante (evento popstate)
+        window.addEventListener(EVENTS.POPSTATE, onLocationChange)
 
-        // remover el evento 
+        // limpiar los eventos
         return () => {
-            window.removeEventListener(EVENTS.NavigationEvent, onLocationChange)
+            window.removeEventListener(EVENTS.PUSHSTATE, onLocationChange)
+            window.removeEventListener(EVENTS.POPSTATE, onLocationChange)
         }
 
         // cuando se va a remover un evento, SE TIENE que guardar el callback en una funcion aparte (onLocationChange en este caso)
