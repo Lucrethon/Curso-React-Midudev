@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react"
 import { EVENTS } from "./types"
+import { HomePage } from "./pages/HomePage"
+import { AboutPage } from "./pages/AboutPage"
 
 
 
 // Que debemos hacer para hacer una single page aplication? 
-const navigation = (href: string) => {
+export const navigation = (href: string) => {
     // el objeto history de window sirve para interactuar y manipular el historial de navegación de la pestaña actual del navegador.
     // pero para cambiarla y no hacer una recarga completa de la página utilizamos el método pushState
     // pushState Añade una nueva entrada al historial de navegación y cambia la URL en la barra de direcciones sin recargar la página. Ejemplo: 
@@ -23,28 +25,7 @@ const navigation = (href: string) => {
 
 }
 
-const HomePage = () => {
-    return (
-        <>
-            <h1>Home</h1>
-            <p>Pagina de ejemplo para crear un React Router desde cero hecha por Super Lulu</p>
-            <button onClick={() => navigation('./about')}>Sobre Mi</button>
-        </>
-    )
-}
 
-const AboutPage = () => {
-    return (
-        <>
-            <h1>About</h1>
-            <div>
-                <p>Soy Super Lulu y estoy creando un clon de React Router</p>
-                <img src="https://avatars.githubusercontent.com/u/191651326?v=4" alt="Foto de SuperLulu"/>
-            </div>
-            <button onClick={() => navigation('./home')}>Ir Al Home</button>
-        </>
-    )
-}
 
 
 const App = () => {
