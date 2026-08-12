@@ -2,9 +2,9 @@
 const App = () => {
 
     return (
-        <main>
-            
-        </main>
+        <>
+            <h1>React Router</h1>
+        </>
     )
 }
 
