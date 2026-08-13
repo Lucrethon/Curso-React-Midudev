@@ -1,4 +1,3 @@
-import { navigate } from "../components/Link"
 import { URLs } from "../types"
 import { Link } from "../components/Link"
 
