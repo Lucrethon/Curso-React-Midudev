@@ -30,4 +30,7 @@ export const URLs = {
     ABOUT : '/about'
 }
 
+export const BUTTONS = {
+    PRIMARY : 0 // primary button
+}
 

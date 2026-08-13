@@ -1,5 +1,5 @@
 import type React from "react"
-import { EVENTS, TARGET } from "../types"
+import { EVENTS, TARGET, BUTTONS } from "../types"
 // import type { Urls } from "../types"
 
 // Que debemos hacer para hacer una single page aplication (SPA)? 
@@ -34,7 +34,7 @@ export const Link = ({ target = TARGET.SELF, to, children, ...props} : {target?:
         // para que funcionen las opciones de accecibilidad se realizan las siguientes comprobaciones: 
 
         // si es el evento o click principal 
-        const isMainEvent = event.button === 0 // primary click
+        const isMainEvent = event.button === BUTTONS.PRIMARY // primary click
 
         // si el evento esta modificado (es decir, si no se esta abriendo el link con click sino con un comando por ejemplo. Ej: mayuscula + click abre en otra ventana)
         // esto es para que el usuario pueda realizar esas acciones en nuestra pagina 
