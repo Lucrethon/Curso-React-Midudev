@@ -1,4 +1,6 @@
-import { EVENTS } from "../types"
+import type React from "react"
+import { EVENTS, TARGET } from "../types"
+// import type { Urls } from "../types"
 
 // Que debemos hacer para hacer una single page aplication? 
 export const navigate = (href: string) => {
@@ -20,3 +22,17 @@ export const navigate = (href: string) => {
 
 }
 
+export const Link = ({ target = TARGET.SELF, to, children, ...props} : {target?: string, to: string, children: React.ReactNode}) => {
+    // target: si se quiere abrir en otra ventana 
+    // to: el destino del link
+    // ...props: props que se le pasan al ancor (className, etc etc)
+
+
+    const handleClick = (event: React.MouseEvent) => {
+        event.preventDefault()
+        // es importante el prevent default porque si no se coloca, se renderiza toda la pagina otra vez como si fuera un multiple page aplication 
+       navigate(to) 
+    }
+    return <a onClick={handleClick} href={to} target={target} {...props}>{children}</a>
+
+}

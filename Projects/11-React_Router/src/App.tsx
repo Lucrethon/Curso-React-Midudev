@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { EVENTS } from "./types"
+import { EVENTS, URLs } from "./types"
 import { HomePage } from "./pages/HomePage"
 import { AboutPage } from "./pages/AboutPage"
 
@@ -35,8 +35,8 @@ const App = () => {
         <main>
             <h1>React Router</h1>
             {/* Esto es un Multiple Page Aplitacion porque esta renderizando toda la pagina cada vez que se va a un enlace */}
-            {currentPath === '/home' && <HomePage/>} 
-            {currentPath === '/about' && <AboutPage/>} 
+            {currentPath === (URLs.HOME) && <HomePage/>} 
+            {currentPath === (URLs.ABOUT) && <AboutPage/>} 
         </main>
     )
 }

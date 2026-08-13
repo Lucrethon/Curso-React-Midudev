@@ -1,4 +1,6 @@
 import { navigate } from "../components/Link"
+import { URLs } from "../types"
+import { Link } from "../components/Link"
 
 export const AboutPage = () => {
     return (
@@ -8,7 +10,7 @@ export const AboutPage = () => {
                 <p>Soy Super Lulu y estoy creando un clon de React Router</p>
                 <img src="https://avatars.githubusercontent.com/u/191651326?v=4" alt="Foto de SuperLulu"/>
             </div>
-            <button onClick={() => navigate('./home')}>Ir Al Home</button>
+            <Link to={URLs.HOME}>Ir al Home</Link>
         </>
     )
 }
