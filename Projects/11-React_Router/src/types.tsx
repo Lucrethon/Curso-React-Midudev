@@ -1,3 +1,7 @@
+import type React from "react"
+import { AboutPage } from "./pages/AboutPage"
+import { HomePage } from "./pages/HomePage"
+
 export const EVENTS = {
     PUSHSTATE : 'pushstate',
     POPSTATE : 'popstate'
@@ -23,6 +27,15 @@ export type Target = '_blank' | '_self' | '_parent' | '_top'
 
     // _top: Abre el enlace en el cuerpo completo de la ventana (full body), rompiendo cualquier estructura de marcos o iframe en la que esté anidado.
 
+
+export const BUTTONS = {
+    PRIMARY : 0 // primary button
+}
+
+
+// ------------- URLs -----------------
+
+
 export type Urls = '/' | '/about'
 
 export const URLs = {
@@ -30,7 +43,21 @@ export const URLs = {
     ABOUT : '/about'
 }
 
-export const BUTTONS = {
-    PRIMARY : 0 // primary button
+// ------------- Routes -----------------
+
+export type Route = {
+    path: string,
+    Component: React.ComponentType
 }
+
+export const routes: Route[] = [
+    {
+        path: URLs.HOME,
+        Component: HomePage
+    },
+    {
+        path: URLs.ABOUT,
+        Component: AboutPage
+    }
+]
 
