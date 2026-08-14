@@ -1,7 +1,6 @@
-import { URLs } from "./types"
 import { Router } from "./components/Router"
 import { routes } from "./types"
-import { DefaultComponent } from "./components/DefaultComponent"
+import { PageError404 } from "./components/DefaultComponent"
 
 const App = () => {
 
@@ -10,7 +9,7 @@ const App = () => {
     return (
         <main>
             <h1>React Router</h1>
-            {<Router routes={routes} defaultComponent={DefaultComponent}/>}
+            {<Router routes={routes} defaultComponent={PageError404}/>}
 
         </main>
     )
