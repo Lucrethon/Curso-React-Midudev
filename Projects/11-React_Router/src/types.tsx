@@ -40,14 +40,21 @@ export type Urls = '/' | '/about'
 
 export const URLs = {
     HOME : '/',
-    ABOUT : '/about'
+    ABOUT : '/about',
+    SEARCH : '/search/:query', // search/javascript , search/python , search/react aqui solo estamos capturando el query
+    //Los dos puntos (:) son una convención de sintaxis para patrones de ruta:
+    // Texto normal (/search): Debe coincidir exactamente con la palabra "search".
+
+    // Dos puntos (:query): Le dice a la librería:
+    // "Aquí viene un comodín dinámico. Cualquier valor que el usuario ponga en este segmento de la URL, guárdamelo bajo una clave llamada query".
 }
 
 // ------------- Routes -----------------
 
 export type Route = {
     path: string,
-    Component: React.ComponentType
+    Component: React.ComponentType<any>
+    // aqui tambien se puede hacer un type para definir de forma mas especifica que tipo de props requiere la pagina 
 }
 
 export const routes: Route[] = [
@@ -58,6 +65,10 @@ export const routes: Route[] = [
     {
         path: URLs.ABOUT,
         Component: AboutPage
+    },
+    {
+        path: URLs.SEARCH,
+        Component: ({queryRoutes}) => <h1>Has buscado {queryRoutes.query}</h1>
     }
 ]
 
