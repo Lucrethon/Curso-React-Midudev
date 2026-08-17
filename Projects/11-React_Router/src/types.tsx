@@ -1,6 +1,7 @@
 import type React from "react"
 import { AboutPage } from "./pages/AboutPage"
 import { HomePage } from "./pages/HomePage"
+import { SearchPage } from "./pages/SearchPage"
 
 export const EVENTS = {
     PUSHSTATE : 'pushstate',
@@ -55,6 +56,7 @@ export type Route = {
     path: string,
     Component: React.ComponentType<any>
     // aqui tambien se puede hacer un type para definir de forma mas especifica que tipo de props requiere la pagina 
+    // esto es para pasar una ruta con parámetros 
 }
 
 export const routes: Route[] = [
@@ -68,7 +70,11 @@ export const routes: Route[] = [
     },
     {
         path: URLs.SEARCH,
-        Component: ({queryRoutes}) => <h1>Has buscado {queryRoutes.query}</h1>
+        Component: SearchPage
     }
 ]
 
+// esto es un type de un parametro de una ruta con parametros 
+export type Query = {
+    query: string
+}
