@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { EVENTS } from "../types"
-import type { Route } from "../types"
+import type { TypeRoute } from "../types"
 import { match } from "path-to-regexp"
 
 
 export const Router = ({routes, defaultComponent : DefaultComponent} : 
-    {routes: Route[], defaultComponent: React.ComponentType}) => {
+    {routes: TypeRoute[], defaultComponent: React.ComponentType}) => {
 
     const [currentPath, setCurrentPath] = useState(window.location.pathname)
 
