@@ -67,7 +67,7 @@ export const Router = ({routes, defaultComponent : DefaultComponent, children} :
     // se esta utilizando path-to-regexp para poder detectar rutas dinamicas. Ejemplo: 
     // /search/:query <- :query es una ruta dinamica 
 
-    let queryRoutes = {}
+    let routeParameters = {}
 
     const Page = routesToUse.find(({ path }) => {
         if (currentPath === path) return true
@@ -78,12 +78,12 @@ export const Router = ({routes, defaultComponent : DefaultComponent, children} :
         //search/:query
 
         // aqui se guardan los parámetros de url que son dinamicos (:query) extraidos con path-to-regexp
-        queryRoutes = matched.params // {query : 'javascript'} // /search/javascript
+        routeParameters = matched.params // {query : 'javascript'} // /search/javascript
         return true // esto es para que find pueda devolver el componente correspondiente a la ruta dinamica
 
     })?.component
 
     return Page 
-    ? <Page queryRoutes={queryRoutes}/> 
+    ? <Page routeParameters={routeParameters}/> 
     : <DefaultComponent/>
 }

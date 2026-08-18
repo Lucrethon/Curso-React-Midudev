@@ -1,5 +1,6 @@
 import type React from "react"
 import { SearchPage } from "./pages/SearchPage"
+import AboutPage from "./pages/AboutPage"
 
 export const EVENTS = {
     PUSHSTATE : 'pushstate',
@@ -28,6 +29,12 @@ export const BUTTONS = {
     PRIMARY : 0 // primary button
 }
 
+ export type Lang = 'es' | 'en'
+
+ export const Langs = {
+    spanish : 'es' as Lang, 
+    english : 'en' as Lang
+ }
 
 // ------------- URLs -----------------
 
@@ -40,6 +47,7 @@ export const URLs = {
 
     // Dos puntos (:query): Le dice a la librería:
     // "Aquí viene un comodín dinámico. Cualquier valor que el usuario ponga en este segmento de la URL, guárdamelo bajo una clave llamada query".
+    LANG: '/:lang'
 }
 
 // ------------- Routes -----------------
@@ -63,10 +71,31 @@ export const routes: TypeRoute[] = [
     {
         path: URLs.SEARCH,
         component: SearchPage
+    },
+    {
+        path: URLs.LANG + URLs.ABOUT,
+        component: AboutPage
     }
+    
 ]
 
 // esto es un type de un parametro de una ruta con parametros 
-export type Query = {
-    query: string
+export type Params = {
+    query: string,
+    lang: Lang
 }
+
+
+ export const i18n = {
+    es : {
+        title: 'Sobre Mi',
+        description: 'Soy Super Lulu y estoy creando un clon de React Router!',
+        button: 'Volver al Home'
+    }, 
+    en : {
+        title: 'About Me',
+        description: "I'm Super Lulu and I'm creating a React Router clon!", 
+        button: 'Return to Home'
+    }
+ }
+
