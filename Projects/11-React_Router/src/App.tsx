@@ -2,8 +2,11 @@ import { Router } from "./components/Router"
 import { routes, URLs } from "./types"
 import { PageError404 } from "./components/DefaultComponent"
 import { Route } from "./components/Route"
-import { HomePage } from "./pages/HomePage"
-import { AboutPage } from "./pages/AboutPage"
+import { lazy, Suspense } from "react"
+
+const HomePage = lazy(() => import("./pages/HomePage"))
+const AboutPage = lazy(() => import("./pages/AboutPage"))
+
 
 const App = () => {
 
@@ -12,12 +15,14 @@ const App = () => {
     return (
         <main>
             <h1>React Router</h1>
-            <Router routes={routes} defaultComponent={PageError404}>
+            <Suspense>
+                <Router routes={routes} defaultComponent={PageError404}>
 
-                <Route path={URLs.HOME} component={HomePage}></Route>
-                <Route path={URLs.ABOUT} component={AboutPage}></Route>
+                    <Route path={URLs.HOME} component={HomePage}></Route>
+                    <Route path={URLs.ABOUT} component={AboutPage}></Route>
 
-            </Router>
+                </Router>
+            </Suspense>
 
         </main>
     )
