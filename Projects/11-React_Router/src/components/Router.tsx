@@ -61,13 +61,15 @@ export const Router = ({routes, defaultComponent : DefaultComponent, children} :
         return isRoute ? (props as TypeRoute) : null
     }) // -> array con las rutas 
 
+    const routesToUse = routesFromChildren ? routes.concat(routesFromChildren) : routes
+
 
     // se esta utilizando path-to-regexp para poder detectar rutas dinamicas. Ejemplo: 
     // /search/:query <- :query es una ruta dinamica 
 
     let queryRoutes = {}
 
-    const Page = routes.find(({ path }) => {
+    const Page = routesToUse.find(({ path }) => {
         if (currentPath === path) return true
          
         const matherUrl = match(path, {decode: decodeURIComponent})
@@ -79,7 +81,7 @@ export const Router = ({routes, defaultComponent : DefaultComponent, children} :
         queryRoutes = matched.params // {query : 'javascript'} // /search/javascript
         return true // esto es para que find pueda devolver el componente correspondiente a la ruta dinamica
 
-    })?.Component
+    })?.component
 
     return Page 
     ? <Page queryRoutes={queryRoutes}/> 
