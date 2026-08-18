@@ -15,9 +15,6 @@ export const TARGET = {
     TOP: '_top'
 }
 
-export type Target = '_blank' | '_self' | '_parent' | '_top'
-
-
 // target : sirve para especificar dónde o cómo se debe abrir el enlace (el documento de destino) cuando el usuario hace clic en él.
 
     // _blank: Abre el enlace en una nueva pestaña o ventana del navegador. Es ideal para enlaces externos si no quieres que el usuario abandone tu sitio web.
@@ -35,9 +32,6 @@ export const BUTTONS = {
 
 
 // ------------- URLs -----------------
-
-
-export type Urls = '/' | '/about'
 
 export const URLs = {
     HOME : '/',
