@@ -1,6 +1,4 @@
 import type React from "react"
-import { AboutPage } from "./pages/AboutPage"
-import { HomePage } from "./pages/HomePage"
 import { SearchPage } from "./pages/SearchPage"
 
 export const EVENTS = {
