@@ -48,23 +48,23 @@ export const URLs = {
 
 export type TypeRoute = {
     path: string,
-    Component: React.ComponentType<any>
+    component: React.ComponentType<any>
     // aqui tambien se puede hacer un type para definir de forma mas especifica que tipo de props requiere la pagina 
     // esto es para pasar una ruta con parámetros 
 }
 
 export const routes: TypeRoute[] = [
-    {
-        path: URLs.HOME,
-        Component: HomePage
-    },
-    {
-        path: URLs.ABOUT,
-        Component: AboutPage
-    },
+    // {
+    //     path: URLs.HOME,
+    //     Component: HomePage
+    // },
+    // {
+    //     path: URLs.ABOUT,
+    //     Component: AboutPage
+    // },
     {
         path: URLs.SEARCH,
-        Component: SearchPage
+        component: SearchPage
     }
 ]
 
