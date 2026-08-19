@@ -1,39 +1,38 @@
- export const i18n = {
-    AboutePage : {
-        es : {
-            title: 'Sobre Mi',
-            description: 'Soy Super Lulu y estoy creando un clon de React Router!',
-            button: 'Volver al Home',
-            navigate: {
-                selecLanguage : 'Language:',
-                languageOpcions : {
-                    spanish: 'Spanish',
-                    english: 'English'
-                }
-            }
-        }, 
-        en : {
-            title: 'About Me',
-            description: "I'm Super Lulu and I'm creating a React Router clon!", 
-            button: 'Return to Home',
-            navigate: {
-                selecLanguage : 'Idioma:',
-                languageOpcions : {
-                    spanish: 'Español',
-                    english: 'Ingles'
-                }
-            }
+export const i18n = {
+  es: {
+    aboutPage: {
+      title: 'Sobre Mí',
+      description: 'Soy Super Lulu y estoy creando un clon de React Router!',
+      button: 'Volver al Home',
+      navigate: {
+        selectLanguage: 'Idioma:',
+        languageOptions: {
+          spanish: 'Español',
+          english: 'Inglés'
         }
+      }
     },
-    HomePage : {
-        es : {
-            description: 'Pagina de ejemplo para crear un React Router desde cero hecha por Super Lulu',
-            navigate: 'Sobre Mi'
-        },
-        en : {
-            description: 'Example page to create a React Router from scratch by Super Lulu',
-            navigate: 'About Me'
+    homePage: {
+      description: 'Página de ejemplo para crear un React Router desde cero hecha por Super Lulu',
+      navigate: 'Sobre Mí'
     }
+  },
+  en: {
+    aboutPage: {
+      title: 'About Me',
+      description: "I'm Super Lulu and I'm creating a React Router clone!",
+      button: 'Return to Home',
+      navigate: {
+        selectLanguage: 'Language:',
+        languageOptions: {
+          spanish: 'Spanish',
+          english: 'English'
+        }
+      }
+    },
+    homePage: {
+      description: 'Example page to create a React Router from scratch by Super Lulu',
+      navigate: 'About Me'
     }
-
- }
+  }
+}
