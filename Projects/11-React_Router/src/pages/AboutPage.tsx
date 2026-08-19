@@ -1,7 +1,9 @@
 import { Langs, URLs, type Params } from "../types"
 import { Link } from "../components/Link"
-import { i18n } from "../types"
+import { i18n } from "../i18n"
 import type { Lang } from "../types"
+import React, { useId } from "react"
+import { navigate } from "../components/Link"
 
 const useI18n = (lang: Lang) => {
     return i18n[lang]
@@ -9,10 +11,29 @@ const useI18n = (lang: Lang) => {
 
 export const AboutPage = ({routeParameters} : {routeParameters: Params}) => {
 
+    const languageFilterId = useId()
+
     const i18n = useI18n(routeParameters?.lang ?? Langs.spanish)
 
+    const handleLanguage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        event.preventDefault();
+        // const formData = new FormData(event.currentTarget)
+        const language = event.currentTarget.value
+        navigate(`/${language}` + `${URLs.ABOUT}`)
+
+    }
+
     return (
-        <>
+        <>  
+            <header>
+                <form>
+                    <label htmlFor={languageFilterId}>Idioma:</label>
+                    <select id={languageFilterId} name='language' onChange={handleLanguage}>
+                        <option value={Langs.english}>English</option>
+                        <option value={Langs.spanish}>Español</option>
+                    </select>
+                </form>
+            </header>
             <h1>{i18n.title}</h1>
             <div>
                 <p>{i18n.description}</p>

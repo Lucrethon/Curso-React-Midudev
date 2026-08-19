@@ -4,8 +4,16 @@ import type { TypeRoute } from "../types"
 import { match } from "path-to-regexp"
 
 
-export const Router = ({routes, defaultComponent : DefaultComponent, children} : 
-    {routes: TypeRoute[], defaultComponent: React.ComponentType, children: React.ReactNode}) => {
+export const Router = (
+    {
+        routes, 
+        defaultComponent : DefaultComponent, 
+        children} : 
+
+    {
+        routes: TypeRoute[], 
+        defaultComponent: React.ComponentType, 
+        children: React.ReactNode}) => {
     
     console.log(children)
 
