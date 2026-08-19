@@ -4,7 +4,7 @@ import { Langs } from "../types"
 import { i18n } from "../i18n"
 
 
-export const useLanguage = (lang: Lang) => {
+export const useI18n = (lang: Lang) => {
 
     const localStorage = window.localStorage.getItem('lang')
     const initialState = localStorage ? JSON.parse(localStorage) : Langs.spanish
@@ -18,7 +18,7 @@ export const useLanguage = (lang: Lang) => {
         setLanguage(lang)
     }
 
-    const currentLanguage = lang == Langs.english ? i18n.en : i18n.es
+    const currentLanguage = i18n[lang]
 
     
     return { currentLanguage, changeLang }
