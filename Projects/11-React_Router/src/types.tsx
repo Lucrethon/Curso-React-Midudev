@@ -86,3 +86,41 @@ export type Params = {
 }
 
 
+// i18n 
+
+export type HomePage = {
+    description: string;
+    navigate:    string;
+}
+
+
+export type AboutPage = {
+    title:       string;
+    description: string;
+    button:      string;
+    navigate:    Navigate;
+}
+
+export type Navigate = {
+    selectLanguage:  string;
+    languageOptions: LanguageOptions;
+}
+
+export type LanguageOptions = {
+    spanish: string;
+    english: string;
+}
+
+export type Pages = {
+    aboutPage: AboutPage;
+    homePage:  HomePage;
+}
+
+export type I18n = {
+    es: Pages;
+    en: Pages;
+}
+
+
+
+
