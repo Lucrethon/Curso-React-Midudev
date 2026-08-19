@@ -1,4 +1,4 @@
-import React, { createContext, useContext, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 import { useI18n } from "../Hooks/useI18n";
 import type { Lang, Pages } from "../types";
 
