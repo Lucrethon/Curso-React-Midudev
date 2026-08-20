@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import type { Lang, Pages } from "../types"
+import type { Lang, PagesAndComponents } from "../types"
 import { Langs } from "../types"
 import { i18n } from "../i18n"
 
@@ -18,7 +18,7 @@ export const useI18n = (lang = Langs.spanish) => {
         setLanguage(lang)
     }
 
-    const i18nObject = i18n[lang] as Pages
+    const i18nObject = i18n[lang] as PagesAndComponents
 
     
     return { language, changeLang, i18nObject }
