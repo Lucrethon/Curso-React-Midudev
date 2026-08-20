@@ -11,7 +11,6 @@ export const Language = () => {
     event.preventDefault();
     // const formData = new FormData(event.currentTarget)
     const language = event.currentTarget.value as Lang
-    // navigate(`/${language}` + `${URLs.ABOUT}`)
     changeLang(language)
 
 }

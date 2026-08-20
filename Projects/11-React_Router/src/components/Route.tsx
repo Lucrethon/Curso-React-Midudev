@@ -1,6 +1,6 @@
 
 
-export const Route = ({ path, component } : 
-    {path: string, component: React.ComponentType<any>}) => {
+export const Route = ({ path, Component } : 
+    {path: string, Component: React.ComponentType<any>}) => {
     return null
 }

@@ -18,8 +18,8 @@ const App = () => {
             <Suspense fallback={<div>Loading...</div>}>
                 <Router routes={routes} defaultComponent={PageError404}>
 
-                    <Route path={URLs.HOME} component={HomePage}></Route>
-                    <Route path={URLs.ABOUT} component={AboutPage}></Route>
+                    <Route path={URLs.HOME} Component={HomePage}></Route>
+                    <Route path={URLs.ABOUT} Component={AboutPage}></Route>
 
                 </Router>
             </Suspense>
