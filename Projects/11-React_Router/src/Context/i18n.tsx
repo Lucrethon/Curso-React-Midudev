@@ -1,11 +1,11 @@
 import { createContext, useContext, type ReactNode } from "react";
 import { useI18n } from "../Hooks/useI18n";
-import type { Lang, Pages } from "../types";
+import type { Lang, PagesAndComponents } from "../types";
 
 type i18nContext = { 
     language: Lang
     changeLang: (lang: Lang) => void
-    i18nObject: Pages
+    i18nObject: PagesAndComponents
 }
 
 const I18nContext = createContext<i18nContext | null>(null)
