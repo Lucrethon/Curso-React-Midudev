@@ -47,14 +47,14 @@ export const URLs = {
 
     // Dos puntos (:query): Le dice a la librería:
     // "Aquí viene un comodín dinámico. Cualquier valor que el usuario ponga en este segmento de la URL, guárdamelo bajo una clave llamada query".
-    LANG: '/:lang'
+    LANG: '{/:lang}'
 }
 
 // ------------- Routes -----------------
 
 export type TypeRoute = {
     path: string,
-    component: React.ComponentType<any>
+    Component: React.ComponentType<any>
     // aqui tambien se puede hacer un type para definir de forma mas especifica que tipo de props requiere la pagina 
     // esto es para pasar una ruta con parámetros 
 }
@@ -70,11 +70,11 @@ export const routes: TypeRoute[] = [
     // },
     {
         path: URLs.SEARCH,
-        component: SearchPage
+        Component: SearchPage
     },
     {
         path: URLs.LANG + URLs.ABOUT,
-        component: AboutPage
+        Component: AboutPage
     }
     
 ]
