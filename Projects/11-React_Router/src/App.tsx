@@ -15,7 +15,7 @@ const App = () => {
     return (
         <main>
             <h1>React Router</h1>
-            <Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
                 <Router routes={routes} defaultComponent={PageError404}>
 
                     <Route path={URLs.HOME} component={HomePage}></Route>
