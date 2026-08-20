@@ -88,37 +88,36 @@ export type Params = {
 
 // i18n 
 
+export type AboutPage = {
+    title:       string;
+    description: string;
+    button:      string;
+}
+
 export type HomePage = {
     description: string;
     navigate:    string;
 }
 
-
-export type AboutPage = {
-    title:       string;
-    description: string;
-    button:      string;
-    navigate:    Navigate;
-}
-
-export type Navigate = {
-    selectLanguage:  string;
-    languageOptions: LanguageOptions;
-}
-
 export type LanguageOptions = {
+    selectLanguage: string;
+    languages:      Languages;
+}
+
+export type Languages = {
     spanish: string;
     english: string;
 }
 
-export type Pages = {
-    aboutPage: AboutPage;
-    homePage:  HomePage;
+export type PagesAndComponents = {
+    aboutPage:       AboutPage;
+    homePage:        HomePage;
+    languageOptions: LanguageOptions;
 }
 
 export type I18n = {
-    es: Pages;
-    en: Pages;
+    es: PagesAndComponents;
+    en: PagesAndComponents;
 }
 
 
