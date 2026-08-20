@@ -1,12 +1,12 @@
 import React, { useState, useEffect, Children, isValidElement } from "react"
-import { EVENTS } from "../types"
+import { EVENTS, URLs } from "../types"
 import type { TypeRoute } from "../types"
 import { match } from "path-to-regexp"
 
 
 export const Router = (
     {
-        routes, 
+        routes = [], 
         defaultComponent : DefaultComponent, 
         children} : 
 
@@ -16,6 +16,10 @@ export const Router = (
         children: React.ReactNode}) => {
     
     console.log(children)
+
+    // --------------- Estado para guardar la ruta actual del navegador ---------------
+
+
 
     const [currentPath, setCurrentPath] = useState(window.location.pathname)
 
@@ -40,6 +44,21 @@ export const Router = (
         // cuando se va a remover un evento, SE TIENE que guardar el callback en una funcion aparte (onLocationChange en este caso)
 
     }, [])
+
+        // ----------- Funcion para ruta con lenguaje opcional (ej: /es, /en) -----------
+
+    function withOptionalLang(path: string): string {
+    // Si es la raíz '/', la ruta queda solo como '{/:lang}'
+    if (path === URLs.HOME) return URLs.LANG
+
+    // Si ya tiene un path (/about), lo prefijamos: '{/:lang}/about'
+    // cuando una ruta esta entre llaves, significa que es opcional. Ej: {/:lang} significa que puede ser /es o /en o simplemente /
+    return `${URLs.LANG}${path}`
+    }
+
+
+
+    // ------------ Adaptando las rutas que vienen desde el componente children <Route/> -----------------
 
 
     // añadir las rutas que viene desde el componente children <Route/>
@@ -67,29 +86,45 @@ export const Router = (
         const isRoute = componentName === 'Route'
 
         return isRoute ? (props as TypeRoute) : null
-    }) // -> array con las rutas 
+    })?.filter(Boolean) as TypeRoute[] || []// -> array con las rutas 
+
+    // .filter(Boolean) es un trucopara eliminar todos los valores falsos (falsy) de un array
+    
+
+
+    // ------------- Se concatenan las rutas que vienen desde el componente children <Route/> con las rutas que vienen desde el prop routes -------------
 
     const routesToUse = routesFromChildren ? routes.concat(routesFromChildren) : routes
 
 
+
+    // ------------- Se busca la ruta que coincide con la ruta actual del navegador -------------
+
     // se esta utilizando path-to-regexp para poder detectar rutas dinamicas. Ejemplo: 
     // /search/:query <- :query es una ruta dinamica 
 
+    // se utiliza el metodo find para buscar la ruta que coincide con la ruta actual del navegador (currentPath)
+
     let routeParameters = {}
 
-    const Page = routesToUse.find(({ path }) => {
-        if (currentPath === path) return true
-         
-        const matherUrl = match(path, {decode: decodeURIComponent})
+    const matchedRoute = routesToUse.find(({ path }) => {
+
+        // if (currentPath === path) return true
+        if (!path) return false
+
+        const fullPath = withOptionalLang(path)
+        const matherUrl = match(fullPath, {decode: decodeURIComponent})
         const matched = matherUrl(currentPath)
         if (!matched) return false
         //search/:query
 
-        // aqui se guardan los parámetros de url que son dinamicos (:query) extraidos con path-to-regexp
+        // aqui se guardan los parámetros de url que son dinamicos (:query, :lang) extraidos con path-to-regexp
         routeParameters = matched.params // {query : 'javascript'} // /search/javascript
         return true // esto es para que find pueda devolver el componente correspondiente a la ruta dinamica
 
-    })?.component
+    })
+
+    const Page = matchedRoute?.Component
 
     return Page 
     ? <Page routeParameters={routeParameters}/> 
