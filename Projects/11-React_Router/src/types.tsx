@@ -38,19 +38,16 @@ export const BUTTONS = {
 
 // ------------- URLs -----------------
 
-const path = {
-    LANG: '/:lang?' // el ? significa que es opcional
-} 
-
 export const URLs = {
-    HOME : path.LANG,
-    ABOUT : path.LANG + '/about',
-    SEARCH : path.LANG + '/search/:query', // search/javascript , search/python , search/react aqui solo estamos capturando el query
+    HOME : '/',
+    ABOUT : '/about',
+    SEARCH : '/search/:query', // search/javascript , search/python , search/react aqui solo estamos capturando el query
     //Los dos puntos (:) son una convención de sintaxis para patrones de ruta:
     // Texto normal (/search): Debe coincidir exactamente con la palabra "search".
 
     // Dos puntos (:query): Le dice a la librería:
     // "Aquí viene un comodín dinámico. Cualquier valor que el usuario ponga en este segmento de la URL, guárdamelo bajo una clave llamada query".
+    LANG: '/:lang'
 }
 
 // ------------- Routes -----------------
@@ -76,7 +73,7 @@ export const routes: TypeRoute[] = [
         component: SearchPage
     },
     {
-        path: URLs.ABOUT,
+        path: URLs.LANG + URLs.ABOUT,
         component: AboutPage
     }
     
