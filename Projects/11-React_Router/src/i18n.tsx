@@ -11,7 +11,7 @@ export const i18n = {
     },
     languageOptions: {
         selectLanguage: 'Idioma:',
-        languageOptions: {
+        languages: {
           spanish: 'Español',
           english: 'Inglés'
         }
@@ -29,7 +29,7 @@ export const i18n = {
     },
     languageOptions: {
         selectLanguage: 'Language:',
-        languageOptions: {
+        languages: {
           spanish: 'Spanish',
           english: 'English'
         }
