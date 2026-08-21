@@ -4,21 +4,21 @@ import { Langs } from "../types"
 import { i18n } from "../i18n"
 
 
-export const useI18n = (lang = Langs.spanish) => {
+export const useI18n = () => {
 
     const localStorage = window.localStorage.getItem('lang')
-    const initialState = localStorage ? JSON.parse(localStorage) : Langs.spanish
+    const initialState = localStorage ? (localStorage as Lang) : Langs.spanish 
     const [language, setLanguage] = useState<Lang>(initialState)
 
     useEffect(() => {
-        window.localStorage.setItem('lang', JSON.stringify(language))
+        window.localStorage.setItem('lang', language)
     }, [language])
 
     const changeLang = (lang: Lang) => {
         setLanguage(lang)
     }
 
-    const i18nObject = i18n[lang] as PagesAndComponents
+    const i18nObject = i18n[language] as PagesAndComponents
 
     
     return { language, changeLang, i18nObject }
