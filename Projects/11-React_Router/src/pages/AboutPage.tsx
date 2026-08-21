@@ -1,10 +1,10 @@
-import { URLs, type Params } from "../types"
+import { URLs } from "../types"
 import { Link } from "../components/Link"
-import { useI18n } from "../Hooks/useI18n"
+import { useI18nContext } from "../Context/i18n"
 
-export const AboutPage = ({routeParameters} : {routeParameters?: Params}) => {
+export const AboutPage = () => {
 
-    const i18n = useI18n(routeParameters?.lang)
+    const i18n = useI18nContext()
     const { i18nObject } = i18n
     const { aboutPage } = i18nObject
 
