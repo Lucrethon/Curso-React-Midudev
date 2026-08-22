@@ -1,8 +1,8 @@
-import React, { useState, useEffect, Children, isValidElement } from "react"
-import { EVENTS, URLs } from "../types"
+import React, { Children, isValidElement } from "react"
+import { URLs } from "../types"
 import type { TypeRoute } from "../types"
 import { match } from "path-to-regexp"
-
+import { useRouterContext } from "../Context/Router"
 
 export const Router = (
     {
@@ -16,34 +16,7 @@ export const Router = (
         children: React.ReactNode}) => {
     
     console.log(children)
-
-    // --------------- Estado para guardar la ruta actual del navegador ---------------
-
-
-
-    const [currentPath, setCurrentPath] = useState(window.location.pathname)
-
-    useEffect(() => {
-        // settear el state currentPath con la ubicación actual del navegador
-        // se utiliza un useEffect para que se actualice cuando cambie el estado 
-        const onLocationChange = () => {
-            setCurrentPath(window.location.pathname)
-        }
-
-        // escuchar el evento de navegación 
-        window.addEventListener(EVENTS.PUSHSTATE, onLocationChange)
-        // escuchar el evento para navegar hacia atrás o hacia adelante (evento popstate)
-        window.addEventListener(EVENTS.POPSTATE, onLocationChange)
-
-        // limpiar los eventos
-        return () => {
-            window.removeEventListener(EVENTS.PUSHSTATE, onLocationChange)
-            window.removeEventListener(EVENTS.POPSTATE, onLocationChange)
-        }
-
-        // cuando se va a remover un evento, SE TIENE que guardar el callback en una funcion aparte (onLocationChange en este caso)
-
-    }, [])
+    const { currentPath } = useRouterContext()
 
         // ----------- Funcion para ruta con lenguaje opcional (ej: /es, /en) -----------
 

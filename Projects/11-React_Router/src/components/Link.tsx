@@ -1,11 +1,14 @@
 import type React from "react"
-import { EVENTS, TARGET, BUTTONS } from "../types"
+import { TARGET, BUTTONS } from "../types"
+import { useRouterContext } from "../Context/Router"
 
 
 export const Link = ({ target = TARGET.SELF, to, children, ...props} : {target?: string, to: string, children: React.ReactNode}) => {
     // target: si se quiere abrir en otra ventana 
     // to: el destino del link
     // ...props: props que se le pasan al ancor (className, etc etc)
+
+    const { navigate } = useRouterContext()
 
 
     const handleClick = (event: React.MouseEvent) => {
