@@ -21,6 +21,7 @@ export const Language = () => {
             // .shift() modifica el array original
         }
         // Reconstruimos la ruta limpia (ej: '/about' o '/')
+        // se coloca una barra al principio por home ("/")
         const cleanPath = pathSegments.length > 0 ? `/${pathSegments.join('/')}` : ''
 
         // Devolvemos la ruta con el nuevo idioma
